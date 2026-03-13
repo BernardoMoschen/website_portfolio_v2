@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { FaGithub, FaExternalLinkAlt, FaArrowRight, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaArrowRight, FaChevronLeft, FaChevronRight, FaLock, FaCode } from 'react-icons/fa';
 import { projects } from '../../data/projectsData';
 import siteConfig from '../../../config/site';
 import { AnimateOnScroll, StaggerContainer, StaggerItem } from '../../utils/animations';
@@ -15,15 +15,24 @@ const statusMap: Record<string, { label: string; color: string; bg: string }> = 
     planning: { label: 'Coming Soon', color: '#3b82f6', bg: 'rgba(59,130,246,0.15)' },
 };
 
+type ProjectFilter = 'all' | 'professional' | 'personal';
+
+const typeMap = {
+    professional: { label: 'Professional', color: 'var(--color-secondary)', bg: 'rgba(255,138,80,0.12)', Icon: FaLock },
+    personal: { label: 'Open Source', color: 'var(--color-primary)', bg: 'rgba(127,176,105,0.12)', Icon: FaCode },
+};
+
 const ProjectsSection: React.FC = () => {
     const { darkMode } = useThemeMode();
     const { t } = useI18n();
     const scrollRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
+    const [filter, setFilter] = useState<ProjectFilter>('all');
 
-    const featuredProjects = projects.filter(p => p.featured);
-    const otherProjects = projects.filter(p => !p.featured);
+    const filtered = filter === 'all' ? projects : projects.filter(p => p.type === filter);
+    const featuredProjects = filtered.filter(p => p.featured);
+    const otherProjects = filtered.filter(p => !p.featured);
 
     const updateScrollState = () => {
         const el = scrollRef.current;
@@ -43,6 +52,13 @@ const ProjectsSection: React.FC = () => {
             window.removeEventListener('resize', updateScrollState);
         };
     }, []);
+
+    useEffect(() => {
+        const el = scrollRef.current;
+        if (!el) return;
+        el.scrollLeft = 0;
+        updateScrollState();
+    }, [filter]);
 
     const scroll = (direction: 'left' | 'right') => {
         const el = scrollRef.current;
@@ -99,6 +115,29 @@ const ProjectsSection: React.FC = () => {
                     }}>
                         {t.projects.subtitle}
                     </p>
+                </div>
+            </AnimateOnScroll>
+
+            {/* Filter tabs */}
+            <AnimateOnScroll delay={0.15}>
+                <div className="section-inner" style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 40 }}>
+                    {(['all', 'professional', 'personal'] as ProjectFilter[]).map((f) => (
+                        <button
+                            key={f}
+                            onClick={() => setFilter(f)}
+                            className={filter === f ? 'tag tag-primary' : 'tag'}
+                            style={{
+                                cursor: 'pointer',
+                                background: 'none',
+                                fontSize: '0.8rem',
+                                padding: '6px 18px',
+                                transition: 'all 0.2s ease',
+                                textTransform: 'capitalize',
+                            }}
+                        >
+                            {f === 'all' ? 'All' : typeMap[f].label}
+                        </button>
+                    ))}
                 </div>
             </AnimateOnScroll>
 
@@ -278,8 +317,8 @@ const ProjectsSection: React.FC = () => {
                                         {num}
                                     </span>
 
-                                    {/* Status badge */}
-                                    <div style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 10 }}>
+                                    {/* Status + type badges */}
+                                    <div style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                                         <span style={{
                                             display: 'inline-flex',
                                             alignItems: 'center',
@@ -306,6 +345,26 @@ const ProjectsSection: React.FC = () => {
                                         }}>
                                             {t.projects.featured}
                                         </span>
+                                        {(() => {
+                                            const tm = typeMap[project.type];
+                                            return (
+                                                <span style={{
+                                                    display: 'inline-flex',
+                                                    alignItems: 'center',
+                                                    gap: 5,
+                                                    padding: '4px 10px',
+                                                    borderRadius: 20,
+                                                    fontSize: '0.7rem',
+                                                    fontWeight: 600,
+                                                    color: tm.color,
+                                                    background: tm.bg,
+                                                    border: `1px solid ${tm.color}44`,
+                                                }}>
+                                                    <tm.Icon size={10} />
+                                                    {tm.label}
+                                                </span>
+                                            );
+                                        })()}
                                     </div>
 
                                     {/* Interactive Preview */}
@@ -367,7 +426,21 @@ const ProjectsSection: React.FC = () => {
                                         paddingTop: 16,
                                         borderTop: '1px solid var(--color-border)',
                                     }}>
-                                        {project.githubUrl ? (
+                                        {project.type === 'professional' ? (
+                                            <span style={{
+                                                display: 'inline-flex',
+                                                alignItems: 'center',
+                                                gap: 6,
+                                                fontSize: '0.82rem',
+                                                padding: '8px 16px',
+                                                borderRadius: 12,
+                                                color: 'var(--color-text-muted)',
+                                                border: '1px solid var(--color-border)',
+                                                cursor: 'default',
+                                            }}>
+                                                <FaLock size={11} /> Private Codebase
+                                            </span>
+                                        ) : project.githubUrl ? (
                                             <a
                                                 href={project.githubUrl}
                                                 target="_blank"
@@ -522,9 +595,39 @@ const ProjectsSection: React.FC = () => {
                                                     }} />
                                                     {status.label}
                                                 </span>
+                                                {(() => {
+                                                    const tm = typeMap[project.type];
+                                                    return (
+                                                        <span style={{
+                                                            display: 'inline-flex',
+                                                            alignItems: 'center',
+                                                            gap: 4,
+                                                            padding: '2px 8px',
+                                                            borderRadius: 12,
+                                                            fontSize: '0.65rem',
+                                                            fontWeight: 600,
+                                                            color: tm.color,
+                                                            background: tm.bg,
+                                                            border: `1px solid ${tm.color}44`,
+                                                        }}>
+                                                            <tm.Icon size={9} />
+                                                            {tm.label}
+                                                        </span>
+                                                    );
+                                                })()}
                                             </div>
-                                            <div style={{ display: 'flex', gap: 4 }}>
-                                                {project.githubUrl ? (
+                                            <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+                                                {project.type === 'professional' ? (
+                                                    <span title="Private codebase — company IP" style={{
+                                                        display: 'inline-flex',
+                                                        alignItems: 'center',
+                                                        color: 'var(--color-text-muted)',
+                                                        opacity: 0.5,
+                                                        padding: 6,
+                                                    }}>
+                                                        <FaLock size={14} />
+                                                    </span>
+                                                ) : project.githubUrl ? (
                                                     <a
                                                         href={project.githubUrl}
                                                         target="_blank"
@@ -538,15 +641,7 @@ const ProjectsSection: React.FC = () => {
                                                     >
                                                         <FaGithub size={16} />
                                                     </a>
-                                                ) : (
-                                                    <span style={{
-                                                        color: 'var(--color-text-secondary)',
-                                                        opacity: 0.3,
-                                                        padding: 6,
-                                                    }}>
-                                                        <FaGithub size={16} />
-                                                    </span>
-                                                )}
+                                                ) : null}
                                                 {project.liveUrl && (
                                                     <a
                                                         href={project.liveUrl}

@@ -11,6 +11,7 @@ export interface ProjectData {
     liveUrl: string;
     featured: boolean;
     status: 'planning' | 'wip' | 'completed';
+    type: 'professional' | 'personal';
     challenges?: string[];
     results?: string[];
     role?: string;
@@ -34,6 +35,7 @@ export const projects: ProjectData[] = [
         liveUrl: siteConfig.url,
         featured: true,
         status: 'completed',
+        type: 'personal',
         challenges: [
             'Balancing visual richness with performance — the 3D globe needed to lazy-load without impacting initial page speed',
             'Building a cinematic scroll system with sticky sections, fade transitions, and smooth camera movement without jank',
@@ -65,6 +67,7 @@ export const projects: ProjectData[] = [
         liveUrl: '',
         featured: true,
         status: 'completed',
+        type: 'professional',
         challenges: [
             'Integrating 4+ external platforms (Zapier, Webflow, Zendesk, Strapi) into a unified automation pipeline',
             'Designing REST APIs that bridged multiple CRM systems serving ~10K+ customers',
@@ -103,6 +106,7 @@ export const projects: ProjectData[] = [
         liveUrl: '',
         featured: false,
         status: 'completed',
+        type: 'professional',
         challenges: [
             'Unifying workflows across ~20 institutions with different operational processes',
             'Handling enrollment transaction volumes at scale with robust data integrity',
@@ -141,6 +145,7 @@ export const projects: ProjectData[] = [
         liveUrl: '',
         featured: false,
         status: 'completed',
+        type: 'professional',
         challenges: [
             'Handling real-time data ingestion from multiple facility systems with different data formats',
             'Working as part of a fully remote international team from Brazil with stakeholders in Canada',
