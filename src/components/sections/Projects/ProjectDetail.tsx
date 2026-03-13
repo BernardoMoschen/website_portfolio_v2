@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaArrowRight, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
