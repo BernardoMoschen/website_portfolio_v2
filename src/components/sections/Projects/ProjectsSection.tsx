@@ -285,13 +285,13 @@ const ProjectsSection: React.FC = () => {
                                     className="glass project-card-featured"
                                     data-scroll-strip=""
                                     style={{
-                                        width: cardWidth,
+                                        width: `min(${cardWidth}px, calc(100vw - 48px))`,
                                         height: '78vh',
-                                        minHeight: 560,
+                                        minHeight: 'min(560px, 70vh)',
                                         maxHeight: 780,
                                         borderRadius: 20,
                                         border: '1px solid var(--color-border)',
-                                        padding: 36,
+                                        padding: 'clamp(20px, 5vw, 36px)',
                                         display: 'flex',
                                         flexDirection: 'column',
                                         position: 'relative',
@@ -542,7 +542,7 @@ const ProjectsSection: React.FC = () => {
 
                     <StaggerContainer staggerDelay={0.1} style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))',
                         gap: 24,
                     }}>
                         {otherProjects.map((project) => {

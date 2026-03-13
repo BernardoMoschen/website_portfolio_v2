@@ -266,7 +266,32 @@ a { color: inherit; text-decoration: none; }
 /* ═══ SECTION LAYOUT ═══ */
 .section-content { width: 100%; height: 100%; position: relative; overflow: auto; }
 .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
-@media (max-width: 768px) { .section-inner { padding: 0 16px; } }
+@media (max-width: 768px) {
+  .section-inner { padding: 0 16px; }
+
+  /* Tighter section vertical spacing on mobile */
+  .section-heading-group { margin-bottom: 1rem; }
+
+  /* Buttons stack better on narrow screens */
+  .btn { padding: 10px 20px; font-size: 0.85rem; }
+
+  /* Tags don't overflow */
+  .tag { font-size: 0.72rem; padding: 3px 10px; }
+
+  /* Glass cards reduce padding */
+  .glass, .glass-subtle { padding: clamp(16px, 4vw, 24px); }
+}
+
+@media (max-width: 480px) {
+  /* Prevent any fixed-width element from causing horizontal scroll */
+  * { max-width: 100%; box-sizing: border-box; }
+
+  /* Hero name size floor on very small phones */
+  h1 { font-size: clamp(2rem, 12vw, 4rem) !important; }
+
+  /* Nav height safe area */
+  nav { padding-top: env(safe-area-inset-top, 0); }
+}
 
 /* ═══ CUSTOM CURSOR ═══ */
 @media (hover: hover) and (pointer: fine) {
