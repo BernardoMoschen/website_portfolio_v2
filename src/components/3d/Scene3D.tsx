@@ -156,10 +156,11 @@ const Arcs: React.FC = () => {
         return [
             { arc: createArc(home, latLngToVector3(locations[1].lat, locations[1].lng, GLOBE_R), 0.7), color: SECONDARY },
             { arc: createArc(home, latLngToVector3(locations[2].lat, locations[2].lng, GLOBE_R), 0.35), color: PRIMARY },
-        ].map(d => ({
-            ...d,
-            geometry: new THREE.BufferGeometry().setFromPoints(d.arc.getPoints(60)),
-        }));
+        ].map(d => {
+            const geometry = new THREE.BufferGeometry().setFromPoints(d.arc.getPoints(60));
+            const material = new THREE.LineBasicMaterial({ color: d.color, transparent: true, opacity: 0.45 });
+            return { ...d, line: new THREE.Line(geometry, material) };
+        });
     }, []);
 
     useFrame(() => {
@@ -172,9 +173,7 @@ const Arcs: React.FC = () => {
         <group ref={groupRef}>
             {arcData.map((d, i) => (
                 <group key={i}>
-                    <line geometry={d.geometry}>
-                        <lineBasicMaterial color={d.color} transparent opacity={0.45} />
-                    </line>
+                    <primitive object={d.line} />
                     <TravelingLight arc={d.arc} color={d.color} delay={i * 1.5} />
                 </group>
             ))}
