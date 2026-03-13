@@ -1,3 +1,5 @@
+'use client';
+
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import { ThemeContextProvider } from '../theme';
