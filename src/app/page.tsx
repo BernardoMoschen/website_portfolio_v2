@@ -1,5 +1,5 @@
-import AppClient from '../components/layout/AppClient';
+import App from '../components/layout/App';
 
 export default function HomePage() {
-  return <AppClient />;
+  return <App />;
 }
