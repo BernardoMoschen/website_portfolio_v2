@@ -242,7 +242,7 @@ const Globe: React.FC = () => {
     });
 
     return (
-        <group ref={innerRef} rotation={[0.15, 1.0, 0.05]}>
+        <group ref={innerRef} rotation={[0.15, -0.5, 0.05]}>
             <GlobeWireframe />
             <GlobeAtmosphere />
             <Arcs />

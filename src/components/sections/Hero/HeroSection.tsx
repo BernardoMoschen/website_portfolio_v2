@@ -56,7 +56,7 @@ const HeroSection: React.FC = () => {
         justifyContent: 'center',
         position: 'relative',
         overflow: 'hidden',
-        padding: '5rem 1.5rem 2rem',
+        padding: '5rem 1.5rem 6rem',
       }}
     >
       {/* Main content — centered vertically */}
