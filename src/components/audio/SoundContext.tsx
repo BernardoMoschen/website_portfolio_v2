@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, useRef } from 'react';
+import React, { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
 
 type SoundName = 'hover' | 'click' | 'whoosh' | 'success' | 'toggle' | 'startup';
 
@@ -28,7 +28,12 @@ function getInitialMuted(): boolean {
 }
 
 export const SoundContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [muted, setMutedState] = useState(getInitialMuted);
+    // Always start muted (SSR-safe default) — sync with localStorage after hydration
+    const [muted, setMutedState] = useState(true);
+
+    useEffect(() => {
+        setMutedState(getInitialMuted());
+    }, []);
     const audioCtxRef = useRef<AudioContext | null>(null);
 
     const getAudioContext = useCallback((): AudioContext | null => {
