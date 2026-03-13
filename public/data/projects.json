@@ -2,10 +2,10 @@
   {
     "title": "Portfolio Website",
     "slug": "portfolio",
-    "description": "Most developer portfolios look the same. I wanted mine to feel like a product — cinematic scroll sequences, a 3D globe tracing my work across countries, procedural audio, and bilingual support. Built with Astro and React, no UI library.",
-    "longDescription": "I got tired of portfolios that feel like themed templates. So I built this one from scratch — Astro for static generation with React islands for interactivity, a custom CSS design system instead of any UI framework, Three.js for the 3D globe, scroll-driven cinematic sections, and a Web Audio API sound layer. It supports English and Portuguese, respects accessibility preferences, and scores 95+ on Lighthouse.",
+    "description": "Most developer portfolios look the same. I wanted mine to feel like a product — cinematic scroll sequences, a 3D globe tracing my work across countries, procedural audio, and bilingual support. Built with Next.js and React, no UI library.",
+    "longDescription": "I got tired of portfolios that feel like themed templates. So I built this one from scratch — Next.js for SSR and static generation with React, a custom CSS design system instead of any UI framework, Three.js for the 3D globe, scroll-driven cinematic sections, and a Web Audio API sound layer. It supports English and Portuguese, respects accessibility preferences, and scores 95+ on Lighthouse.",
     "image": "/project-portfolio.jpg",
-    "technologies": ["Astro", "React", "TypeScript", "Three.js", "CSS Custom Properties", "Framer Motion", "Web Audio API", "Resend"],
+    "technologies": ["Next.js", "React", "TypeScript", "Three.js", "CSS Custom Properties", "Framer Motion", "Web Audio API", "Resend"],
     "githubUrl": "https://github.com/BernardoMoschen/portfolio_astro",
     "liveUrl": "https://bernardomoschen.dev",
     "featured": true,
