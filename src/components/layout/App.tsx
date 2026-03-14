@@ -18,6 +18,8 @@ import { ProjectsSection } from '../sections/Projects';
 import { ContactSection } from '../sections/Contact';
 import { FooterSection } from '../sections/Footer';
 import CertificationsSection from '../sections/Certifications/CertificationsSection';
+import { LikesProvider } from '../../context/LikesContext';
+import FloatingLikeButton from '../ui/FloatingLikeButton';
 
 const Scene3D = lazy(() => import('../3d/Scene3D'));
 
@@ -104,7 +106,10 @@ const App: React.FC = () => {
         <ThemeContextProvider>
             <I18nProvider>
             <SoundContextProvider>
-                <AppInner />
+                <LikesProvider>
+                    <AppInner />
+                    <FloatingLikeButton />
+                </LikesProvider>
             </SoundContextProvider>
             </I18nProvider>
         </ThemeContextProvider>

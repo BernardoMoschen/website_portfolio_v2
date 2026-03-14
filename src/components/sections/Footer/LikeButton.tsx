@@ -1,70 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-
-const LS_KEY = 'portfolio:liked';
-
-function lsGet(key: string): string | null {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-}
-
-function lsSet(key: string, value: string): void {
-  try {
-    localStorage.setItem(key, value);
-  } catch {
-    // storage unavailable (private mode, quota exceeded, etc.)
-  }
-}
+import React from 'react';
+import { useLikes } from '../../../context/LikesContext';
 
 const LikeButton: React.FC = () => {
-  const [count, setCount] = useState<number | null>(null);
-  const [liked, setLiked] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [pulse, setPulse] = useState(false);
-  const pulseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    setLiked(lsGet(LS_KEY) === '1');
-
-    fetch('/api/likes')
-      .then((r) => r.json())
-      .then((data) => setCount(data.count ?? 0))
-      .catch(() => setCount(0));
-
-    return () => {
-      if (pulseTimer.current) clearTimeout(pulseTimer.current);
-    };
-  }, []);
-
-  const handleLike = async () => {
-    if (liked || loading || count === null) return;
-    setLoading(true);
-
-    try {
-      const res = await fetch('/api/likes', { method: 'POST' });
-      const data = await res.json();
-
-      if (res.ok) {
-        setCount(data.count);
-        setLiked(true);
-        lsSet(LS_KEY, '1');
-        setPulse(true);
-        pulseTimer.current = setTimeout(() => setPulse(false), 600);
-      } else if (res.status === 409) {
-        setLiked(true);
-        lsSet(LS_KEY, '1');
-        if (data.count !== undefined) setCount(data.count);
-      }
-    } catch {
-      // silently fail
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { count, liked, loading, pulse, handleLike } = useLikes();
 
   return (
     <button
@@ -77,16 +17,18 @@ const LikeButton: React.FC = () => {
       style={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: '0.5rem',
         fontSize: '0.8rem',
         color: liked ? 'var(--color-primary)' : 'var(--color-text-muted)',
         cursor: liked || count === null ? 'default' : loading ? 'wait' : 'pointer',
-        transition: 'color 0.25s ease',
+        transition: 'color 0.25s ease, transform 0.25s ease',
         userSelect: 'none',
         transform: pulse ? 'scale(1.08)' : 'scale(1)',
         background: 'none',
         border: 'none',
-        padding: 0,
+        padding: '0.4rem 0.75rem',
+        margin: '0 auto',
       }}
     >
       <span
