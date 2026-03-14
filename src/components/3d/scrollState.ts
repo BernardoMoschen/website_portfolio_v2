@@ -4,6 +4,7 @@ export interface SectionProgress {
     hero: number;
     about: number;
     projects: number;
+    certifications: number;
     contact: number;
 }
 
@@ -14,11 +15,19 @@ export const scrollState = {
         hero: 0,
         about: 0,
         projects: 0,
+        certifications: 0,
         contact: 0,
     } as SectionProgress,
 };
 
-export const mouseState = {
+export interface MouseState {
+    x: number;
+    y: number;
+    targetX: number;
+    targetY: number;
+}
+
+export const mouseState: MouseState = {
     x: 0,
     y: 0,
     targetX: 0,

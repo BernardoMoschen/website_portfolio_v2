@@ -1,7 +1,10 @@
+'use client';
+
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import Lenis from 'lenis';
 import { ThemeContextProvider } from '../theme';
 import { SoundContextProvider, useSoundContext } from '../audio';
+import { AmbientAudio } from '../audio/AmbientAudio';
 import { I18nProvider } from '../../i18n';
 import Navigation from './Navigation';
 import CinematicSection from './CinematicSection';
@@ -62,6 +65,7 @@ const AppInner: React.FC = () => {
 
     return (
         <LenisProvider>
+            <AmbientAudio />
             <LoadingScreen loading={loading} />
             <CustomCursor />
             <Suspense fallback={null}>

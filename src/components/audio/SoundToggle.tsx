@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSoundContext } from './SoundContext';
+import { SOUND_ENABLED_EVENT, SOUND_DISABLED_EVENT } from './AmbientAudio';
 
 interface SoundToggleProps {
     size?: number;
@@ -10,6 +11,8 @@ const SoundToggle: React.FC<SoundToggleProps> = ({ size = 20 }) => {
 
     const handleClick = () => {
         if (muted) {
+            // Dispatch synchronously here so play() is called within the user gesture
+            window.dispatchEvent(new CustomEvent(SOUND_ENABLED_EVENT));
             setMuted(false);
             // Play toggle sound after unmuting — need slight delay so state updates
             setTimeout(() => {
@@ -26,9 +29,11 @@ const SoundToggle: React.FC<SoundToggleProps> = ({ size = 20 }) => {
                     gain.connect(ctx.destination);
                     osc.start();
                     osc.stop(ctx.currentTime + 0.04);
+                    osc.onended = () => { ctx.close(); };
                 } catch {}
             }, 0);
         } else {
+            window.dispatchEvent(new CustomEvent(SOUND_DISABLED_EVENT));
             playSound('toggle');
             setMuted(true);
         }

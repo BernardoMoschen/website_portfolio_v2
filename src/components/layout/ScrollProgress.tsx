@@ -5,6 +5,7 @@ const SECTIONS = [
     { key: 'hero', label: 'hero' },
     { key: 'about', label: 'about' },
     { key: 'projects', label: 'projects' },
+    { key: 'certifications', label: 'certifications' },
     { key: 'contact', label: 'contact' },
 ] as const;
 

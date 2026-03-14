@@ -19,14 +19,19 @@ const CustomCursor: React.FC = () => {
         };
 
         const onMouseEnter = (e: Event) => {
-            const target = e.target as HTMLElement;
-            if (target.closest('a, button, [role="button"], input, textarea, .interactive')) {
+            const target = e.target;
+            if (target instanceof Element && target.closest('a, button, [role="button"], input, textarea, .interactive')) {
                 document.body.classList.add('cursor-hover');
             }
         };
 
-        const onMouseLeave = () => {
-            document.body.classList.remove('cursor-hover');
+        const onMouseLeave = (e: Event) => {
+            if (!(e instanceof MouseEvent)) return;
+            const isInteractive = (el: EventTarget | null): boolean =>
+                el instanceof Element && !!el.closest('a, button, [role="button"], input, textarea, .interactive');
+            if (isInteractive(e.target) && !isInteractive(e.relatedTarget)) {
+                document.body.classList.remove('cursor-hover');
+            }
         };
 
         window.addEventListener('mousemove', onMouseMove);
@@ -34,14 +39,16 @@ const CustomCursor: React.FC = () => {
         document.addEventListener('mouseleave', onMouseLeave, true);
 
         let raf: number;
+        let lastDotX = -1, lastDotY = -1;
         const animate = () => {
-            if (dotRef.current) {
-                dotRef.current.style.left = `${pos.current.x}px`;
-                dotRef.current.style.top = `${pos.current.y}px`;
+            const { x, y } = pos.current;
+            if (dotRef.current && (x !== lastDotX || y !== lastDotY)) {
+                dotRef.current.style.left = `${x}px`;
+                dotRef.current.style.top = `${y}px`;
+                lastDotX = x; lastDotY = y;
             }
-            // Ring follows with lag
-            ringPos.current.x += (pos.current.x - ringPos.current.x) * 0.15;
-            ringPos.current.y += (pos.current.y - ringPos.current.y) * 0.15;
+            ringPos.current.x += (x - ringPos.current.x) * 0.15;
+            ringPos.current.y += (y - ringPos.current.y) * 0.15;
             if (ringRef.current) {
                 ringRef.current.style.left = `${ringPos.current.x}px`;
                 ringRef.current.style.top = `${ringPos.current.y}px`;

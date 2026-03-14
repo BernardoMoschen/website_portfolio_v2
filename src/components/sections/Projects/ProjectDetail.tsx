@@ -1,6 +1,9 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaArrowRight, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaArrowRight, FaCheckCircle, FaExclamationTriangle, FaLock } from 'react-icons/fa';
+import { projectTypeMap } from './projectTypeMap';
 import { ThemeContextProvider, useThemeMode } from '../../theme/ThemeContext';
 import type { ProjectData } from '../../data/projectsData';
 import { AnimateOnScroll } from '../../utils/animations';
@@ -24,6 +27,7 @@ const statusMap: Record<string, { label: string; color: string; bg: string }> = 
     wip: { label: 'In Progress', color: '#f59e0b', bg: 'rgba(245,158,11,0.15)' },
     planning: { label: 'Coming Soon', color: '#3b82f6', bg: 'rgba(59,130,246,0.15)' },
 };
+
 
 const GradientDivider: React.FC = () => (
     <div style={{
@@ -190,6 +194,27 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
                                 {project.role}
                             </span>
                         )}
+                        {(() => {
+                            const tm = projectTypeMap[project.type];
+                            return (
+                                <span style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: 6,
+                                    padding: '6px 16px',
+                                    borderRadius: 20,
+                                    fontSize: '0.8rem',
+                                    fontWeight: 600,
+                                    color: tm.color,
+                                    background: tm.bg,
+                                    border: `1px solid ${tm.color}44`,
+                                    backdropFilter: 'blur(8px)',
+                                }}>
+                                    <tm.Icon size={11} />
+                                    {tm.label}
+                                </span>
+                            );
+                        })()}
                         <span className="mono" style={{
                             fontSize: '0.75rem',
                             color: 'var(--color-text-secondary)',
@@ -239,7 +264,22 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
                         transition={m ? {} : { duration: 0.5, delay: 0.4, ease }}
                         style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}
                     >
-                        {project.githubUrl && (
+                        {project.type === 'professional' ? (
+                            <span style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                padding: '12px 28px',
+                                borderRadius: 12,
+                                fontSize: '0.95rem',
+                                fontWeight: 500,
+                                color: 'var(--color-text-muted)',
+                                border: '1px solid var(--color-border)',
+                                cursor: 'default',
+                            }}>
+                                <FaLock size={14} /> Private Codebase
+                            </span>
+                        ) : project.githubUrl ? (
                             <a
                                 href={project.githubUrl}
                                 target="_blank"
@@ -256,7 +296,7 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
                                 <FaGithub size={16} />
                                 {t.project_detail.view_code}
                             </a>
-                        )}
+                        ) : null}
                         {project.liveUrl && (
                             <a
                                 href={project.liveUrl}

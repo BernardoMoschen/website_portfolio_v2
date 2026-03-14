@@ -152,11 +152,16 @@ function makeEnvelope(buf: Float32Array) {
 }
 
 // Section-aware shape mapping: determines fromShape, toShape, blend from scrollState.sections
-function getSectionShape(sections: { hero: number; about: number; projects: number; contact: number }): { fromShape: number; toShape: number; blend: number } {
-    const { about, projects, contact } = sections;
+function getSectionShape(sections: { hero: number; about: number; projects: number; certifications: number; contact: number }): { fromShape: number; toShape: number; blend: number } {
+    const { about, projects, certifications, contact } = sections;
 
     // Globe = hero, Brackets = about (first half), Circuit = about→projects,
     // Grid = projects, Envelope = contact
+
+    // Certifications active (shares Grid shape with projects)
+    if (certifications > 0.05) {
+        return { fromShape: 3, toShape: 3, blend: 0 }; // Grid holds
+    }
 
     // Contact active
     if (contact > 0.05) {

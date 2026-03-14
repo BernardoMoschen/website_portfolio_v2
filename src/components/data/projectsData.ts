@@ -1,4 +1,4 @@
-import siteConfig from '../../config/site';
+import rawData from '../../../public/data/projects.json';
 
 export interface ProjectData {
     title: string;
@@ -11,161 +11,15 @@ export interface ProjectData {
     liveUrl: string;
     featured: boolean;
     status: 'planning' | 'wip' | 'completed';
+    type: 'professional' | 'personal';
     challenges?: string[];
     results?: string[];
     role?: string;
     preview?: {
         type: 'live' | 'mockup';
-        /** For 'live': URL to embed; for 'mockup': abstract lines shown in terminal preview */
         content?: string[];
         metrics?: { label: string; value: string }[];
     };
 }
 
-export const projects: ProjectData[] = [
-    {
-        title: 'Portfolio Website',
-        slug: 'portfolio',
-        description: 'Most developer portfolios look the same. I wanted mine to feel like a product — cinematic scroll sequences, a 3D globe tracing my work across countries, procedural audio, and bilingual support. Built with Astro and React, no UI library.',
-        longDescription: 'I got tired of portfolios that feel like themed templates. So I built this one from scratch — Astro for static generation with React islands for interactivity, a custom CSS design system instead of any UI framework, Three.js for the 3D globe, scroll-driven cinematic sections, and a Web Audio API sound layer. It supports English and Portuguese, respects accessibility preferences, and scores 95+ on Lighthouse.',
-        image: '/project-portfolio.jpg',
-        technologies: ['Astro', 'React', 'TypeScript', 'Three.js', 'CSS Custom Properties', 'Framer Motion', 'Web Audio API', 'Resend'],
-        githubUrl: 'https://github.com/BernardoMoschen/portfolio_astro',
-        liveUrl: siteConfig.url,
-        featured: true,
-        status: 'completed',
-        challenges: [
-            'Balancing visual richness with performance — the 3D globe needed to lazy-load without impacting initial page speed',
-            'Building a cinematic scroll system with sticky sections, fade transitions, and smooth camera movement without jank',
-            'Creating a custom design system (no UI library) that looks polished in both dark and light themes',
-        ],
-        results: [
-            'Lighthouse performance score 95+',
-            '3D globe loads asynchronously with only 244KB gzipped overhead',
-            'Full bilingual support (EN/PT-BR) with zero layout shift on language switch',
-        ],
-        role: 'Solo developer — design, architecture, and implementation',
-        preview: {
-            type: 'live',
-            metrics: [
-                { label: 'Lighthouse', value: '95+' },
-                { label: '3D Bundle', value: '244KB gz' },
-                { label: 'Build', value: 'Astro SSG' },
-            ],
-        },
-    },
-    {
-        title: 'Telecom Back-Office Platform',
-        slug: 'telecom-backoffice',
-        description: 'Paradise Mobile\'s support team was drowning in manual workflows — copying data between Zendesk, Webflow, and spreadsheets. I built the automation layer that replaced all of it, from ticket routing to customer onboarding.',
-        longDescription: 'When I joined Paradise Mobile, every customer interaction touched 4+ disconnected platforms. Support reps were manually copying data between systems, onboarding had a high drop-off rate, and there was no single view of a customer. I designed and built a unified back-office platform that automated the entire pipeline — Zapier integrations for ticket routing, a React dashboard for customer management, self-service onboarding flows that measurably reduced drop-off, and REST APIs bridging the CRM across ~10K+ customers.',
-        image: '/project-telecom.jpg',
-        technologies: ['React', 'Node.js', 'TypeScript', 'Material UI', 'Recoil', 'GraphQL', 'AWS', 'Zapier'],
-        githubUrl: '',
-        liveUrl: '',
-        featured: true,
-        status: 'completed',
-        challenges: [
-            'Integrating 4+ external platforms (Zapier, Webflow, Zendesk, Strapi) into a unified automation pipeline',
-            'Designing REST APIs that bridged multiple CRM systems serving ~10K+ customers',
-            'Building onboarding flows that reduced friction while maintaining data validation requirements',
-        ],
-        results: [
-            'Directly boosted support team revenue through automated workflow tools',
-            'Reduced operational costs by replacing manual processes with integrated automation',
-            'CRM integration serving ~10K+ customers across the platform',
-        ],
-        role: 'Senior Full Stack Engineer — architecture, API design, and frontend implementation',
-        preview: {
-            type: 'mockup',
-            content: [
-                '$ zapier trigger --workflow=onboarding',
-                '→ CRM sync: 10K+ customers',
-                '→ Zendesk tickets: auto-routed',
-                '→ Revenue: ↑ automated pipelines',
-                '✓ All integrations healthy',
-            ],
-            metrics: [
-                { label: 'Users', value: '~10K+' },
-                { label: 'Integrations', value: '4+' },
-                { label: 'APIs', value: 'REST + GraphQL' },
-            ],
-        },
-    },
-    {
-        title: 'EdTech Unified Platform',
-        slug: 'edtech-platform',
-        description: 'Twenty educational institutions, each with their own enrollment system, contract workflows, and reporting tools. Grupo Tiradentes needed one platform to replace them all — I helped build it.',
-        longDescription: 'Grupo Tiradentes operated ~20 institutions, each running separate systems for enrollment, contracts, financing, and reporting. Students and staff dealt with fragmented workflows daily. I built the React + TypeScript frontend and contributed to the C#/.NET + PostgreSQL backend that consolidated everything into a single platform — handling high-volume enrollment transactions, contract generation, and institutional reporting used daily by thousands.',
-        image: '/project-edtech.jpg',
-        technologies: ['React', 'TypeScript', 'C#', '.NET', 'PostgreSQL', 'SCRUM'],
-        githubUrl: '',
-        liveUrl: '',
-        featured: false,
-        status: 'completed',
-        challenges: [
-            'Unifying workflows across ~20 institutions with different operational processes',
-            'Handling enrollment transaction volumes at scale with robust data integrity',
-            'Designing interfaces usable by both tech-savvy students and non-technical administrative staff',
-        ],
-        results: [
-            'Consolidated ~20 institutional systems into a single platform',
-            'Used daily by administrative staff and thousands of students',
-            'Streamlined enrollment, contracts, and financial reporting workflows',
-        ],
-        role: 'Mid-level Full Stack Engineer — frontend implementation and backend API development',
-        preview: {
-            type: 'mockup',
-            content: [
-                '$ dotnet run --project=enrollment',
-                '→ Institutions connected: 20',
-                '→ Active students: processing...',
-                '→ Contracts generated: ✓',
-                '✓ All systems operational',
-            ],
-            metrics: [
-                { label: 'Institutions', value: '~20' },
-                { label: 'Stack', value: 'React + .NET' },
-                { label: 'DB', value: 'PostgreSQL' },
-            ],
-        },
-    },
-    {
-        title: 'Mining Data Integration Platform',
-        slug: 'mining-data-platform',
-        description: 'ArcelorMittal\'s Canadian mining operations relied on manual data entry to track 50K+ daily sensor readings. I led the team that built the real-time integration platform that replaced it — from Brazil, fully remote.',
-        longDescription: 'ArcelorMittal Mines Canada was manually reconciling physical sensor data with virtual models across their mining facilities — a slow, error-prone process touching 50K+ readings per day. I led development of a web platform that automated the entire pipeline: real-time data ingestion from multiple facility systems, automated merging of virtual models with physical sensor readings, and a unified operations dashboard. Shipped from Brazil as part of a fully remote international team coordinating daily with Canadian stakeholders.',
-        image: '/project-mining.jpg',
-        technologies: ['React', 'TypeScript', 'Node.js', 'Sequelize.js', 'SQL Server', 'Jest'],
-        githubUrl: '',
-        liveUrl: '',
-        featured: false,
-        status: 'completed',
-        challenges: [
-            'Handling real-time data ingestion from multiple facility systems with different data formats',
-            'Working as part of a fully remote international team from Brazil with stakeholders in Canada',
-            'Replacing deeply entrenched manual processes without disrupting ongoing mining operations',
-        ],
-        results: [
-            'Eliminated manual data entry processes for resource tracking',
-            'Enabled real-time data merging across multiple facility systems',
-            'Delivered as part of a fully remote international team',
-        ],
-        role: 'Mid-level Full Stack Engineer — lead developer for the integration platform',
-        preview: {
-            type: 'mockup',
-            content: [
-                '$ node ingest --source=sensors',
-                '→ Virtual model: syncing...',
-                '→ Physical sensors: 50K+/day',
-                '→ Data merge: real-time ✓',
-                '✓ Pipeline healthy',
-            ],
-            metrics: [
-                { label: 'Data/Day', value: '50K+' },
-                { label: 'Team', value: 'Remote Intl' },
-                { label: 'DB', value: 'SQL Server' },
-            ],
-        },
-    },
-];
+export const projects: ProjectData[] = rawData as ProjectData[];

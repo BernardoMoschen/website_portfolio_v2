@@ -1,0 +1,112 @@
+.notFound {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  max-width: 600px;
+  width: 100%;
+  animation: fadeInUp 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+.errorCode {
+  font-size: clamp(6rem, 20vw, 12rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.terminal {
+  width: 100%;
+  overflow: hidden;
+}
+
+.terminalHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dotRed { background: var(--color-error); }
+.dotYellow { background: var(--color-warning); }
+.dotGreen { background: var(--color-success); }
+
+.terminalTitle {
+  margin-left: auto;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+.terminalBody {
+  padding: 20px;
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+.line {
+  color: var(--color-text);
+  white-space: pre;
+}
+
+.output {
+  color: var(--color-text-secondary);
+}
+
+.error {
+  color: var(--color-error);
+  font-weight: 700;
+}
+
+.link {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.link:hover {
+  color: var(--color-primary-light);
+  border-bottom-color: var(--color-primary);
+}
+
+.comment {
+  color: var(--color-text-muted);
+  margin-left: 8px;
+}
+
+.cursor {
+  animation: blink 1s step-end infinite;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.goHome {
+  margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .terminalBody {
+    font-size: 0.75rem;
+    padding: 16px;
+  }
+}
