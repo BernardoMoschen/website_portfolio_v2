@@ -163,6 +163,15 @@ const Arcs: React.FC = () => {
         });
     }, []);
 
+    useEffect(() => {
+        return () => {
+            arcData.forEach(d => {
+                d.line.geometry.dispose();
+                (d.line.material as THREE.Material).dispose();
+            });
+        };
+    }, [arcData]);
+
     useFrame(() => {
         if (!groupRef.current) return;
         const fade = Math.max(0, 1 - scrollState.progress / 0.18);
