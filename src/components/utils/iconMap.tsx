@@ -1,12 +1,12 @@
 import React from 'react';
 import {
     SiReact, SiTypescript, SiMui, SiJest, SiNextdotjs, SiNodedotjs, SiSharp, SiDotnet,
-    SiGraphql, SiPostgresql, SiAmazon, SiSonarqube, SiVuedotjs, SiPhp, SiMysql,
+    SiGraphql, SiPostgresql, SiSonar, SiVuedotjs, SiPhp, SiMysql,
     SiMongodb, SiSequelize, SiTypeorm, SiZapier, SiWebflow, SiZendesk, SiStrapi,
     SiNestjs, SiAdonisjs, SiJavascript, SiAstro, SiTailwindcss, SiRedux, SiWebpack,
-    SiSass, SiHtml5, SiCss3, SiExpress, SiPrisma, SiDocker, SiLinux, SiGit, SiSwagger,
+    SiSass, SiHtml5, SiCss, SiExpress, SiPrisma, SiDocker, SiLinux, SiGit, SiSwagger,
 } from 'react-icons/si';
-import { FaServer, FaDatabase, FaLaptopCode, FaCloud, FaBriefcase } from 'react-icons/fa';
+import { FaServer, FaDatabase, FaLaptopCode, FaCloud, FaBriefcase, FaAws } from 'react-icons/fa';
 import { HiDatabase } from 'react-icons/hi';
 
 export const getCategoryIcon = (iconType: string) => {
@@ -35,7 +35,7 @@ export const getTechnologyIcon = (iconType: string, color: string) => {
         case 'webpack': return <SiWebpack style={style} />;
         case 'sass': return <SiSass style={style} />;
         case 'html': return <SiHtml5 style={style} />;
-        case 'css': return <SiCss3 style={style} />;
+        case 'css': return <SiCss style={style} />;
         case 'nodejs': return <SiNodedotjs style={style} />;
         case 'express': return <SiExpress style={style} />;
         case 'nestjs': return <SiNestjs style={style} />;
@@ -53,10 +53,10 @@ export const getTechnologyIcon = (iconType: string, color: string) => {
         case 'typeorm': return <SiTypeorm style={style} />;
         case 'prisma': return <SiPrisma style={style} />;
         case 'docker': return <SiDocker style={style} />;
-        case 'aws': return <SiAmazon style={style} />;
+        case 'aws': return <FaAws style={style} />;
         case 'linux': return <SiLinux style={style} />;
         case 'git': return <SiGit style={style} />;
-        case 'sonarqube': return <SiSonarqube style={style} />;
+        case 'sonarqube': return <SiSonar style={style} />;
         case 'swagger': return <SiSwagger style={style} />;
         case 'zapier': return <SiZapier style={style} />;
         case 'webflow': return <SiWebflow style={style} />;

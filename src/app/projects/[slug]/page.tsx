@@ -9,9 +9,9 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
   const project = projects.find((p) => p.slug === slug);
   if (!project) return {};
   return {
@@ -22,9 +22,9 @@ export async function generateMetadata(
 }
 
 export default async function ProjectPage(
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = params;
+  const { slug } = await params;
   const projectIndex = projects.findIndex((p) => p.slug === slug);
   if (projectIndex === -1) notFound();
 
