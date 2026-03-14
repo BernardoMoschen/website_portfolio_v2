@@ -24,7 +24,11 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     const stored = localStorage.getItem('locale');
-    if (stored === 'en' || stored === 'pt-br') setLocaleState(stored);
+    if (stored === 'en' || stored === 'pt-br') {
+      setLocaleState(stored);
+    } else if (navigator.language.toLowerCase().startsWith('pt')) {
+      setLocaleState('pt-br');
+    }
   }, []);
 
   const setLocale = useCallback((newLocale: Locale) => {
