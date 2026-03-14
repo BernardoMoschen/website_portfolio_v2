@@ -45,8 +45,8 @@ export default async function ProjectPage(
     author: { '@type': 'Person', name: siteConfig.name, url: siteConfig.url },
     applicationCategory: 'WebApplication',
     operatingSystem: 'Web',
-    ...(project.githubUrl && { codeRepository: project.githubUrl }),
-    ...(project.technologies?.length && { keywords: project.technologies.join(', ') }),
+    ...(project.githubUrl ? { codeRepository: project.githubUrl } : {}),
+    ...(project.technologies?.length ? { keywords: project.technologies.join(', ') } : {}),
   };
 
   return (

@@ -71,7 +71,7 @@ const LikeButton: React.FC = () => {
       type="button"
       className="mono"
       onClick={handleLike}
-      disabled={liked || loading}
+      disabled={liked || loading || count === null}
       aria-label={liked ? 'You liked this portfolio' : 'Like this portfolio'}
       aria-pressed={liked}
       style={{
@@ -80,7 +80,7 @@ const LikeButton: React.FC = () => {
         gap: '0.5rem',
         fontSize: '0.8rem',
         color: liked ? 'var(--color-primary)' : 'var(--color-text-muted)',
-        cursor: liked ? 'default' : loading ? 'wait' : 'pointer',
+        cursor: liked || count === null ? 'default' : loading ? 'wait' : 'pointer',
         transition: 'color 0.25s ease',
         userSelect: 'none',
         transform: pulse ? 'scale(1.08)' : 'scale(1)',

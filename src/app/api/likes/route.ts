@@ -28,14 +28,18 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const ipKey = getIpKey(req);
 
+  // Reject requests where no client IP can be determined so the rate-limit
+  // guarantee holds even in environments that don't set proxy headers.
+  if (!ipKey) {
+    return NextResponse.json({ error: 'Unable to identify client' }, { status: 400 });
+  }
+
   try {
-    if (ipKey) {
-      // Atomic SET NX: returns 'OK' if key was created, null if already existed
-      const wasSet = await kv.set(ipKey, 1, { ex: IP_TTL_SECONDS, nx: true });
-      if (wasSet === null) {
-        const count = (await kv.get<number>(LIKES_KEY)) ?? 0;
-        return NextResponse.json({ count, alreadyLiked: true }, { status: 409 });
-      }
+    // Atomic SET NX: returns 'OK' if key was created, null if already existed
+    const wasSet = await kv.set(ipKey, 1, { ex: IP_TTL_SECONDS, nx: true });
+    if (wasSet === null) {
+      const count = (await kv.get<number>(LIKES_KEY)) ?? 0;
+      return NextResponse.json({ count, alreadyLiked: true }, { status: 409 });
     }
 
     const count = await kv.incr(LIKES_KEY);
