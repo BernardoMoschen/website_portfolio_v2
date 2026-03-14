@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
+import type { FC } from 'react';
 import { useSoundContext } from './SoundContext';
 
 const TARGET_VOLUME = 0.1;
@@ -10,7 +11,7 @@ const FADE_MS = 2500;
 export const SOUND_ENABLED_EVENT = 'ambient:enabled';
 export const SOUND_DISABLED_EVENT = 'ambient:disabled';
 
-export const AmbientAudio: React.FC = () => {
+export const AmbientAudio: FC = () => {
     const { muted } = useSoundContext();
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);

@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaArrowRight, FaCheckCircle, FaExclamationTriangle, FaLock, FaCode } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaArrowRight, FaCheckCircle, FaExclamationTriangle, FaLock } from 'react-icons/fa';
+import { projectTypeMap } from './projectTypeMap';
 import { ThemeContextProvider, useThemeMode } from '../../theme/ThemeContext';
 import type { ProjectData } from '../../data/projectsData';
 import { AnimateOnScroll } from '../../utils/animations';
@@ -27,10 +28,6 @@ const statusMap: Record<string, { label: string; color: string; bg: string }> = 
     planning: { label: 'Coming Soon', color: '#3b82f6', bg: 'rgba(59,130,246,0.15)' },
 };
 
-const typeMap = {
-    professional: { label: 'Professional', color: 'var(--color-secondary)', bg: 'rgba(255,138,80,0.12)', Icon: FaLock },
-    personal: { label: 'Open Source', color: 'var(--color-primary)', bg: 'rgba(127,176,105,0.12)', Icon: FaCode },
-};
 
 const GradientDivider: React.FC = () => (
     <div style={{
@@ -198,7 +195,7 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
                             </span>
                         )}
                         {(() => {
-                            const tm = typeMap[project.type];
+                            const tm = projectTypeMap[project.type];
                             return (
                                 <span style={{
                                     display: 'inline-flex',

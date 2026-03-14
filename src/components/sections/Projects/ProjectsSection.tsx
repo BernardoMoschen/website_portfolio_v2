@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { FaGithub, FaExternalLinkAlt, FaArrowRight, FaChevronLeft, FaChevronRight, FaLock, FaCode } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaArrowRight, FaChevronLeft, FaChevronRight, FaLock } from 'react-icons/fa';
+import { projectTypeMap } from './projectTypeMap';
 import { projects } from '../../data/projectsData';
 import siteConfig from '../../../config/site';
 import { AnimateOnScroll, StaggerContainer, StaggerItem } from '../../utils/animations';
@@ -17,10 +18,6 @@ const statusMap: Record<string, { label: string; color: string; bg: string }> = 
 
 type ProjectFilter = 'all' | 'professional' | 'personal';
 
-const typeMap = {
-    professional: { label: 'Professional', color: 'var(--color-secondary)', bg: 'rgba(255,138,80,0.12)', Icon: FaLock },
-    personal: { label: 'Open Source', color: 'var(--color-primary)', bg: 'rgba(127,176,105,0.12)', Icon: FaCode },
-};
 
 const ProjectsSection: React.FC = () => {
     const { darkMode } = useThemeMode();
@@ -125,6 +122,7 @@ const ProjectsSection: React.FC = () => {
                         <button
                             key={f}
                             onClick={() => setFilter(f)}
+                            aria-pressed={filter === f}
                             className={filter === f ? 'tag tag-primary' : 'tag'}
                             style={{
                                 cursor: 'pointer',
@@ -135,7 +133,7 @@ const ProjectsSection: React.FC = () => {
                                 textTransform: 'capitalize',
                             }}
                         >
-                            {f === 'all' ? 'All' : typeMap[f].label}
+                            {f === 'all' ? 'All' : projectTypeMap[f].label}
                         </button>
                     ))}
                 </div>
@@ -346,7 +344,7 @@ const ProjectsSection: React.FC = () => {
                                             {t.projects.featured}
                                         </span>
                                         {(() => {
-                                            const tm = typeMap[project.type];
+                                            const tm = projectTypeMap[project.type];
                                             return (
                                                 <span style={{
                                                     display: 'inline-flex',
@@ -596,7 +594,7 @@ const ProjectsSection: React.FC = () => {
                                                     {status.label}
                                                 </span>
                                                 {(() => {
-                                                    const tm = typeMap[project.type];
+                                                    const tm = projectTypeMap[project.type];
                                                     return (
                                                         <span style={{
                                                             display: 'inline-flex',
