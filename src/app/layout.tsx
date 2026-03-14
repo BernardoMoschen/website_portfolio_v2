@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import siteConfig from '../config/site';
 import './globals.css';
 
@@ -52,6 +53,7 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   keywords: [...siteConfig.keywords],
   authors: [{ name: siteConfig.name }],
+  alternates: { canonical: siteConfig.url },
   robots: {
     index: true,
     follow: true,
@@ -70,7 +72,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [
       {
-        url: `${siteConfig.url}/og-image.jpg`,
+        url: `${siteConfig.url}/og`,
         width: 1200,
         height: 630,
         alt: 'Bernardo Moschen - Full Stack Engineer Portfolio',
@@ -87,7 +89,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [
       {
-        url: `${siteConfig.url}/og-image.jpg`,
+        url: `${siteConfig.url}/og`,
         alt: 'Bernardo Moschen - Full Stack Engineer Portfolio',
       },
     ],
@@ -110,6 +112,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#7fb069" />
         <link rel="prefetch" href="/resume.pdf" />
         <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
+        <link rel="me" href={siteConfig.github} />
+        <link rel="me" href={siteConfig.linkedin} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -131,6 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main-content" className="skip-link">Skip to content</a>
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

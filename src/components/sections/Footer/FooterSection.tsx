@@ -4,6 +4,7 @@ import { HiMail } from 'react-icons/hi';
 import siteConfig from '../../../config/site';
 import { useI18n } from '../../../i18n';
 import { AnimateOnScroll } from '../../utils/animations';
+import LikeButton from './LikeButton';
 
 const socialLinks = [
   { icon: FaGithub, label: 'GitHub', url: siteConfig.github },
@@ -68,6 +69,9 @@ const FooterSection: React.FC = () => {
         >
           bernardo.moschen
         </span>
+
+        {/* Like button */}
+        <LikeButton />
 
         {/* Social icons */}
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', justifyContent: 'center', marginTop: '1rem' }}>

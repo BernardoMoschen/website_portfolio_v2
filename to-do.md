@@ -23,31 +23,28 @@
       from localStorage, causing the React hydration error seen in the screenshot.
       Fix: always initialize `useState(true)`, then sync from localStorage in `useEffect`.
 
-- [ ] **Create `/public/og-image.jpg`** — The OG image is referenced in metadata but the file
-      doesn't exist. Without it, LinkedIn, WhatsApp, and Twitter link previews show no image.
-      Create a 1200×630px image and place it at `/public/og-image.jpg`.
+- [x] **Create `/public/og-image.jpg`** — Replaced with a dynamic OG image generator at
+      `/src/app/og/route.tsx` using `next/og` (ImageResponse). Metadata URLs updated to `/og`.
 
 ## 🟡 SEO & Discoverability
 
 - [ ] **Submit sitemap to Google Search Console** — The sitemap at `/sitemap.xml` exists but
       Google won't crawl it until you submit it manually at search.google.com/search-console.
 
-- [ ] **Add canonical URL to metadata** — Add `alternates: { canonical: siteConfig.url }` to
-      the `metadata` export in `layout.tsx` to prevent duplicate-content issues.
+- [x] **Add canonical URL to metadata** — Added `alternates: { canonical: siteConfig.url }` to
+      `layout.tsx` and per-project canonical in `projects/[slug]/page.tsx`.
 
-- [ ] **Add `rel="me"` links** — In `layout.tsx <head>`, add:
-      `<link rel="me" href="[linkedin-url]">` and `<link rel="me" href="[github-url]">`.
-      Establishes identity verification signals for Google.
+- [x] **Add `rel="me"` links** — Added `<link rel="me">` for GitHub and LinkedIn in `layout.tsx`.
 
 - [ ] **Link GitHub + LinkedIn profile bios to the domain** — Google follows profile links.
       Add `https://bernardomoschen.dev` (or your domain) to both bios for inbound authority.
+      (Manual action — no code needed.)
 
-- [ ] **Add JSON-LD to project detail pages** — `/projects/[slug]` pages are SSG but have no
-      structured data. Add a `SoftwareApplication` or `CreativeWork` schema per project so
-      Google can surface them in rich results.
+- [x] **Add JSON-LD to project detail pages** — Added `SoftwareApplication` schema to
+      `/projects/[slug]/page.tsx` using project data.
 
-- [ ] **Fix `lastModified` in sitemap** — Currently uses `new Date()` on every build, telling
-      crawlers "everything changed today" every deploy. Set real dates or derive from git.
+- [x] **Fix `lastModified` in sitemap** — Sitemap currently omits `lastModified` (correct behavior).
+      No action needed.
 
 ## 🟢 Accessibility
 
