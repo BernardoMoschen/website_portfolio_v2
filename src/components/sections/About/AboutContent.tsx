@@ -1,9 +1,13 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { briefList } from '../../data/aboutData';
+import { useI18n } from '../../../i18n';
 
 const AboutContent: React.FC = () => {
+    const { t } = useI18n();
     const [selectedTab, setSelectedTab] = useState<number>(0);
+    const briefs = t.about.briefs;
 
     return (
         <div style={{ marginBottom: '2rem' }}>
@@ -20,7 +24,7 @@ const AboutContent: React.FC = () => {
                     flexWrap: 'wrap',
                 }}
             >
-                {briefList.map(({ audience }, index) => {
+                {briefs.map(({ audience }, index) => {
                     const isActive = selectedTab === index;
                     return (
                         <button
@@ -69,7 +73,7 @@ const AboutContent: React.FC = () => {
                             maxWidth: '100%',
                         }}
                     >
-                        {briefList[selectedTab].brief}
+                        {briefs[selectedTab].brief}
                     </motion.p>
                 </AnimatePresence>
             </div>

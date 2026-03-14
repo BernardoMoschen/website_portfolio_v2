@@ -12,6 +12,65 @@ export const ptBr = {
     subtitle: 'De edtech brasileira a mineração canadense a telecom internacional — entreguei produtos em 3 países que pessoas reais usam todo dia.',
     stats: { years: '5+ Anos', countries: '3 Países', remote: 'Remoto' },
     tabs: { anyone: 'Para todos', recruiters: 'Recrutadores', pms: 'Product Managers', engineers: 'Engenheiros' },
+    experience_heading: 'Experiência Profissional',
+    briefs: [
+      {
+        audience: 'Para todos',
+        brief: 'Me importo com os detalhes que a maioria das pessoas nunca vê — o estado de loading que parece certo, a resposta da API que é 200ms mais rápida, o código que um colega lê seis meses depois e realmente entende. Já entreguei produtos no Brasil, no Canadá e remotamente para equipes internacionais. Construo coisas que importam, não apenas coisas que funcionam.',
+      },
+      {
+        audience: 'Recrutadores',
+        brief: '5+ anos, 3 países, 4 indústrias. Liderei o desenvolvimento de ferramentas de automação em uma telecom que aumentou a receita diretamente. Construí uma plataforma atendendo ~20 instituições de ensino e milhares de alunos. Entreguei um sistema de integração de dados em tempo real para a mineração da ArcelorMittal no Canadá — remotamente do Brasil. Full-stack TypeScript, confortável liderando projetos do início ao fim ou contribuindo em equipes maiores.',
+      },
+      {
+        audience: 'Product Managers',
+        brief: 'Não construo apenas o que está no ticket — pergunto o porquê. Na Paradise Mobile, defendi fluxos de onboarding self-service que reduziram o abandono de usuários. No Grupo Tiradentes, ajudei a consolidar 20 sistemas institucionais em um só. Penso em resultados para o usuário, aponto riscos técnicos cedo e entrego incrementalmente. Se algo pode ser validado de forma mais simples e rápida, vou defender isso.',
+      },
+      {
+        audience: 'Engenheiros',
+        brief: 'React + TypeScript é minha base, mas já entreguei código em produção com Node, NestJS, .NET/C# e até PHP quando necessário. Trabalhei com PostgreSQL, SQL Server, MongoDB e MySQL — o que o projeto exigir. Gosto de abstrações limpas, testes pragmáticos e code reviews que me ensinam algo. Valorizo equipes que entregam rápido, refatoram com cuidado e não over-engineeram.',
+      },
+    ],
+    experience_descriptions: [
+      [
+        'Construí fluxos de onboarding self-service (React, Recoil, Jest) que reduziram mensuralmente o abandono de usuários na plataforma de telecom',
+        'Projetei APIs REST e serviços intermediários (Node.js, TypeScript, GraphQL, AWS) que alimentam um CRM com ~10K+ clientes',
+        'Liderei o desenvolvimento de ferramentas de automação de back-office que aumentaram diretamente a receita da equipe de suporte ao substituir fluxos manuais por pipelines integrados',
+        'Unifiquei 4+ plataformas externas (Zapier, Webflow, Zendesk, Strapi) em uma única camada de automação — do roteamento de tickets ao onboarding de clientes',
+      ],
+      [
+        'Consolidei ~20 instituições de ensino em uma plataforma unificada — matrícula, contratos, financiamento e relatórios em um único sistema usado diariamente por milhares',
+        'Construí o frontend React + TypeScript atendendo equipes administrativas e alunos em toda a rede institucional',
+        'Desenvolvi o backend C#/.NET + PostgreSQL para lidar com transações de matrícula em alto volume com robusta integridade de dados',
+      ],
+      [
+        'Liderei o desenvolvimento de uma plataforma de integração de dados em tempo real processando 50K+ leituras de sensores/dia — substituiu completamente a entrada manual de dados propensa a erros',
+        'Arquitetei o backend Node.js + Sequelize.js + SQL Server para fusão automatizada de modelos virtuais com dados físicos de sensores',
+        'Entreguei remotamente do Brasil como parte de uma equipe internacional totalmente remota — coordenação diária entre fusos horários com stakeholders canadenses',
+      ],
+      [
+        'Entreguei funcionalidades em múltiplos projetos clientes simultaneamente — React, Vue, PHP, NestJS e Adonis.js dependendo do engajamento',
+        'Trabalhei com 5+ sistemas de banco de dados (MySQL, PostgreSQL, MongoDB, SQL Server) adaptando-me à arquitetura de cada projeto',
+        'Ambiente de agência: prazos apertados, codebases diversas, troca de contexto rápida — construí a adaptabilidade que definiu minha carreira desde então',
+      ],
+    ],
+    technical_categories: [
+      {
+        category: 'Desenvolvimento Frontend',
+        description: 'Frameworks modernos de frontend, gerenciamento de estado e soluções de estilização',
+        descriptionHighlight: 'Faço pixels dançarem e usuários felizes (na maioria das vezes)',
+      },
+      {
+        category: 'Backend & APIs',
+        description: 'Desenvolvimento server-side, design de APIs e arquitetura escalável',
+        descriptionHighlight: 'Crio endpoints funcionais e deixo seu site rápido...eventualmente',
+      },
+      {
+        category: 'DevOps, Bancos de Dados & Ferramentas',
+        description: 'Design de banco de dados, otimização, conteinerização e infraestrutura em nuvem',
+        descriptionHighlight: 'Falo SQL fluentemente e faço deploy com confiança (dedos cruzados)',
+      },
+    ],
   },
   projects: {
     label: '// trabalhos em destaque',
@@ -56,7 +115,7 @@ export const ptBr = {
       course: 'Curso',
     },
   },
-  footer: { copyright: '\u00a9 2026 Bernardo Moschen', built_with: 'Feito com Astro & React' },
+  footer: { copyright: '\u00a9 2026 Bernardo Moschen', built_with: 'Feito com Next.js & React' },
   project_detail: {
     back: 'Voltar aos projetos',
     tech_stack: 'Tecnologias',

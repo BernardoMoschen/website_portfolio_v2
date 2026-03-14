@@ -4,8 +4,15 @@ import { FaCode } from 'react-icons/fa';
 import { technicalAreas } from '../../data/aboutData';
 import TechnicalExpertiseCard from './TechnicalExpertiseCard';
 import { StaggerContainer, StaggerItem } from '../../utils/animations';
+import { useI18n } from '../../../i18n';
 
 const TechnicalExpertiseSection: React.FC = () => {
+    const { t } = useI18n();
+    const areas = technicalAreas.map((area, i) => ({
+        ...area,
+        ...(t.about.technical_categories[i] ?? {}),
+    }));
+
     return (
         <div>
             <div style={{ marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -42,7 +49,7 @@ const TechnicalExpertiseSection: React.FC = () => {
 
             <StaggerContainer staggerDelay={0.12}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                    {technicalAreas.map((area, index) => (
+                    {areas.map((area, index) => (
                         <StaggerItem key={index}>
                             <TechnicalExpertiseCard area={area} />
                         </StaggerItem>

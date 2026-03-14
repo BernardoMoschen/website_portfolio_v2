@@ -132,7 +132,11 @@ const AboutSection: React.FC = () => {
 
                 {/* Experience Timeline */}
                 <AnimateOnScroll delay={0.1}>
-                    <ExperienceTimeline experiences={experiences} />
+                    <ExperienceTimeline
+                        experiences={experiences}
+                        descriptions={t.about.experience_descriptions}
+                        heading={t.about.experience_heading}
+                    />
                 </AnimateOnScroll>
             </div>
         </div>

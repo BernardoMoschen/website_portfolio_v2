@@ -4,9 +4,11 @@ import { getCategoryIcon } from '../../utils/iconMap';
 
 interface ExperienceTimelineProps {
     experiences: Experience[];
+    descriptions: string[][];
+    heading: string;
 }
 
-const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experiences }) => {
+const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experiences, descriptions, heading }) => {
     const timelineRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -65,7 +67,7 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experiences }) 
                     color: 'var(--color-text)',
                 }}
             >
-                Professional Experience
+                {heading}
             </h3>
 
             <div className="timeline" ref={timelineRef}>
@@ -245,7 +247,7 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experiences }) 
                             </p>
                             <span className="timeline-period">{exp.period}</span>
                             <ul className="timeline-desc-list">
-                                {exp.description.map((desc, descIndex) => (
+                                {(descriptions[index] ?? exp.description).map((desc, descIndex) => (
                                     <li key={descIndex}>{desc}</li>
                                 ))}
                             </ul>
