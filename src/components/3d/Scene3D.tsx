@@ -373,6 +373,7 @@ const GridPlane: React.FC = () => {
 // ─── Energy Spiral ──────────────────────────────────────────────
 const EnergyLines: React.FC = () => {
     const ref = useRef<THREE.Points>(null);
+    const frameSkip = useRef(0);
 
     const geometry = useMemo(() => {
         const count = 60;
@@ -402,6 +403,9 @@ const EnergyLines: React.FC = () => {
         if (!ref.current.visible) return;
 
         (ref.current.material as THREE.PointsMaterial).opacity = opacity * 0.3;
+
+        frameSkip.current = (frameSkip.current + 1) % 2;
+        if (frameSkip.current !== 0) return;
 
         const positions = ref.current.geometry.attributes.position.array as Float32Array;
         const count = positions.length / 3;
@@ -435,7 +439,6 @@ const PostProcessing: React.FC = () => {
                 luminanceThreshold={0.3}
                 luminanceSmoothing={0.9}
                 intensity={0.5}
-                mipmapBlur
             />
             <Vignette eskil={false} offset={0.1} darkness={0.4} />
         </EffectComposer>
@@ -508,8 +511,9 @@ const Scene3DInner: React.FC = () => {
         try {
             const canvas = document.createElement('canvas');
             const hasGL = !!(
-                window.WebGLRenderingContext &&
-                (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+                canvas.getContext('webgl2') ||
+                (window.WebGLRenderingContext &&
+                    (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')))
             );
             if (hasGL) setEnabled(true);
         } catch {
@@ -534,8 +538,8 @@ const Scene3DInner: React.FC = () => {
             <Canvas
                 camera={{ position: [0, 0, 6], fov: 50 }}
                 style={{ background: 'transparent' }}
-                gl={{ antialias: typeof window !== 'undefined' ? window.devicePixelRatio <= 1 : true, powerPreference: 'high-performance', alpha: true }}
-                dpr={[1, 2]}
+                gl={{ antialias: typeof window !== 'undefined' ? window.devicePixelRatio <= 1 : true, powerPreference: 'default', alpha: true }}
+                dpr={[1, 1.5]}
             >
                 <SceneContent />
             </Canvas>

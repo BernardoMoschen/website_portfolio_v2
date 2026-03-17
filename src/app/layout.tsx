@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -43,6 +43,13 @@ const websiteJsonLd = {
   inLanguage: 'en-US',
   copyrightYear: new Date().getFullYear(),
   genre: 'Portfolio',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#7fb069',
+  colorScheme: 'dark light',
 };
 
 export const metadata: Metadata = {
@@ -109,7 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="dark" className={`${inter.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#7fb069" />
+        <link rel="preload" href="/profile-photo.webp" as="image" type="image/webp" fetchPriority="high" />
         <link rel="prefetch" href="/resume.pdf" />
         <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
         <link rel="me" href={siteConfig.github} />

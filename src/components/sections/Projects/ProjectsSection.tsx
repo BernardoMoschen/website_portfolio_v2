@@ -75,9 +75,86 @@ const ProjectsSection: React.FC = () => {
             overflow: 'hidden',
             padding: '80px 0',
         }}>
+            {/* Ambient organic blobs */}
+            <style>{`
+                @keyframes projFloat1 {
+                    0%,100% { transform: translate(0,0) scale(1); }
+                    33%     { transform: translate(90px,-70px) scale(1.12); }
+                    66%     { transform: translate(-30px,50px) scale(0.88); }
+                }
+                @keyframes projFloat2 {
+                    0%,100% { transform: translate(0,0) scale(1); }
+                    40%     { transform: translate(-80px,60px) scale(1.08); }
+                    75%     { transform: translate(50px,-40px) scale(0.92); }
+                }
+                @keyframes projFloat3 {
+                    0%,100% { transform: translate(0,0) scale(1); }
+                    50%     { transform: translate(60px,80px) scale(1.15); }
+                }
+                @keyframes projMorphA {
+                    0%,100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+                    25%     { border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%; }
+                    50%     { border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; }
+                    75%     { border-radius: 30% 70% 60% 40% / 60% 40% 50% 50%; }
+                }
+                @keyframes projMorphB {
+                    0%,100% { border-radius: 50% 50% 40% 60% / 40% 60% 50% 50%; }
+                    30%     { border-radius: 30% 70% 60% 40% / 60% 30% 70% 40%; }
+                    65%     { border-radius: 70% 30% 40% 60% / 30% 70% 60% 40%; }
+                }
+                .proj-blob {
+                    position: absolute;
+                    pointer-events: none;
+                    filter: blur(88px);
+                    mix-blend-mode: screen;
+                    z-index: 0;
+                }
+                .proj-blob-1 {
+                    width: 360px; height: 300px;
+                    background: radial-gradient(ellipse at 40% 40%, var(--color-primary), transparent 70%);
+                    top: -40px; left: -60px;
+                    opacity: 0.13;
+                    animation: projFloat1 24s ease-in-out infinite, projMorphA 11s ease-in-out infinite;
+                }
+                .proj-blob-2 {
+                    width: 440px; height: 380px;
+                    background: radial-gradient(ellipse at 60% 55%, var(--color-secondary), transparent 70%);
+                    top: 30%; right: -100px;
+                    opacity: 0.1;
+                    animation: projFloat2 30s ease-in-out infinite, projMorphB 15s ease-in-out infinite;
+                }
+                .proj-blob-3 {
+                    width: 300px; height: 280px;
+                    background: radial-gradient(ellipse at 50% 50%, var(--color-primary), transparent 70%);
+                    bottom: 60px; left: 25%;
+                    opacity: 0.08;
+                    animation: projFloat3 19s ease-in-out infinite, projMorphA 9s ease-in-out infinite reverse;
+                }
+                .proj-blob-4 {
+                    width: 380px; height: 320px;
+                    background: radial-gradient(ellipse at 45% 60%, var(--color-secondary), transparent 70%);
+                    top: 15%; left: 45%;
+                    opacity: 0.07;
+                    animation: projFloat2 35s ease-in-out infinite reverse, projMorphB 13s ease-in-out infinite;
+                }
+                @keyframes filterPillMorph {
+                    0%,100% { border-radius: 20px 8px 20px 8px; }
+                    25%     { border-radius: 12px 20px 8px 16px; }
+                    50%     { border-radius: 8px 16px 20px 8px; }
+                    75%     { border-radius: 16px 8px 12px 20px; }
+                }
+                .filter-pill-active {
+                    animation: filterPillMorph 3.5s ease-in-out infinite;
+                }
+            `}</style>
+            <div className="proj-blob proj-blob-1" />
+            <div className="proj-blob proj-blob-2" />
+            <div className="proj-blob proj-blob-3" />
+            <div className="proj-blob proj-blob-4" />
+
             {/* Section Header */}
             <AnimateOnScroll>
-                <div className="section-inner" style={{ textAlign: 'center', marginBottom: 16 }}>
+                <div className="section-inner" style={{ textAlign: 'center', marginBottom: 16, position: 'relative', zIndex: 1 }}>
                     <span className="mono" style={{
                         color: 'var(--color-primary)',
                         fontSize: '0.85rem',
@@ -123,7 +200,7 @@ const ProjectsSection: React.FC = () => {
                             key={f}
                             onClick={() => setFilter(f)}
                             aria-pressed={filter === f}
-                            className={filter === f ? 'tag tag-primary' : 'tag'}
+                            className={filter === f ? 'tag tag-primary filter-pill-active' : 'tag'}
                             style={{
                                 cursor: 'pointer',
                                 background: 'none',

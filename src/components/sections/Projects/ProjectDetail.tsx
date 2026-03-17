@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion, useReducedMotion } from 'motion/react';
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaArrowRight, FaCheckCircle, FaExclamationTriangle, FaLock } from 'react-icons/fa';
 import { projectTypeMap } from './projectTypeMap';
@@ -337,22 +338,13 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
                     }}>
                         {project.image && project.image !== '/project-placeholder.jpg' ? (
                             <>
-                                <picture>
-                                    <source srcSet={project.image.replace(/\.\w+$/, '.webp')} type="image/webp" />
-                                    <img
-                                        src={project.image}
-                                        alt={project.title}
-                                        loading="lazy"
-                                        decoding="async"
-                                        style={{
-                                            width: '100%',
-                                            height: '100%',
-                                            objectFit: 'cover',
-                                            position: 'absolute',
-                                            inset: 0,
-                                        }}
-                                    />
-                                </picture>
+                                <Image
+                                    src={project.image}
+                                    alt={project.title}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, 80vw"
+                                    style={{ objectFit: 'cover' }}
+                                />
                                 {/* Gradient overlay on image */}
                                 <div style={{
                                     position: 'absolute',

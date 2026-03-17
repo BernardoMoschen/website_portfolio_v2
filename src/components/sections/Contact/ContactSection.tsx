@@ -18,6 +18,7 @@ const ContactSection: React.FC = () => {
     website: '', // honeypot field
   });
   const [loading, setLoading] = useState(false);
+  const [focusedField, setFocusedField] = useState<string | null>(null);
   const [touched, setTouched] = useState<Record<string, boolean>>({
     name: false,
     email: false,
@@ -56,9 +57,13 @@ const ContactSection: React.FC = () => {
     !getFieldError('subject') &&
     !getFieldError('message');
 
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFocusedField(e.target.name);
+  };
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name } = e.target;
     setTouched(prev => ({ ...prev, [name]: true }));
+    setFocusedField(null);
   };
   const [toast, setToast] = useState<{
     visible: boolean;
@@ -159,8 +164,44 @@ const ContactSection: React.FC = () => {
     },
   ];
 
+  const focusBlob = {
+    name:    { x: '20%',  y: '35%', color: 'var(--color-primary)',   morph: '50% 50% 40% 60% / 60% 40% 50% 50%' },
+    email:   { x: '70%',  y: '35%', color: 'var(--color-secondary)', morph: '40% 60% 50% 50% / 50% 60% 40% 60%' },
+    subject: { x: '40%',  y: '50%', color: 'var(--color-primary)',   morph: '60% 40% 60% 40% / 40% 60% 40% 60%' },
+    message: { x: '35%',  y: '68%', color: 'var(--color-secondary)', morph: '30% 70% 40% 60% / 60% 30% 70% 40%' },
+  } as const;
+  const blob = focusedField ? focusBlob[focusedField as keyof typeof focusBlob] : null;
+
   return (
-    <div className="section-inner" style={{ width: '100%', padding: '5rem 1.5rem 3rem' }}>
+    <div className="section-inner" style={{ width: '100%', padding: '5rem 1.5rem 3rem', position: 'relative' }}>
+      {/* Focus-reactive organic bloom */}
+      <style>{`
+        @keyframes contactBlobMorph {
+          0%,100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+          25%     { border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%; }
+          50%     { border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; }
+          75%     { border-radius: 30% 70% 60% 40% / 60% 40% 50% 50%; }
+        }
+      `}</style>
+      <div style={{
+        position: 'absolute',
+        width: 560,
+        height: 480,
+        left: blob ? blob.x : '40%',
+        top:  blob ? blob.y : '50%',
+        transform: 'translate(-50%, -50%)',
+        background: blob
+          ? `radial-gradient(ellipse at 45% 45%, ${blob.color}, transparent 68%)`
+          : 'radial-gradient(ellipse at 50% 50%, var(--color-primary), transparent 68%)',
+        filter: 'blur(90px)',
+        opacity: blob ? 0.35 : 0.06,
+        borderRadius: blob ? blob.morph : '50% 50% 50% 50%',
+        animation: blob ? 'contactBlobMorph 6s ease-in-out infinite' : 'none',
+        transition: 'left 0.7s cubic-bezier(0.34,1.56,0.64,1), top 0.7s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease, background 0.5s ease',
+        pointerEvents: 'none',
+        zIndex: 0,
+        mixBlendMode: 'screen',
+      }} />
       {/* Section Header */}
       <AnimateOnScroll>
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -201,6 +242,8 @@ const ContactSection: React.FC = () => {
           gap: '2rem',
           maxWidth: '1100px',
           margin: '0 auto',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {/* Terminal Form */}
@@ -293,6 +336,7 @@ const ContactSection: React.FC = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
+                      onFocus={handleFocus}
                       onBlur={handleBlur}
                       required
                       aria-invalid={touched.name && !!getFieldError('name')}
@@ -327,6 +371,7 @@ const ContactSection: React.FC = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
+                      onFocus={handleFocus}
                       onBlur={handleBlur}
                       required
                       aria-invalid={touched.email && !!getFieldError('email')}
@@ -362,6 +407,7 @@ const ContactSection: React.FC = () => {
                     name="subject"
                     value={formData.subject}
                     onChange={handleInputChange}
+                    onFocus={handleFocus}
                     onBlur={handleBlur}
                     required
                     aria-invalid={touched.subject && !!getFieldError('subject')}
@@ -395,6 +441,7 @@ const ContactSection: React.FC = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}
+                    onFocus={handleFocus}
                     onBlur={handleBlur}
                     required
                     aria-invalid={touched.message && !!getFieldError('message')}

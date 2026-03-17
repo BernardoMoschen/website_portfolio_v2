@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     const safeMessage = escapeHtml(message.trim());
 
     const emailResponse = await resend.emails.send({
-      from: `Portfolio Contact <${siteConfig.email}>`,
+      from: `Portfolio Contact <contact@${siteConfig.domain}>`,
       to: siteConfig.email,
       subject: `Portfolio Contact: ${safeSubject}`,
       html: `
