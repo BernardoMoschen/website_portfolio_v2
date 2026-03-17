@@ -75,7 +75,7 @@ export const ptBr = {
   projects: {
     label: '// trabalhos em destaque',
     heading: 'Trabalhos Selecionados',
-    subtitle: 'Produtos reais, usuários reais, impacto real. Não projetos pessoais — sistemas que empresas dependem.',
+    subtitle: 'Produtos reais, usuários reais, impacto real. Não projetos pessoais — sistemas dos quais empresas dependem.',
     scroll_hint: 'arraste ou role',
     other_heading: 'Outros Projetos',
     other_subtitle: 'Mais trabalhos em diferentes indústrias e stacks.',
@@ -94,7 +94,7 @@ export const ptBr = {
     placeholders: { name: 'seu nome', email: 'voce@exemplo.com', subject: 'sobre o que é?', message: 'digite sua mensagem...' },
     submit: '$ enviar_mensagem',
     sending: '$ enviando...',
-    success: 'Mensagem enviada! Retorno em até 24 horas.',
+    success: 'Mensagem enviada! Responderei em até 24 horas.',
     error: 'Falha ao enviar mensagem. Tente novamente.',
     info_title: '> info_contato',
     available: 'Disponível para novos projetos',

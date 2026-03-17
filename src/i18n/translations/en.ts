@@ -20,11 +20,11 @@ export const en = {
       },
       {
         audience: 'Recruiters',
-        brief: "5+ years, 3 countries, 4 industries. I led the dev of automation tools at a telecom that directly boosted revenue. I built a platform serving ~20 educational institutions and thousands of students. I shipped a real-time data system for ArcelorMittal's mining operations in Canada — remotely from Brazil. TypeScript full-stack, comfortable owning projects end-to-end or contributing to larger teams.",
+        brief: "5+ years, 3 countries, 4 industries. I led development of automation tools at a telecom that directly boosted revenue. I built a platform serving ~20 educational institutions and thousands of students. I shipped a real-time data system for ArcelorMittal's mining operations in Canada — remotely from Brazil. TypeScript full-stack, comfortable owning projects end-to-end or contributing to larger teams.",
       },
       {
         audience: 'Product Managers',
-        brief: "I don't just build what's in the ticket — I ask why. At Paradise Mobile, I pushed for self-service onboarding flows that reduced user drop-off. At Grupo Tiradentes, I helped consolidate 20 institutional systems into one. I think in user outcomes, flag technical risks early, and ship incrementally. If something can be validated simpler and sooner, I'll push for that.",
+        brief: "I don't just build what's in the ticket — I ask why. At Paradise Mobile, I pushed for self-service onboarding flows that reduced user drop-off. At Grupo Tiradentes, I helped consolidate 20 institutional systems into one. I think in user outcomes, flag technical risks early, and ship incrementally. If something can be validated faster and more simply, I'll push for that.",
       },
       {
         audience: 'Engineers',
@@ -35,7 +35,7 @@ export const en = {
       [
         'Built self-service onboarding flows (React, Recoil, Jest) that measurably reduced user drop-off rates across the telecom platform',
         'Designed REST APIs and midtier services (Node.js, TypeScript, GraphQL, AWS) powering a CRM serving ~10K+ customers',
-        'Led dev of back-office automation tools that directly boosted support team revenue by replacing manual workflows with integrated pipelines',
+        'Led development of back-office automation tools that directly boosted support team revenue by replacing manual workflows with integrated pipelines',
         'Unified 4+ external platforms (Zapier, Webflow, Zendesk, Strapi) into a single automation layer — from ticket routing to customer onboarding',
       ],
       [
@@ -63,7 +63,7 @@ export const en = {
       {
         category: 'Backend & APIs',
         description: 'Server-side development, API design, and scalable architecture',
-        descriptionHighlight: 'I create functional endpoints and make your site fast...eventually',
+        descriptionHighlight: 'I build APIs that hold up under pressure...usually',
       },
       {
         category: 'DevOps, Databases & Tools',

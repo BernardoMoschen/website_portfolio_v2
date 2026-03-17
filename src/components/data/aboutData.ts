@@ -37,7 +37,7 @@ export const briefList: AudienceBrief[] = [
     {
         audience: 'Recruiters',
         brief:
-            "5+ years, 3 countries, 4 industries. I led the dev of automation tools at a telecom that directly boosted revenue. I built a platform serving ~20 educational institutions and thousands of students. I shipped a real-time data system for ArcelorMittal's mining operations in Canada — remotely from Brazil. TypeScript full-stack, comfortable owning projects end-to-end or contributing to larger teams.",
+            "5+ years, 3 countries, 4 industries. I led development of automation tools at a telecom that directly boosted revenue. I built a platform serving ~20 educational institutions and thousands of students. I shipped a real-time data system for ArcelorMittal's mining operations in Canada — remotely from Brazil. TypeScript full-stack, comfortable owning projects end-to-end or contributing to larger teams.",
     },
     {
         audience: 'Product Managers',
@@ -131,7 +131,7 @@ export const experiences: Experience[] = [
         description: [
             'Built self-service onboarding flows (React, Recoil, Jest) that measurably reduced user drop-off rates across the telecom platform',
             'Designed REST APIs and midtier services (Node.js, TypeScript, GraphQL, AWS) powering a CRM serving ~10K+ customers',
-            'Led dev of back-office automation tools that directly boosted support team revenue by replacing manual workflows with integrated pipelines',
+            'Led development of back-office automation tools that directly boosted support team revenue by replacing manual workflows with integrated pipelines',
             'Unified 4+ external platforms (Zapier, Webflow, Zendesk, Strapi) into a single automation layer — from ticket routing to customer onboarding',
         ],
         iconType: 'work',
