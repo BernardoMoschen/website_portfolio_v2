@@ -604,6 +604,7 @@ type RenderMode = 'pending' | 'css-globe' | 'webgl' | 'none';
 
 const Scene3DInner: React.FC = () => {
     const [mode, setMode] = useState<RenderMode>('pending');
+    const [glReady, setGlReady] = useState(false);
 
     useEffect(() => {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -635,29 +636,36 @@ const Scene3DInner: React.FC = () => {
         });
     }, []);
 
-    if (mode === 'pending' || mode === 'none') return null;
-    if (mode === 'css-globe') return <CSSGlobe />;
+    if (mode === 'none') return null;
+    if (mode === 'pending' || mode === 'css-globe') return <CSSGlobe />;
 
     const antialias = window.devicePixelRatio <= 1;
 
     return (
-        <div
-            style={{
-                position: 'fixed',
-                top: 0, left: 0,
-                width: '100vw', height: '100vh',
-                zIndex: 1, pointerEvents: 'none',
-            }}
-        >
-            <Canvas
-                camera={{ position: [0, 0, 6], fov: 50 }}
-                style={{ background: 'transparent' }}
-                gl={{ antialias, alpha: true, powerPreference: 'default', preserveDrawingBuffer: false }}
-                dpr={[1, 1.5]}
+        <>
+            {/* CSS globe stays visible until WebGL first frame is rendered */}
+            {!glReady && <CSSGlobe />}
+            <div
+                style={{
+                    position: 'fixed',
+                    top: 0, left: 0,
+                    width: '100vw', height: '100vh',
+                    zIndex: 1, pointerEvents: 'none',
+                    opacity: glReady ? 1 : 0,
+                    transition: 'opacity 0.6s ease',
+                }}
             >
-                <SceneContent />
-            </Canvas>
-        </div>
+                <Canvas
+                    camera={{ position: [0, 0, 6], fov: 50 }}
+                    style={{ background: 'transparent' }}
+                    gl={{ antialias, alpha: true, powerPreference: 'default', preserveDrawingBuffer: false }}
+                    dpr={[1, 1.5]}
+                    onCreated={() => setGlReady(true)}
+                >
+                    <SceneContent />
+                </Canvas>
+            </div>
+        </>
     );
 };
 
