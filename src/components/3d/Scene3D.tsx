@@ -482,6 +482,105 @@ const SceneContent: React.FC = () => {
     );
 };
 
+// ─── CSS 3D Globe (Brave / no-WebGL fallback) ───────────────────
+const CSSGlobe: React.FC = () => {
+    const S = 360; // diameter px
+    const R = S / 2;
+    const meridians = 6;
+    const latitudes = [-60, -30, 0, 30, 60];
+
+    return (
+        <div
+            aria-hidden="true"
+            style={{
+                position: 'fixed',
+                top: 0, left: 0, width: '100vw', height: '100vh',
+                zIndex: 1, pointerEvents: 'none',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+        >
+            <style>{`
+                @keyframes cssGlobeRotate {
+                    from { transform: rotateX(14deg) rotateY(0deg); }
+                    to   { transform: rotateX(14deg) rotateY(360deg); }
+                }
+                @keyframes cssGlobePulse {
+                    0%, 100% { opacity: 0.55; }
+                    50%      { opacity: 0.75; }
+                }
+            `}</style>
+
+            {/* Atmosphere glow — gradient only, no blur (avoids software-render cost) */}
+            <div style={{
+                position: 'absolute',
+                width: S + 120, height: S + 120,
+                borderRadius: '50%',
+                background: `radial-gradient(circle, rgba(127,176,105,0.1) 0%, rgba(255,138,80,0.04) 40%, transparent 68%)`,
+                animation: 'cssGlobePulse 5s ease-in-out infinite',
+            }} />
+
+            {/* Perspective container */}
+            <div style={{ perspective: `${S * 2.6}px`, width: S, height: S }}>
+                {/* Rotating globe */}
+                <div style={{
+                    width: S, height: S,
+                    transformStyle: 'preserve-3d',
+                    animation: 'cssGlobeRotate 28s linear infinite',
+                    position: 'relative',
+                }}>
+                    {/* Outer sphere */}
+                    <div style={{
+                        position: 'absolute', inset: 0,
+                        borderRadius: '50%',
+                        border: '1px solid rgba(127, 176, 105, 0.3)',
+                    }} />
+
+                    {/* Meridians */}
+                    {Array.from({ length: meridians }, (_, i) => (
+                        <div key={`m${i}`} style={{
+                            position: 'absolute', inset: 0,
+                            borderRadius: '50%',
+                            border: `1px solid rgba(${i === 1 ? '255,138,80' : '127,176,105'}, ${i === 0 ? 0.32 : 0.18})`,
+                            transform: `rotateY(${i * (180 / meridians)}deg)`,
+                        }} />
+                    ))}
+
+                    {/* Latitude rings */}
+                    {latitudes.map((lat, i) => {
+                        const rad = lat * (Math.PI / 180);
+                        const r = R * Math.cos(rad);
+                        const y = -R * Math.sin(rad);
+                        const isEquator = lat === 0;
+                        return (
+                            <div key={`l${i}`} style={{
+                                position: 'absolute',
+                                width: r * 2, height: r * 2,
+                                left: '50%', top: '50%',
+                                marginLeft: -r, marginTop: -r,
+                                borderRadius: '50%',
+                                border: `1px solid rgba(127,176,105,${isEquator ? 0.38 : 0.2})`,
+                                // Apply translateY first (before the tilt), then tilt flat
+                                transform: `rotateX(90deg) translateY(${y}px)`,
+                            }} />
+                        );
+                    })}
+
+                    {/* Location dot — home (Porto Alegre, roughly front-facing) */}
+                    <div style={{
+                        position: 'absolute',
+                        width: 7, height: 7,
+                        borderRadius: '50%',
+                        background: SECONDARY,
+                        boxShadow: `0 0 8px ${SECONDARY}`,
+                        left: '54%', top: '60%',
+                        transform: `translateZ(${R}px)`,
+                    }} />
+                </div>
+            </div>
+        </div>
+    );
+};
+
 // ─── Outer Error Boundary (catches Canvas/WebGL init failures) ──
 class WebGLErrorBoundary extends React.Component<
     { children: React.ReactNode },
@@ -501,44 +600,59 @@ class WebGLErrorBoundary extends React.Component<
 }
 
 // ─── Exported Component ─────────────────────────────────────────
+type RenderMode = 'pending' | 'css-globe' | 'webgl' | 'none';
+
 const Scene3DInner: React.FC = () => {
-    const [enabled, setEnabled] = useState(false);
+    const [mode, setMode] = useState<RenderMode>('pending');
 
     useEffect(() => {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) return;
-
-        try {
-            const canvas = document.createElement('canvas');
-            const hasGL = !!(
-                canvas.getContext('webgl2') ||
-                (window.WebGLRenderingContext &&
-                    (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')))
-            );
-            if (hasGL) setEnabled(true);
-        } catch {
-            // No WebGL
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            setMode('none');
+            return;
         }
+
+        const nav = navigator as Navigator & { brave?: { isBrave?: () => Promise<boolean> } };
+        const braveCheck: Promise<boolean> = nav.brave?.isBrave?.().catch(() => false) ?? Promise.resolve(false);
+
+        braveCheck.then(isBrave => {
+            try {
+                const canvas = document.createElement('canvas');
+                const hasGL = !!(
+                    canvas.getContext('webgl2') ||
+                    (window.WebGLRenderingContext &&
+                        (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')))
+                );
+                // Brave with a working GPU gets the real WebGL scene.
+                // Brave with no WebGL (broken/software GPU) gets the CSS globe.
+                if (hasGL) {
+                    setMode('webgl');
+                } else {
+                    setMode(isBrave ? 'css-globe' : 'none');
+                }
+            } catch {
+                setMode(isBrave ? 'css-globe' : 'none');
+            }
+        });
     }, []);
 
-    if (!enabled) return null;
+    if (mode === 'pending' || mode === 'none') return null;
+    if (mode === 'css-globe') return <CSSGlobe />;
+
+    const antialias = window.devicePixelRatio <= 1;
 
     return (
         <div
             style={{
                 position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100vw',
-                height: '100vh',
-                zIndex: 1,
-                pointerEvents: 'none',
+                top: 0, left: 0,
+                width: '100vw', height: '100vh',
+                zIndex: 1, pointerEvents: 'none',
             }}
         >
             <Canvas
                 camera={{ position: [0, 0, 6], fov: 50 }}
                 style={{ background: 'transparent' }}
-                gl={{ antialias: typeof window !== 'undefined' ? window.devicePixelRatio <= 1 : true, powerPreference: 'default', alpha: true }}
+                gl={{ antialias, alpha: true, powerPreference: 'default', preserveDrawingBuffer: false }}
                 dpr={[1, 1.5]}
             >
                 <SceneContent />

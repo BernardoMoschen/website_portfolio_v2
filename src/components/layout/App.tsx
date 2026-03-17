@@ -79,19 +79,19 @@ const AppInner: React.FC = () => {
                 <CinematicSection id="hero" scrollHeight="300vh" startVisible>
                     <HeroSection />
                 </CinematicSection>
-                <SectionDivider />
+                <SectionDivider idBase="hero-about-divider" />
                 <CinematicSection id="about" scrollHeight="400vh">
                     <AboutSection />
                 </CinematicSection>
-                <SectionDivider flip />
+                <SectionDivider flip idBase="about-projects-divider" />
                 <CinematicSection id="projects" scrollHeight="500vh">
                     <ProjectsSection />
                 </CinematicSection>
-                <SectionDivider flip />
+                <SectionDivider flip idBase="projects-certifications-divider" />
                 <CinematicSection id="certifications" scrollHeight="300vh">
                     <CertificationsSection />
                 </CinematicSection>
-                <SectionDivider />
+                <SectionDivider idBase="certifications-contact-divider" />
                 <CinematicSection id="contact" scrollHeight="400vh">
                     <ContactSection />
                 </CinematicSection>
@@ -105,12 +105,12 @@ const App: React.FC = () => {
     return (
         <ThemeContextProvider>
             <I18nProvider>
-            <SoundContextProvider>
-                <LikesProvider>
-                    <AppInner />
-                    <BottomRightHUD />
-                </LikesProvider>
-            </SoundContextProvider>
+                <SoundContextProvider>
+                    <LikesProvider>
+                        <AppInner />
+                        <BottomRightHUD />
+                    </LikesProvider>
+                </SoundContextProvider>
             </I18nProvider>
         </ThemeContextProvider>
     );
