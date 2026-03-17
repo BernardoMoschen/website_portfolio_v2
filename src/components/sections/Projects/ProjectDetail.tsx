@@ -336,7 +336,7 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
                             <>
                                 <Image
                                     src={project.image}
-                                    alt={project.title}
+                                    alt={`${project.title} — project screenshot`}
                                     fill
                                     sizes="(max-width: 768px) 100vw, 80vw"
                                     style={{ objectFit: 'cover' }}

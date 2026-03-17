@@ -18,10 +18,8 @@
 
 ## 🔴 Critical (bugs / broken behavior)
 
-- [ ] **Fix SoundContext hydration mismatch** — `getInitialMuted()` reads localStorage during
-      the initial render. The server always gets `true` (muted) but the client may read `false`
-      from localStorage, causing the React hydration error seen in the screenshot.
-      Fix: always initialize `useState(true)`, then sync from localStorage in `useEffect`.
+- [x] **Fix SoundContext hydration mismatch** — Already fixed: `useState(true)` as SSR-safe
+      default, `useEffect` syncs from localStorage after hydration.
 
 - [x] **Create `/public/og-image.jpg`** — Replaced with a dynamic OG image generator at
       `/src/app/og/route.tsx` using `next/og` (ImageResponse). Metadata URLs updated to `/og`.
@@ -68,8 +66,8 @@
 - [ ] **Migrate project/profile images to Next.js `<Image>`** — Gets automatic WebP
       conversion, responsive sizing, and prevents CLS (requires explicit width/height).
 
-- [ ] **Preload hero profile photo** — The avatar is above-the-fold and should be added to
-      the `<link rel="preload">` list in `layout.tsx`.
+- [x] **Preload hero profile photo** — Already present in `layout.tsx:119` as
+      `<link rel="preload" href="/profile-photo.webp" fetchPriority="high" />`.
 
 - [ ] **Run bundle analyzer** — Add `@next/bundle-analyzer` and check if Three.js or any
       other dependency can be split further to reduce initial JS payload.
@@ -133,5 +131,5 @@
 - [x] **JSON-LD author field on project pages** — Already present in
       `projects/[slug]/page.tsx`. No changes needed.
 
-- [ ] **Add `article` Open Graph type to project pages** — `projects/[slug]/page.tsx` doesn't
-      set `og:type: 'article'`. Helps social platforms categorize the page correctly.
+- [x] **Add `article` Open Graph type to project pages** — Added `openGraph.type: 'article'`
+      in `projects/[slug]/page.tsx` in the previous session.

@@ -54,7 +54,7 @@ const CertificationCard: React.FC<Props> = ({ cert }) => {
         {cert.badgeUrl ? (
           <img
             src={cert.badgeUrl}
-            alt={cert.issuer}
+            alt={`${cert.issuer} logo`}
             style={{ width: 56, height: 56, objectFit: 'contain', borderRadius: 8, flexShrink: 0 }}
           />
         ) : (

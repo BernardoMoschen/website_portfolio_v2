@@ -21,6 +21,19 @@ const ProjectsSection: React.FC = () => {
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
     const [filter, setFilter] = useState<ProjectFilter>('all');
+    const filterOptions: ProjectFilter[] = ['all', 'professional', 'personal'];
+
+    const handleFilterKeyDown = (e: React.KeyboardEvent, currentIndex: number) => {
+        let next = currentIndex;
+        if (e.key === 'ArrowRight') next = (currentIndex + 1) % filterOptions.length;
+        else if (e.key === 'ArrowLeft') next = (currentIndex - 1 + filterOptions.length) % filterOptions.length;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = filterOptions.length - 1;
+        else return;
+        e.preventDefault();
+        setFilter(filterOptions[next]);
+        (e.currentTarget.parentElement?.children[next] as HTMLElement)?.focus();
+    };
 
     const filtered = filter === 'all' ? projects : projects.filter(p => p.type === filter);
     const featuredProjects = filtered.filter(p => p.featured);
@@ -189,12 +202,20 @@ const ProjectsSection: React.FC = () => {
 
             {/* Filter tabs */}
             <AnimateOnScroll delay={0.15}>
-                <div className="section-inner" style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 40 }}>
-                    {(['all', 'professional', 'personal'] as ProjectFilter[]).map((f) => (
+                <div
+                    role="tablist"
+                    aria-label="Filter projects by type"
+                    className="section-inner"
+                    style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 40 }}
+                >
+                    {filterOptions.map((f, i) => (
                         <button
                             key={f}
+                            role="tab"
+                            aria-selected={filter === f}
+                            tabIndex={filter === f ? 0 : -1}
                             onClick={() => setFilter(f)}
-                            aria-pressed={filter === f}
+                            onKeyDown={(e) => handleFilterKeyDown(e, i)}
                             className={filter === f ? 'tag tag-primary filter-pill-active' : 'tag'}
                             style={{
                                 cursor: 'pointer',

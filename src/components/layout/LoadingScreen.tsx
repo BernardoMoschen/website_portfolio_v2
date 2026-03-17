@@ -50,6 +50,8 @@ const LoadingScreen: React.FC<{ loading: boolean }> = ({ loading }) => {
 
     return (
         <div
+            role="status"
+            aria-label={loading ? 'Loading portfolio…' : 'Portfolio ready'}
             style={{
                 position: 'fixed',
                 inset: 0,
@@ -79,6 +81,7 @@ const LoadingScreen: React.FC<{ loading: boolean }> = ({ loading }) => {
 
             {/* Terminal boot lines */}
             <div
+                aria-live="polite"
                 className="mono"
                 style={{
                     fontSize: 'clamp(0.75rem, 1.5vw, 0.9rem)',
