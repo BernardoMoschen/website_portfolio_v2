@@ -7,6 +7,7 @@ import SectionAnchor from '../../utils/SectionAnchor';
 import { useThemeMode } from '../../theme/ThemeContext';
 import { useI18n } from '../../../i18n';
 import { EMAIL_REGEX } from '../../../utils/validation';
+import styles from './ContactSection.module.css';
 
 const ContactSection: React.FC = () => {
   const { darkMode } = useThemeMode();
@@ -112,21 +113,14 @@ const ContactSection: React.FC = () => {
         throw new Error(result.error || 'Failed to send message');
       }
 
-      setToast({
-        visible: true,
-        message: t.contact.success,
-        type: 'success',
-      });
+      setToast({ visible: true, message: t.contact.success, type: 'success' });
       setFormData({ name: '', email: '', subject: '', message: '', website: '' });
       setTouched({ name: false, email: false, subject: false, message: false });
     } catch (error) {
       console.error('Contact form error:', error);
       setToast({
         visible: true,
-        message:
-          error instanceof Error
-            ? error.message
-            : t.contact.error,
+        message: error instanceof Error ? error.message : t.contact.error,
         type: 'error',
       });
     } finally {
@@ -135,32 +129,10 @@ const ContactSection: React.FC = () => {
   };
 
   const contactLinks = [
-    {
-      icon: <HiMail size={20} />,
-      label: 'Email',
-      value: siteConfig.email,
-      href: `mailto:${siteConfig.email}`,
-    },
-    {
-      icon: <FaGithub size={20} />,
-      label: 'GitHub',
-      value: 'BernardoMoschen',
-      href: siteConfig.github,
-      external: true,
-    },
-    {
-      icon: <FaLinkedin size={20} />,
-      label: 'LinkedIn',
-      value: 'bernardomoschen',
-      href: siteConfig.linkedin,
-      external: true,
-    },
-    {
-      icon: <HiLocationMarker size={20} />,
-      label: 'Location',
-      value: t.hero.location,
-      href: '',
-    },
+    { icon: <HiMail size={20} />, label: 'Email', value: siteConfig.email, href: `mailto:${siteConfig.email}` },
+    { icon: <FaGithub size={20} />, label: 'GitHub', value: 'BernardoMoschen', href: siteConfig.github, external: true },
+    { icon: <FaLinkedin size={20} />, label: 'LinkedIn', value: 'bernardomoschen', href: siteConfig.linkedin, external: true },
+    { icon: <HiLocationMarker size={20} />, label: 'Location', value: t.hero.location, href: '' },
   ];
 
   const focusBlob = {
@@ -174,33 +146,19 @@ const ContactSection: React.FC = () => {
   return (
     <div className="section-inner" style={{ width: '100%', padding: '5rem 1.5rem 3rem', position: 'relative' }}>
       {/* Focus-reactive organic bloom */}
-      <style>{`
-        @keyframes contactBlobMorph {
-          0%,100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-          25%     { border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%; }
-          50%     { border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; }
-          75%     { border-radius: 30% 70% 60% 40% / 60% 40% 50% 50%; }
-        }
-      `}</style>
-      <div style={{
-        position: 'absolute',
-        width: 560,
-        height: 480,
-        left: blob ? blob.x : '40%',
-        top:  blob ? blob.y : '50%',
-        transform: 'translate(-50%, -50%)',
-        background: blob
-          ? `radial-gradient(ellipse at 45% 45%, ${blob.color}, transparent 68%)`
-          : 'radial-gradient(ellipse at 50% 50%, var(--color-primary), transparent 68%)',
-        filter: 'blur(90px)',
-        opacity: blob ? 0.35 : 0.06,
-        borderRadius: blob ? blob.morph : '50% 50% 50% 50%',
-        animation: blob ? 'contactBlobMorph 6s ease-in-out infinite' : 'none',
-        transition: 'left 0.7s cubic-bezier(0.34,1.56,0.64,1), top 0.7s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease, background 0.5s ease',
-        pointerEvents: 'none',
-        zIndex: 0,
-        mixBlendMode: 'screen',
-      }} />
+      <div
+        className={`${styles.blob}${blob ? ` ${styles.blobActive}` : ''}`}
+        style={{
+          left: blob ? blob.x : '40%',
+          top: blob ? blob.y : '50%',
+          background: blob
+            ? `radial-gradient(ellipse at 45% 45%, ${blob.color}, transparent 68%)`
+            : 'radial-gradient(ellipse at 50% 50%, var(--color-primary), transparent 68%)',
+          opacity: blob ? 0.35 : 0.06,
+          borderRadius: blob ? blob.morph : '50% 50% 50% 50%',
+        }}
+      />
+
       {/* Section Header */}
       <AnimateOnScroll>
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -220,14 +178,7 @@ const ContactSection: React.FC = () => {
             </h2>
             <SectionAnchor sectionId="contact" />
           </div>
-          <p
-            className="mono"
-            style={{
-              color: 'var(--color-text-secondary)',
-              fontSize: '1rem',
-              margin: 0,
-            }}
-          >
+          <p className="mono" style={{ color: 'var(--color-text-secondary)', fontSize: '1rem', margin: 0 }}>
             {t.contact.subtitle}
           </p>
         </div>
@@ -247,64 +198,16 @@ const ContactSection: React.FC = () => {
       >
         {/* Terminal Form */}
         <SlideIn direction="left">
-          <div
-            className="glass"
-            style={{
-              borderRadius: '12px',
-              overflow: 'hidden',
-              border: '1px solid var(--color-border)',
-            }}
-          >
+          <div className="glass" style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--color-border)' }}>
             {/* Terminal title bar */}
             <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 16px',
-                borderBottom: '1px solid var(--color-border)',
-                background: darkMode
-                  ? 'rgba(0, 0, 0, 0.3)'
-                  : 'rgba(0, 0, 0, 0.05)',
-              }}
+              className={styles.terminalBar}
+              style={{ background: darkMode ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.05)' }}
             >
-              <span
-                style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: '50%',
-                  background: '#ff5f57',
-                  display: 'inline-block',
-                }}
-              />
-              <span
-                style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: '50%',
-                  background: '#febc2e',
-                  display: 'inline-block',
-                }}
-              />
-              <span
-                style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: '50%',
-                  background: '#28c840',
-                  display: 'inline-block',
-                }}
-              />
-              <span
-                className="mono"
-                style={{
-                  marginLeft: '12px',
-                  fontSize: '0.8rem',
-                  color: 'var(--color-text-secondary)',
-                }}
-              >
-                {t.contact.terminal_title}
-              </span>
+              <span className={styles.terminalDot} style={{ background: '#ff5f57' }} />
+              <span className={styles.terminalDot} style={{ background: '#febc2e' }} />
+              <span className={styles.terminalDot} style={{ background: '#28c840' }} />
+              <span className={`mono ${styles.terminalTitle}`}>{t.contact.terminal_title}</span>
             </div>
 
             {/* Form body */}
@@ -314,13 +217,8 @@ const ContactSection: React.FC = () => {
                 <label htmlFor="contact-website">Website</label>
                 <input type="text" id="contact-website" name="website" tabIndex={-1} autoComplete="off" value={formData.website ?? ''} onChange={handleInputChange} />
               </div>
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '1.25rem',
-                }}
-              >
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
                 {/* Name field */}
                 <div>
                   <label htmlFor="contact-name" className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
@@ -352,7 +250,7 @@ const ContactSection: React.FC = () => {
                       <span style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-success)', fontSize: '0.9rem', fontWeight: 700, opacity: 0.8 }}>✓</span>
                     )}
                   </div>
-                  <span id="field-name-error" role="alert" aria-live="assertive" className={`field-error mono${touched.name && getFieldError('name') ? ' visible' : ''}`}>
+                  <span id="field-name-error" role="alert" aria-live="assertive" className={`mono ${styles.fieldError}${touched.name && getFieldError('name') ? ` ${styles.fieldErrorVisible}` : ''}`}>
                     {getFieldError('name') || '\u00A0'}
                   </span>
                 </div>
@@ -388,7 +286,7 @@ const ContactSection: React.FC = () => {
                       <span style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-success)', fontSize: '0.9rem', fontWeight: 700, opacity: 0.8 }}>✓</span>
                     )}
                   </div>
-                  <span id="field-email-error" role="alert" aria-live="assertive" className={`field-error mono${touched.email && getFieldError('email') ? ' visible' : ''}`}>
+                  <span id="field-email-error" role="alert" aria-live="assertive" className={`mono ${styles.fieldError}${touched.email && getFieldError('email') ? ` ${styles.fieldErrorVisible}` : ''}`}>
                     {getFieldError('email') || '\u00A0'}
                   </span>
                 </div>
@@ -425,7 +323,7 @@ const ContactSection: React.FC = () => {
                     <span style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-success)', fontSize: '0.9rem', fontWeight: 700, opacity: 0.8 }}>✓</span>
                   )}
                 </div>
-                <span id="field-subject-error" role="alert" aria-live="assertive" className={`field-error mono${touched.subject && getFieldError('subject') ? ' visible' : ''}`}>
+                <span id="field-subject-error" role="alert" aria-live="assertive" className={`mono ${styles.fieldError}${touched.subject && getFieldError('subject') ? ` ${styles.fieldErrorVisible}` : ''}`}>
                   {getFieldError('subject') || '\u00A0'}
                 </span>
               </div>
@@ -462,30 +360,23 @@ const ContactSection: React.FC = () => {
                     <span style={{ position: 'absolute', right: 12, top: 16, color: 'var(--color-success)', fontSize: '0.9rem', fontWeight: 700, opacity: 0.8 }}>✓</span>
                   )}
                 </div>
-                <span id="field-message-error" role="alert" aria-live="assertive" className={`field-error mono${touched.message && getFieldError('message') ? ' visible' : ''}`}>
+                <span id="field-message-error" role="alert" aria-live="assertive" className={`mono ${styles.fieldError}${touched.message && getFieldError('message') ? ` ${styles.fieldErrorVisible}` : ''}`}>
                   {getFieldError('message') || '\u00A0'}
                 </span>
               </div>
 
               {/* Submit button */}
-              <div style={{ marginTop: '1.5rem' }}>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={loading || !isFormValid}
-                  style={{
-                    fontFamily: 'monospace',
-                    fontSize: '0.95rem',
-                    padding: '0.75rem 2rem',
-                    cursor: loading || !isFormValid ? 'not-allowed' : 'pointer',
-                    opacity: loading || !isFormValid ? 0.6 : 1,
-                    width: '100%',
-                    ...(isFormValid && !loading ? { animation: 'pulse-ready 2s ease-in-out infinite' } : {}),
-                  }}
-                >
-                  {loading ? t.contact.sending : t.contact.submit}
-                </button>
-              </div>
+              <button
+                type="submit"
+                className={[
+                  'btn btn-primary',
+                  styles.submitBtn,
+                  isFormValid && !loading ? styles.submitBtnReady : styles.submitBtnDisabled,
+                ].join(' ')}
+                disabled={loading || !isFormValid}
+              >
+                {loading ? t.contact.sending : t.contact.submit}
+              </button>
             </form>
           </div>
         </SlideIn>
@@ -494,74 +385,29 @@ const ContactSection: React.FC = () => {
         <SlideIn direction="right" delay={0.15}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '100%' }}>
             {/* Contact links */}
-            <div
-              className="glass"
-              style={{
-                borderRadius: '12px',
-                padding: '1.75rem',
-                border: '1px solid var(--color-border)',
-                flex: 1,
-              }}
-            >
-              <h3
-                className="mono"
-                style={{
-                  color: 'var(--color-primary)',
-                  fontSize: '1.1rem',
-                  fontWeight: 600,
-                  margin: '0 0 1.5rem',
-                }}
-              >
+            <div className="glass" style={{ borderRadius: '12px', padding: '1.75rem', border: '1px solid var(--color-border)', flex: 1 }}>
+              <h3 className="mono" style={{ color: 'var(--color-primary)', fontSize: '1.1rem', fontWeight: 600, margin: '0 0 1.5rem' }}>
                 {t.contact.info_title}
               </h3>
-
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                 {contactLinks.map((link, index) => {
                   const content = (
-                    <div
-                      key={index}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '12px',
-                      }}
-                    >
+                    <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                       <div
                         style={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: '10px',
-                          background: 'var(--color-bg-glass)',
-                          border: '1px solid var(--color-border)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          color: 'var(--color-primary)',
-                          flexShrink: 0,
+                          width: 40, height: 40, borderRadius: '10px',
+                          background: 'var(--color-bg-glass)', border: '1px solid var(--color-border)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          color: 'var(--color-primary)', flexShrink: 0,
                         }}
                       >
                         {link.icon}
                       </div>
                       <div style={{ minWidth: 0 }}>
-                        <div
-                          style={{
-                            fontSize: '0.75rem',
-                            color: 'var(--color-text-secondary)',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.5px',
-                            marginBottom: '2px',
-                          }}
-                        >
+                        <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '2px' }}>
                           {link.label}
                         </div>
-                        <div
-                          className="mono"
-                          style={{
-                            fontSize: '0.9rem',
-                            color: 'var(--color-text)',
-                            wordBreak: 'break-word',
-                          }}
-                        >
+                        <div className="mono" style={{ fontSize: '0.9rem', color: 'var(--color-text)', wordBreak: 'break-word' }}>
                           {link.value}
                         </div>
                       </div>
@@ -576,17 +422,9 @@ const ContactSection: React.FC = () => {
                         target={link.external ? '_blank' : undefined}
                         rel={link.external ? 'noopener noreferrer' : undefined}
                         aria-label={`${link.label}${link.external ? ' (opens in new tab)' : ''}: ${link.value}`}
-                        style={{
-                          textDecoration: 'none',
-                          color: 'inherit',
-                          transition: 'transform 0.2s ease',
-                        }}
-                        onMouseEnter={e =>
-                          (e.currentTarget.style.transform = 'translateX(4px)')
-                        }
-                        onMouseLeave={e =>
-                          (e.currentTarget.style.transform = 'translateX(0)')
-                        }
+                        style={{ textDecoration: 'none', color: 'inherit', transition: 'transform 0.2s ease' }}
+                        onMouseEnter={e => (e.currentTarget.style.transform = 'translateX(4px)')}
+                        onMouseLeave={e => (e.currentTarget.style.transform = 'translateX(0)')}
                       >
                         {content}
                       </a>
@@ -600,40 +438,13 @@ const ContactSection: React.FC = () => {
             {/* Availability status */}
             <div
               className="glass"
-              style={{
-                borderRadius: '12px',
-                padding: '1.5rem 1.75rem',
-                border: '1px solid var(--color-border)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-              }}
+              style={{ borderRadius: '12px', padding: '1.5rem 1.75rem', border: '1px solid var(--color-border)', display: 'flex', alignItems: 'center', gap: '12px' }}
             >
-              <span
-                style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: '50%',
-                  background: 'var(--color-success)',
-                  display: 'inline-block',
-                  flexShrink: 0,
-                  boxShadow: '0 0 8px var(--color-success)',
-                  animation: 'pulse 2s ease-in-out infinite',
-                }}
-              />
-              <span
-                className="mono"
-                style={{
-                  fontSize: '0.9rem',
-                  color: 'var(--color-text)',
-                }}
-              >
+              <span className={styles.availabilityDot} />
+              <span className="mono" style={{ fontSize: '0.9rem', color: 'var(--color-text)' }}>
                 {t.contact.available}
               </span>
-              <span
-                className="tag"
-                style={{ marginLeft: 'auto', fontSize: '0.75rem' }}
-              >
+              <span className="tag" style={{ marginLeft: 'auto', fontSize: '0.75rem' }}>
                 {t.contact.open}
               </span>
             </div>
@@ -646,65 +457,13 @@ const ContactSection: React.FC = () => {
         <div
           role="alert"
           aria-live="assertive"
-          className={`toast ${toast.type === 'success' ? 'toast-success success-msg' : 'toast-error'}`}
-          style={{
-            position: 'fixed',
-            bottom: '2rem',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 9999,
-            padding: '1rem 1.5rem',
-            borderRadius: '8px',
-            fontFamily: 'monospace',
-            fontSize: '0.9rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            maxWidth: '90vw',
-            animation: 'fadeInUp 0.3s ease',
-          }}
+          className={`toast ${toast.type === 'success' ? 'toast-success' : 'toast-error'} ${styles.toast} ${toast.type === 'success' ? styles.toastSuccess : ''}`}
           onClick={() => setToast(prev => ({ ...prev, visible: false }))}
         >
           <span>{toast.type === 'success' ? '$' : '!'}</span>
           <span>{toast.message}</span>
         </div>
       )}
-
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
-        }
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateX(-50%) translateY(10px); }
-          to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        .field-error {
-          display: block;
-          overflow: hidden;
-          max-height: 0;
-          opacity: 0;
-          transform: translateX(-8px);
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          color: var(--color-error);
-          font-size: 0.75rem;
-          margin-top: 2px;
-        }
-        .field-error.visible {
-          max-height: 30px;
-          opacity: 1;
-          transform: translateX(0);
-        }
-        @keyframes pulse-ready {
-          0%, 100% { box-shadow: 0 4px 14px rgba(127, 176, 105, 0.3); }
-          50% { box-shadow: 0 4px 24px rgba(127, 176, 105, 0.5); }
-        }
-        @keyframes pop-in {
-          from { transform: translateX(-50%) scale(0.8); opacity: 0; }
-          to { transform: translateX(-50%) scale(1); opacity: 1; }
-        }
-        .success-msg { animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; }
-      `}</style>
     </div>
   );
 };
