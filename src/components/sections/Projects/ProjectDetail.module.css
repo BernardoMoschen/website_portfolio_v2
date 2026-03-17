@@ -1,0 +1,32 @@
+.backBtn:hover { color: var(--color-primary) !important; }
+.backBtn:hover .backArrow { transform: translateX(-4px); }
+.backArrow { transition: transform 0.3s ease; }
+
+.navCard {
+  transition: all 0.3s ease;
+}
+.navCard:hover {
+  border-color: var(--color-primary) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+}
+.navCard:hover .navArrow { transform: translateX(4px); }
+.navCardPrev:hover .navArrow { transform: translateX(-4px); }
+.navArrow { transition: transform 0.3s ease; }
+
+.techTag {
+  transition: all 0.2s ease;
+  cursor: default;
+}
+.techTag:hover {
+  border-color: var(--color-primary) !important;
+  background: rgba(var(--color-primary-rgb, 99, 102, 241), 0.15) !important;
+}
+
+.actionBtn {
+  transition: all 0.25s ease;
+}
+.actionBtn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 20px rgba(var(--color-primary-rgb, 99, 102, 241), 0.3) !important;
+}
