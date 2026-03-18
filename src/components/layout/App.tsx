@@ -1,6 +1,7 @@
 'use client';
 
-import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Lenis from 'lenis';
 import { ThemeContextProvider } from '../theme';
 import { SoundContextProvider, useSoundContext } from '../audio';
@@ -21,7 +22,7 @@ import CertificationsSection from '../sections/Certifications/CertificationsSect
 import { LikesProvider } from '../../context/LikesContext';
 import BottomRightHUD from '../ui/BottomRightHUD';
 
-const Scene3D = lazy(() => import('../3d/Scene3D'));
+const Scene3D = dynamic(() => import('../3d/Scene3D'), { ssr: false });
 
 const LenisProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     useEffect(() => {
