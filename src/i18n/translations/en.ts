@@ -136,5 +136,73 @@ export const en = {
     results: 'Results',
     view_code: 'View Code',
     live_demo: 'Live Demo',
+    overview: 'Project Overview',
+  },
+  experience_periods: ['2024 - Present', '2022 - 2023', '2021 - 2022', '2021 - 2021'],
+  project_items: {
+    portfolio: {
+      title: 'Portfolio Website',
+      description: "Most developer portfolios look the same. I wanted mine to feel like a product — cinematic scroll sequences, a 3D globe tracing my work across countries, procedural audio, and bilingual support. Built from scratch with Next.js and React — no UI library.",
+      longDescription: "I got tired of portfolios that feel like themed templates. So I built this one from scratch — Next.js for SSR and static generation with React, a custom CSS design system instead of any UI framework, Three.js for the 3D globe, scroll-driven cinematic sections, and a Web Audio API sound layer. It supports English and Portuguese, respects accessibility preferences, and scores 95+ on Lighthouse.",
+      challenges: [
+        'Balancing visual richness with performance — the 3D globe needed to lazy-load without impacting initial page speed',
+        'Building a cinematic scroll system with sticky sections, fade transitions, and smooth camera movement without jank',
+        'Creating a custom design system (no UI library) that looks polished in both dark and light themes',
+      ],
+      results: [
+        'Lighthouse performance score 95+',
+        '3D globe loads asynchronously with only 244KB gzipped overhead',
+        'Full bilingual support (EN/PT-BR) with zero layout shift on language switch',
+      ],
+      role: 'Solo developer — design, architecture, and implementation',
+    },
+    'telecom-backoffice': {
+      title: 'Telecom Back-Office Platform',
+      description: "Paradise Mobile's support team was drowning in manual workflows — copying data between Zendesk, Webflow, and spreadsheets. I built the automation layer that replaced all of it, from ticket routing to customer onboarding.",
+      longDescription: "When I joined Paradise Mobile, every customer interaction touched 4+ disconnected platforms. Support reps were manually copying data between systems, onboarding had a high drop-off rate, and there was no single view of a customer. I designed and built a unified back-office platform that automated the entire pipeline — Zapier integrations for ticket routing, a React dashboard for customer management, self-service onboarding flows that measurably reduced drop-off, and REST APIs bridging the CRM across ~10K+ customers.",
+      challenges: [
+        'Integrating 4+ external platforms (Zapier, Webflow, Zendesk, Strapi) into a unified automation pipeline',
+        'Designing REST APIs that bridged multiple CRM systems serving ~10K+ customers',
+        'Building onboarding flows that reduced friction while maintaining data validation requirements',
+      ],
+      results: [
+        'Directly boosted support team revenue through automated workflow tools',
+        'Reduced operational costs by replacing manual processes with integrated automation',
+        'CRM integration serving ~10K+ customers across the platform',
+      ],
+      role: 'Senior Full Stack Engineer — architecture, API design, and frontend implementation',
+    },
+    'edtech-platform': {
+      title: 'EdTech Unified Platform',
+      description: "Twenty+ educational institutions, each with their own enrollment system, contract workflows, and reporting tools. Grupo Tiradentes needed one platform to unify them all — I helped build it.",
+      longDescription: "Grupo Tiradentes operated ~20 institutions, each running separate systems for enrollment, contracts, financing, and reporting. Students and staff dealt with fragmented workflows daily. I built the React + TypeScript frontend and contributed to the C#/.NET + PostgreSQL backend that consolidated everything into a single platform — handling high-volume enrollment transactions, contract generation, and institutional reporting used daily by thousands.",
+      challenges: [
+        'Unifying workflows across ~20 institutions with different operational processes',
+        'Handling enrollment transaction volumes at scale with robust data integrity',
+        'Designing interfaces usable by both tech-savvy students and non-technical administrative staff',
+      ],
+      results: [
+        'Consolidated ~20 institutional systems into a single platform',
+        'Used daily by administrative staff and thousands of students',
+        'Streamlined enrollment, contracts, and financial reporting workflows',
+      ],
+      role: 'Mid-level Full Stack Engineer — frontend implementation and backend API development',
+    },
+    'mining-data-platform': {
+      title: 'Mining Data Integration Platform',
+      description: "ArcelorMittal's Canadian mining operations relied on manual data entry to track 50K+ daily sensor readings. I led the team that built the real-time integration platform that replaced it — from Brazil, fully remote.",
+      longDescription: "ArcelorMittal Mines Canada was manually reconciling physical sensor data with virtual models across their mining facilities — a slow, error-prone process touching 50K+ readings per day. I led development of a web platform that automated the entire pipeline: real-time data ingestion from multiple facility systems, automated merging of virtual models with physical sensor readings, and a unified operations dashboard. Shipped from Brazil as part of a fully remote international team coordinating daily with Canadian stakeholders.",
+      challenges: [
+        'Handling real-time data ingestion from multiple facility systems with different data formats',
+        'Working as part of a fully remote international team from Brazil with stakeholders in Canada',
+        'Replacing deeply entrenched manual processes without disrupting ongoing mining operations',
+      ],
+      results: [
+        'Eliminated manual data entry processes for resource tracking',
+        'Enabled real-time data merging across multiple facility systems',
+        'Led delivery from Brazil, coordinating daily with Canadian engineering and operations stakeholders',
+      ],
+      role: 'Mid-level Full Stack Engineer — lead developer for the integration platform',
+    },
   },
 };

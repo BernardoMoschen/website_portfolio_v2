@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { FaGithub, FaExternalLinkAlt, FaArrowRight, FaChevronLeft, FaChevronRight, FaLock } from 'react-icons/fa';
 import { getProjectTypeMap } from './projectTypeMap';
-import { projects } from '../../data/projectsData';
+import { getLocalizedProjects } from '../../data/projectsData';
 import siteConfig from '../../../config/site';
 import { AnimateOnScroll, StaggerContainer, StaggerItem } from '../../utils/animations';
 import TiltCard from '../../utils/TiltCard';
@@ -17,6 +17,7 @@ type ProjectFilter = 'all' | 'professional' | 'personal';
 const ProjectsSection: React.FC = () => {
     const { darkMode } = useThemeMode();
     const { t } = useI18n();
+    const projects = getLocalizedProjects(t);
     const projectTypeMap = getProjectTypeMap(t);
     const statusMap = getStatusMap(t);
     const scrollRef = useRef<HTMLDivElement>(null);

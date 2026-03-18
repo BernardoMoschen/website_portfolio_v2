@@ -136,5 +136,73 @@ export const ptBr = {
     results: 'Resultados',
     view_code: 'Ver Código',
     live_demo: 'Demo ao Vivo',
+    overview: 'Visão Geral do Projeto',
+  },
+  experience_periods: ['2024 - Atual', '2022 - 2023', '2021 - 2022', '2021 - 2021'],
+  project_items: {
+    portfolio: {
+      title: 'Portfólio',
+      description: 'A maioria dos portfólios de dev são iguais. Eu quis que o meu parecesse um produto — scroll cinematográfico, globo 3D mapeando onde trabalhei, áudio procedural e suporte bilíngue. Feito do zero com Next.js e React — sem biblioteca de UI.',
+      longDescription: 'Cansei de portfólio que parece template. Construí esse do zero — Next.js pra SSR e geração estática com React, design system próprio em CSS sem nenhum framework de UI, Three.js pro globo 3D, seções cinematográficas por scroll e camada de som com Web Audio API. Suporta inglês e português, respeita preferências de acessibilidade e tira 95+ no Lighthouse.',
+      challenges: [
+        'Equilibrar riqueza visual com performance — o globo 3D precisava carregar lazy sem impactar a velocidade inicial',
+        'Construir um sistema de scroll cinematográfico com seções sticky, transições fade e movimento de câmera suave sem travamento',
+        'Criar um design system próprio (sem biblioteca de UI) que ficasse polido tanto no tema escuro quanto no claro',
+      ],
+      results: [
+        'Score de performance no Lighthouse 95+',
+        'Globo 3D carrega de forma assíncrona com apenas 244KB gzipped',
+        'Suporte bilíngue completo (EN/PT-BR) sem layout shift na troca de idioma',
+      ],
+      role: 'Desenvolvedor solo — design, arquitetura e implementação',
+    },
+    'telecom-backoffice': {
+      title: 'Plataforma Back-Office de Telecom',
+      description: 'O time de suporte da Paradise Mobile estava afogado em fluxos manuais — copiando dados entre Zendesk, Webflow e planilhas. Construí a camada de automação que substituiu tudo, do roteamento de tickets ao onboarding de clientes.',
+      longDescription: 'Quando entrei na Paradise Mobile, cada interação com cliente passava por 4+ plataformas desconectadas. Os atendentes copiavam dados entre sistemas manualmente, o onboarding tinha alta taxa de abandono e não existia uma visão unificada do cliente. Projetei e construí uma plataforma back-office unificada que automatizou todo o pipeline — integrações Zapier pro roteamento de tickets, dashboard React pra gestão de clientes, fluxos de onboarding self-service que reduziram o abandono de forma mensurável, e APIs REST conectando o CRM com ~10K+ clientes.',
+      challenges: [
+        'Integrar 4+ plataformas externas (Zapier, Webflow, Zendesk, Strapi) em um pipeline de automação unificado',
+        'Projetar APIs REST que conectassem múltiplos sistemas de CRM atendendo ~10K+ clientes',
+        'Construir fluxos de onboarding que reduzissem a fricção mantendo os requisitos de validação de dados',
+      ],
+      results: [
+        'Aumento direto na receita do time de suporte através de ferramentas de automação',
+        'Redução de custos operacionais ao substituir processos manuais por automação integrada',
+        'Integração de CRM atendendo ~10K+ clientes em toda a plataforma',
+      ],
+      role: 'Engenheiro Full Stack Sênior — arquitetura, design de APIs e implementação frontend',
+    },
+    'edtech-platform': {
+      title: 'Plataforma Unificada de EdTech',
+      description: 'Vinte e poucas instituições de ensino, cada uma com seu próprio sistema de matrícula, fluxos de contrato e ferramentas de relatório. O Grupo Tiradentes precisava de uma plataforma pra unificar tudo — eu ajudei a construir.',
+      longDescription: 'O Grupo Tiradentes operava ~20 instituições, cada uma rodando sistemas separados de matrícula, contratos, financiamento e relatórios. Alunos e funcionários lidavam com fluxos fragmentados no dia a dia. Construí o frontend React + TypeScript e contribuí pro backend C#/.NET + PostgreSQL que consolidou tudo em uma única plataforma — processando transações de matrícula em alto volume, geração de contratos e relatórios institucionais usados diariamente por milhares.',
+      challenges: [
+        'Unificar fluxos de trabalho entre ~20 instituições com processos operacionais diferentes',
+        'Lidar com volumes de transações de matrícula em escala com integridade robusta de dados',
+        'Projetar interfaces utilizáveis tanto por alunos tech-savvy quanto por funcionários administrativos não-técnicos',
+      ],
+      results: [
+        'Consolidação de ~20 sistemas institucionais em uma única plataforma',
+        'Utilizada diariamente por funcionários administrativos e milhares de alunos',
+        'Simplificação dos fluxos de matrícula, contratos e relatórios financeiros',
+      ],
+      role: 'Engenheiro Full Stack Pleno — implementação frontend e desenvolvimento de APIs backend',
+    },
+    'mining-data-platform': {
+      title: 'Plataforma de Integração de Dados de Mineração',
+      description: 'As operações de mineração da ArcelorMittal no Canadá dependiam de entrada manual de dados pra rastrear 50K+ leituras de sensores por dia. Liderei o time que construiu a plataforma de integração em tempo real que substituiu tudo — do Brasil, 100% remoto.',
+      longDescription: 'A ArcelorMittal Mines Canada reconciliava manualmente dados de sensores físicos com modelos virtuais nas instalações de mineração — um processo lento e propenso a erros tocando 50K+ leituras por dia. Liderei o desenvolvimento de uma plataforma web que automatizou todo o pipeline: ingestão de dados em tempo real de múltiplos sistemas das instalações, fusão automatizada de modelos virtuais com leituras de sensores físicos e um dashboard de operações unificado. Entregue do Brasil como parte de um time internacional 100% remoto, coordenando diariamente com stakeholders canadenses.',
+      challenges: [
+        'Lidar com ingestão de dados em tempo real de múltiplos sistemas de instalações com formatos diferentes',
+        'Trabalhar como parte de um time internacional 100% remoto do Brasil com stakeholders no Canadá',
+        'Substituir processos manuais profundamente enraizados sem interromper as operações de mineração em andamento',
+      ],
+      results: [
+        'Eliminação dos processos de entrada manual de dados pro rastreamento de recursos',
+        'Fusão de dados em tempo real entre múltiplos sistemas de instalações',
+        'Entrega liderada do Brasil, coordenando diariamente com stakeholders de engenharia e operações canadenses',
+      ],
+      role: 'Engenheiro Full Stack Pleno — desenvolvedor líder da plataforma de integração',
+    },
   },
 };

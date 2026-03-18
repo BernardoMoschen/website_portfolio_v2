@@ -135,6 +135,7 @@ const AboutSection: React.FC = () => {
                     <ExperienceTimeline
                         experiences={experiences}
                         descriptions={t.about.experience_descriptions}
+                        periods={t.experience_periods}
                         heading={t.about.experience_heading}
                     />
                 </AnimateOnScroll>

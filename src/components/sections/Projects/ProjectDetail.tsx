@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion, useReducedMotion } from 'motion/react';
 import { ThemeContextProvider, useThemeMode } from '../../theme/ThemeContext';
 import type { ProjectData } from '../../data/projectsData';
+import { getLocalizedProjects } from '../../data/projectsData';
 import { AnimateOnScroll } from '../../utils/animations';
 import { I18nProvider, useI18n } from '../../../i18n';
 import { getStatusMap } from '../../../constants/projectConstants';
@@ -41,15 +42,17 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
     const shouldReduceMotion = useReducedMotion();
     const { t } = useI18n();
     const statusMap = getStatusMap(t);
+    const localizedProjects = getLocalizedProjects(t);
+    const localizedProject = localizedProjects.find((p) => p.slug === project.slug) || project;
     const num = String(projectIndex + 1).padStart(2, '0');
-    const status = statusMap[project.status] || statusMap.completed;
+    const status = statusMap[localizedProject.status] || statusMap.completed;
     const ease = [0.25, 0.1, 0.25, 1] as const;
 
     return (
         <div style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
             {/* ===== HERO ===== */}
             <ProjectHero
-                project={project}
+                project={localizedProject}
                 projectIndex={projectIndex}
                 totalProjects={totalProjects}
                 darkMode={darkMode}
@@ -72,7 +75,7 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
                             <>
                                 <Image
                                     src={project.image}
-                                    alt={`${project.title} — project screenshot`}
+                                    alt={`${localizedProject.title} — project screenshot`}
                                     fill
                                     sizes="(max-width: 768px) 100vw, 80vw"
                                     style={{ objectFit: 'cover' }}
@@ -111,7 +114,7 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
             </div>
 
             {/* ===== PROJECT OVERVIEW ===== */}
-            {project.longDescription && (
+            {localizedProject.longDescription && (
                 <div className="section-inner">
                     <AnimateOnScroll y={30} delay={0.1}>
                         <div className="glass" style={{
@@ -128,13 +131,13 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
                                 fontWeight: 600, marginBottom: '1.25rem', fontSize: '1.1rem',
                                 color: 'var(--color-primary)', letterSpacing: '0.05em',
                             }}>
-                                {'// '}Project Overview
+                                {'// '}{t.project_detail.overview}
                             </h2>
                             <p style={{
                                 color: 'var(--color-text-secondary)', fontSize: '1.05rem',
                                 lineHeight: 1.85, maxWidth: '800px', margin: 0,
                             }}>
-                                {project.longDescription}
+                                {localizedProject.longDescription}
                             </p>
                         </div>
                     </AnimateOnScroll>
@@ -161,7 +164,7 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
                             {'< '}{t.project_detail.tech_stack}{' />'}
                         </h2>
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
-                            {project.technologies.map((tech, i) => (
+                            {localizedProject.technologies.map((tech, i) => (
                                 <motion.span
                                     key={tech}
                                     initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.8 }}
@@ -182,7 +185,7 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
 
             {/* ===== CHALLENGES & RESULTS ===== */}
             <ProjectChallengesResults
-                project={project}
+                project={localizedProject}
                 shouldReduceMotion={shouldReduceMotion}
                 ease={ease}
             />
@@ -190,7 +193,10 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
             <div className="section-inner"><GradientDivider /></div>
 
             {/* ===== NAVIGATION ===== */}
-            <ProjectNavigation prevProject={prevProject} nextProject={nextProject} />
+            <ProjectNavigation
+                prevProject={prevProject ? { ...prevProject, title: t.project_items[prevProject.slug as keyof typeof t.project_items]?.title ?? prevProject.title } : null}
+                nextProject={nextProject ? { ...nextProject, title: t.project_items[nextProject.slug as keyof typeof t.project_items]?.title ?? nextProject.title } : null}
+            />
         </div>
     );
 };
