@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { FaGithub, FaExternalLinkAlt, FaArrowRight, FaChevronLeft, FaChevronRight, FaLock } from 'react-icons/fa';
-import { projectTypeMap } from './projectTypeMap';
+import { getProjectTypeMap } from './projectTypeMap';
 import { projects } from '../../data/projectsData';
 import siteConfig from '../../../config/site';
 import { AnimateOnScroll, StaggerContainer, StaggerItem } from '../../utils/animations';
@@ -9,7 +9,7 @@ import SectionAnchor from '../../utils/SectionAnchor';
 import ProjectPreview from './ProjectPreview';
 import { useThemeMode } from '../../theme/ThemeContext';
 import { useI18n } from '../../../i18n';
-import { statusMap } from '../../../constants/projectConstants';
+import { getStatusMap } from '../../../constants/projectConstants';
 
 type ProjectFilter = 'all' | 'professional' | 'personal';
 
@@ -17,6 +17,8 @@ type ProjectFilter = 'all' | 'professional' | 'personal';
 const ProjectsSection: React.FC = () => {
     const { darkMode } = useThemeMode();
     const { t } = useI18n();
+    const projectTypeMap = getProjectTypeMap(t);
+    const statusMap = getStatusMap(t);
     const scrollRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
@@ -226,7 +228,7 @@ const ProjectsSection: React.FC = () => {
                                 textTransform: 'capitalize',
                             }}
                         >
-                            {f === 'all' ? 'All' : projectTypeMap[f].label}
+                            {f === 'all' ? t.projects.filter_all : projectTypeMap[f].label}
                         </button>
                     ))}
                 </div>

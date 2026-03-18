@@ -9,8 +9,8 @@ export interface TechnicalArea {
     category: string;
     iconType: 'devices' | 'storage' | 'cloud';
     technologies: Technology[];
-    description: string;
-    descriptionHighlight: string;
+    description?: string;
+    descriptionHighlight?: string;
 }
 
 export interface Experience {
@@ -18,38 +18,9 @@ export interface Experience {
     company: string;
     companyUrl: string;
     period: string;
-    description: string[];
+    description?: string[];
     iconType: 'work';
 }
-
-
-export type AudienceBrief = {
-    audience: string;
-    brief: string;
-};
-
-export const briefList: AudienceBrief[] = [
-    {
-        audience: 'For anyone',
-        brief:
-            "I care about the details most people never see — the loading state that feels right, the API response that's 200ms faster, the code a teammate reads six months later and actually understands. I've shipped products in Brazil, Canada, and remotely for international teams. I build things that matter, not just things that work.",
-    },
-    {
-        audience: 'Recruiters',
-        brief:
-            "5+ years, 3 countries, 4 industries. I led development of automation tools at a telecom that directly boosted revenue. I built a platform serving ~20 educational institutions and thousands of students. I shipped a real-time data system for ArcelorMittal's mining operations in Canada — remotely from Brazil. TypeScript full-stack, comfortable owning projects end-to-end or contributing to larger teams.",
-    },
-    {
-        audience: 'Product Managers',
-        brief:
-            "I don't just build what's in the ticket — I ask why. At Paradise Mobile, I pushed for self-service onboarding flows that reduced user drop-off. At Grupo Tiradentes, I helped consolidate 20 institutional systems into one. I think in user outcomes, flag technical risks early, and ship incrementally. If something can be validated simpler and sooner, I'll push for that.",
-    },
-    {
-        audience: 'Engineers',
-        brief:
-            "React + TypeScript is home base, but I've shipped production code in Node, NestJS, .NET/C#, and even PHP when needed. I've worked across PostgreSQL, SQL Server, MongoDB, and MySQL — whatever the project requires. I like clean abstractions, pragmatic testing, and code reviews that teach me something. I value teams that ship fast, refactor deliberately, and don't over-engineer.",
-    },
-];
 
 export const technicalAreas: TechnicalArea[] = [
     {
@@ -71,8 +42,6 @@ export const technicalAreas: TechnicalArea[] = [
             { name: 'CSS3', iconColor: '#1572B6', iconType: 'css' },
             { name: 'Jest', iconColor: '#C21325', iconType: 'jest', featured: true },
         ],
-        description: `Modern frontend frameworks, state management, and styling solutions`,
-        descriptionHighlight: 'I make pixels dance and users happy (mostly)',
     },
     {
         category: 'Backend & APIs',
@@ -93,8 +62,6 @@ export const technicalAreas: TechnicalArea[] = [
             { name: 'C#', iconColor: '#239120', iconType: 'csharp', },
 
         ],
-        description: 'Server-side development, API design, and scalable architecture',
-        descriptionHighlight:'I create functional endpoints and make your site fast...eventually',
     },
     {
         category: 'DevOps, Databases & Tools',
@@ -117,8 +84,6 @@ export const technicalAreas: TechnicalArea[] = [
             { name: 'Webflow', iconColor: '#4353FF', iconType: 'webflow' },
             { name: 'SOLID', iconColor: '#4285F4', iconType: 'solid' },
         ],
-        description: 'Database design, optimization, containerization and cloud infrastructure',
-        descriptionHighlight:'I speak fluent SQL and deploy with confidence (fingers crossed)' ,
     },
 ];
 
@@ -128,12 +93,6 @@ export const experiences: Experience[] = [
         company: 'Paradise Mobile',
         companyUrl: 'https://www.linkedin.com/company/paradise-mobile/about',
         period: '2024 - Present',
-        description: [
-            'Built self-service onboarding flows (React, Recoil, Jest) that measurably reduced user drop-off rates across the telecom platform',
-            'Designed REST APIs and midtier services (Node.js, TypeScript, GraphQL, AWS) powering a CRM serving ~10K+ customers',
-            'Led development of back-office automation tools that directly boosted support team revenue by replacing manual workflows with integrated pipelines',
-            'Unified 4+ external platforms (Zapier, Webflow, Zendesk, Strapi) into a single automation layer — from ticket routing to customer onboarding',
-        ],
         iconType: 'work',
     },
     {
@@ -141,11 +100,6 @@ export const experiences: Experience[] = [
         company: 'Grupo Tiradentes',
         companyUrl: 'https://www.linkedin.com/company/grupo-tiradentes/about',
         period: '2022 - 2023',
-        description: [
-            'Consolidated ~20 educational institutions into one unified platform — enrollment, contracts, financing, and reporting in a single system used daily by thousands',
-            'Built the React + TypeScript frontend serving administrative staff and students across the entire institution network',
-            'Engineered C#/.NET + PostgreSQL backend handling high-volume enrollment transactions with robust data integrity',
-        ],
         iconType: 'work',
     },
     {
@@ -153,11 +107,6 @@ export const experiences: Experience[] = [
         company: 'ArcelorMittal Mines Canada',
         companyUrl: 'https://www.linkedin.com/company/arcelormittal/about',
         period: '2021 - 2022',
-        description: [
-            'Led development of a real-time data integration platform processing 50K+ sensor readings/day — replaced error-prone manual data entry entirely',
-            'Architected Node.js + Sequelize.js + SQL Server backend for automated merging of virtual models with physical sensor data',
-            'Shipped from Brazil as part of a fully remote international team — daily coordination across time zones with Canadian stakeholders',
-        ],
         iconType: 'work',
     },
     {
@@ -165,11 +114,6 @@ export const experiences: Experience[] = [
         company: 'Meta IT',
         companyUrl: 'https://www.linkedin.com/company/metaoficial/about/',
         period: '2021 - 2021',
-        description: [
-            'Delivered features across multiple client projects simultaneously — React, Vue, PHP, NestJS, and Adonis.js depending on the engagement',
-            'Worked across 5+ database systems (MySQL, PostgreSQL, MongoDB, SQL Server) adapting to each project\'s architecture',
-            'Agency environment: tight deadlines, diverse codebases, rapid context-switching — built the adaptability that defined my career since',
-        ],
         iconType: 'work',
     },
 ];

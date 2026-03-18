@@ -73,7 +73,7 @@
   {
     "title": "EdTech Unified Platform",
     "slug": "edtech-platform",
-    "description": "Twenty educational institutions, each with their own enrollment system, contract workflows, and reporting tools. Grupo Tiradentes needed one platform to replace them all — I helped build it.",
+    "description": "Twenty+ educational institutions, each with their own enrollment system, contract workflows, and reporting tools. Grupo Tiradentes needed one platform to unify them all — I helped build it.",
     "longDescription": "Grupo Tiradentes operated ~20 institutions, each running separate systems for enrollment, contracts, financing, and reporting. Students and staff dealt with fragmented workflows daily. I built the React + TypeScript frontend and contributed to the C#/.NET + PostgreSQL backend that consolidated everything into a single platform — handling high-volume enrollment transactions, contract generation, and institutional reporting used daily by thousands.",
     "image": "/project-edtech.jpg",
     "technologies": ["React", "TypeScript", "C#", ".NET", "PostgreSQL", "SCRUM"],

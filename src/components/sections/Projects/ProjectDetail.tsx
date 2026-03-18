@@ -7,7 +7,7 @@ import { ThemeContextProvider, useThemeMode } from '../../theme/ThemeContext';
 import type { ProjectData } from '../../data/projectsData';
 import { AnimateOnScroll } from '../../utils/animations';
 import { I18nProvider, useI18n } from '../../../i18n';
-import { statusMap } from '../../../constants/projectConstants';
+import { getStatusMap } from '../../../constants/projectConstants';
 import styles from './ProjectDetail.module.css';
 import ProjectHero from './ProjectHero';
 import ProjectChallengesResults from './ProjectChallengesResults';
@@ -40,6 +40,7 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
     const { darkMode } = useThemeMode();
     const shouldReduceMotion = useReducedMotion();
     const { t } = useI18n();
+    const statusMap = getStatusMap(t);
     const num = String(projectIndex + 1).padStart(2, '0');
     const status = statusMap[project.status] || statusMap.completed;
     const ease = [0.25, 0.1, 0.25, 1] as const;
