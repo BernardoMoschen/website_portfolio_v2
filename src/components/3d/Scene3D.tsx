@@ -493,8 +493,8 @@ const CSSGlobe: React.FC<CSSGlobeProps> = ({ isLight = false }) => {
     const latitudes = [-60, -30, 0, 30, 60];
 
     const pColor = isLight ? '13,122,95' : '127,176,105';
-    const sColor = isLight ? '232,93,4'  : '255,138,80';
-    const dotColor = isLight ? '#e85d04' : SECONDARY;
+    const sColor = isLight ? '201,83,10' : '255,138,80';
+    const dotColor = isLight ? '#c9530a' : SECONDARY;
 
     return (
         <div
@@ -523,7 +523,7 @@ const CSSGlobe: React.FC<CSSGlobeProps> = ({ isLight = false }) => {
                 width: S + 120, height: S + 120,
                 borderRadius: '50%',
                 background: isLight
-                    ? `radial-gradient(circle, rgba(${pColor},0.14) 0%, rgba(${sColor},0.07) 45%, transparent 68%)`
+                    ? `radial-gradient(circle, rgba(${pColor},0.22) 0%, rgba(${sColor},0.12) 45%, transparent 68%)`
                     : `radial-gradient(circle, rgba(${pColor},0.10) 0%, rgba(${sColor},0.04) 40%, transparent 68%)`,
                 animation: 'cssGlobePulse 5s ease-in-out infinite',
             }} />
@@ -541,7 +541,7 @@ const CSSGlobe: React.FC<CSSGlobeProps> = ({ isLight = false }) => {
                     <div style={{
                         position: 'absolute', inset: 0,
                         borderRadius: '50%',
-                        border: `1px solid rgba(${pColor}, ${isLight ? 0.45 : 0.3})`,
+                        border: `1.5px solid rgba(${pColor}, ${isLight ? 0.6 : 0.3})`,
                     }} />
 
                     {/* Meridians */}
@@ -549,7 +549,7 @@ const CSSGlobe: React.FC<CSSGlobeProps> = ({ isLight = false }) => {
                         <div key={`m${i}`} style={{
                             position: 'absolute', inset: 0,
                             borderRadius: '50%',
-                            border: `1px solid rgba(${i === 1 ? sColor : pColor}, ${i === 0 ? (isLight ? 0.45 : 0.32) : (isLight ? 0.28 : 0.18)})`,
+                            border: `1px solid rgba(${i === 1 ? sColor : pColor}, ${i === 0 ? (isLight ? 0.58 : 0.32) : (isLight ? 0.38 : 0.18)})`,
                             transform: `rotateY(${i * (180 / meridians)}deg)`,
                         }} />
                     ))}
@@ -567,7 +567,7 @@ const CSSGlobe: React.FC<CSSGlobeProps> = ({ isLight = false }) => {
                                 left: '50%', top: '50%',
                                 marginLeft: -r, marginTop: -r,
                                 borderRadius: '50%',
-                                border: `1px solid rgba(${pColor},${isEquator ? (isLight ? 0.5 : 0.38) : (isLight ? 0.28 : 0.2)})`,
+                                border: `1px solid rgba(${pColor},${isEquator ? (isLight ? 0.62 : 0.38) : (isLight ? 0.38 : 0.2)})`,
                                 transform: `rotateX(90deg) translateY(${y}px)`,
                             }} />
                         );
