@@ -2,11 +2,16 @@ export const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
         const navbarHeight = window.innerWidth < 900 ? 64 : 72; // Match Toolbar heights
-        const additionalOffset = 24; 
+        const additionalOffset = 24;
         const totalOffset = navbarHeight + additionalOffset;
-        
-        const elementPosition = element.offsetTop - totalOffset;
-        
+
+        // CinematicSection content fades in between progress 0 and 0.12.
+        // Scroll past the fade-in zone so content is fully visible on arrival.
+        const sectionScroll = element.scrollHeight - window.innerHeight;
+        const fadeInOffset = sectionScroll > 0 ? sectionScroll * 0.15 : 0;
+
+        const elementPosition = element.offsetTop - totalOffset + fadeInOffset;
+
         window.scrollTo({
             top: elementPosition,
             behavior: 'smooth'
