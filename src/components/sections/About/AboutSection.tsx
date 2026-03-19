@@ -19,7 +19,8 @@ const AboutSection: React.FC = () => {
             style={{
                 width: '100%',
                 minHeight: '100vh',
-                padding: 'clamp(2rem, 4vw, 3rem) 0',
+                paddingTop: 'calc(72px + clamp(1rem, 2vw, 2rem))',
+                paddingBottom: 'clamp(2rem, 4vw, 3rem)',
                 background: 'var(--color-bg-glass)',
                 backdropFilter: 'blur(16px)',
                 position: 'relative',
