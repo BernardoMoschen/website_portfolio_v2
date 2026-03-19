@@ -27,25 +27,41 @@ const TechnicalExpertiseCard: React.FC<TechnicalExpertiseCardProps> = ({ area })
                     box-shadow: 0 8px 25px color-mix(in srgb, var(--color-primary) 15%, transparent);
                     border-color: var(--color-primary) !important;
                 }
+                @media (max-width: 640px) {
+                    .tech-card {
+                        padding: 0.625rem;
+                    }
+                    .tech-card:hover {
+                        transform: none;
+                    }
+                    .tech-card-description-box {
+                        background: none !important;
+                        padding: 0 !important;
+                        min-height: auto !important;
+                    }
+                    .tech-card-desc-highlight {
+                        display: none !important;
+                    }
+                }
             `}</style>
 
             {/* Header */}
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '0.5rem', gap: '0.625rem' }}>
                 {/* Category icon */}
                 <div
                     style={{
-                        width: 32,
-                        height: 32,
+                        width: 28,
+                        height: 28,
                         borderRadius: '50%',
                         background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        marginRight: '0.75rem',
                         color: '#fff',
-                        fontSize: '0.9rem',
+                        fontSize: '0.8rem',
                         flexShrink: 0,
                         boxShadow: '0 2px 8px color-mix(in srgb, var(--color-primary) 30%, transparent)',
+                        marginTop: '0.1rem',
                     }}
                 >
                     {getCategoryIcon(area.iconType)}
@@ -53,8 +69,8 @@ const TechnicalExpertiseCard: React.FC<TechnicalExpertiseCardProps> = ({ area })
 
                 <div style={{ flex: 1, minWidth: 0 }}>
                     {/* Title row */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem', flexWrap: 'wrap', gap: '0.25rem' }}>
-                        <span style={{ fontWeight: 700, color: 'var(--color-text)', fontSize: '0.9rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.25rem' }}>
+                        <span style={{ fontWeight: 700, color: 'var(--color-text)', fontSize: '0.85rem' }}>
                             {area.category}
                         </span>
                         <div style={{ display: 'flex', gap: '0.3rem', flexShrink: 0 }}>
@@ -63,8 +79,8 @@ const TechnicalExpertiseCard: React.FC<TechnicalExpertiseCardProps> = ({ area })
                                     background: 'var(--color-primary)',
                                     color: '#fff',
                                     fontWeight: 600,
-                                    fontSize: '0.6rem',
-                                    padding: '0.1rem 0.4rem',
+                                    fontSize: '0.55rem',
+                                    padding: '0.1rem 0.35rem',
                                     borderRadius: 4,
                                     lineHeight: 1.4,
                                 }}
@@ -76,8 +92,8 @@ const TechnicalExpertiseCard: React.FC<TechnicalExpertiseCardProps> = ({ area })
                                     border: '1px solid var(--color-primary)',
                                     color: 'var(--color-primary)',
                                     fontWeight: 600,
-                                    fontSize: '0.6rem',
-                                    padding: '0.05rem 0.4rem',
+                                    fontSize: '0.55rem',
+                                    padding: '0.05rem 0.35rem',
                                     borderRadius: 4,
                                     lineHeight: 1.4,
                                 }}
@@ -89,13 +105,15 @@ const TechnicalExpertiseCard: React.FC<TechnicalExpertiseCardProps> = ({ area })
 
                     {/* Description with hover swap */}
                     <div
+                        className="tech-card-description-box"
                         style={{
                             position: 'relative',
                             minHeight: 28,
                             cursor: 'pointer',
                             borderRadius: 4,
-                            padding: '0.4rem',
+                            padding: '0.35rem',
                             background: 'var(--color-bg-glass)',
+                            marginTop: '0.25rem',
                         }}
                         onMouseEnter={() => setIsDescriptionHovered(true)}
                         onMouseLeave={() => setIsDescriptionHovered(false)}
@@ -103,8 +121,8 @@ const TechnicalExpertiseCard: React.FC<TechnicalExpertiseCardProps> = ({ area })
                         <span
                             style={{
                                 color: 'var(--color-text-secondary)',
-                                lineHeight: 1.2,
-                                fontSize: '0.75rem',
+                                lineHeight: 1.3,
+                                fontSize: '0.7rem',
                                 fontWeight: 500,
                                 opacity: isDescriptionHovered ? 0 : 1,
                                 transform: isDescriptionHovered ? 'translateY(-6px)' : 'translateY(0)',
@@ -117,10 +135,11 @@ const TechnicalExpertiseCard: React.FC<TechnicalExpertiseCardProps> = ({ area })
                             {area.description}
                         </span>
                         <span
+                            className="tech-card-desc-highlight"
                             style={{
                                 color: 'var(--color-secondary)',
-                                lineHeight: 1.2,
-                                fontSize: '0.75rem',
+                                lineHeight: 1.3,
+                                fontSize: '0.7rem',
                                 fontStyle: 'italic',
                                 fontWeight: 600,
                                 opacity: isDescriptionHovered ? 1 : 0,

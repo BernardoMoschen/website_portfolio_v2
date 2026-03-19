@@ -48,7 +48,7 @@ const TechnicalExpertiseSection: React.FC = () => {
             `}</style>
 
             <StaggerContainer staggerDelay={0.12}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
                     {areas.map((area, index) => (
                         <StaggerItem key={index}>
                             <TechnicalExpertiseCard area={area} />

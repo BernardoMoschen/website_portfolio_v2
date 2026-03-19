@@ -18,14 +18,14 @@ const TechnologyChipList: React.FC<TechnologyChipListProps> = ({ technologies })
         <div>
             {/* Featured Technologies */}
             {featuredTechnologies.length > 0 && (
-                <div style={{ marginBottom: hasAdditional ? '0.75rem' : 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.4rem' }}>
-                        <FaStar size={10} style={{ color: 'var(--color-primary)', marginRight: '0.3rem' }} />
+                <div style={{ marginBottom: hasAdditional ? '0.5rem' : 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.35rem' }}>
+                        <FaStar size={9} style={{ color: 'var(--color-primary)', marginRight: '0.25rem' }} />
                         <span
                             style={{
                                 fontWeight: 700,
                                 color: 'var(--color-text)',
-                                fontSize: '0.65rem',
+                                fontSize: '0.6rem',
                                 textTransform: 'uppercase',
                                 letterSpacing: '0.05em',
                             }}
@@ -33,7 +33,7 @@ const TechnologyChipList: React.FC<TechnologyChipListProps> = ({ technologies })
                             Core Technologies
                         </span>
                     </div>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
                         {featuredTechnologies.map((tech, index) => (
                             <TechnologyChip key={index} technology={tech} />
                         ))}
@@ -52,13 +52,13 @@ const TechnologyChipList: React.FC<TechnologyChipListProps> = ({ technologies })
                             transition: 'max-height 0.35s ease, opacity 0.3s ease',
                         }}
                     >
-                        <div style={{ marginBottom: '0.5rem' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.4rem' }}>
+                        <div style={{ marginBottom: '0.4rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.35rem' }}>
                                 <span
                                     style={{
                                         fontWeight: 600,
                                         color: 'var(--color-text-secondary)',
-                                        fontSize: '0.6rem',
+                                        fontSize: '0.55rem',
                                         textTransform: 'uppercase',
                                         letterSpacing: '0.05em',
                                     }}
@@ -66,7 +66,7 @@ const TechnologyChipList: React.FC<TechnologyChipListProps> = ({ technologies })
                                     Additional Skills
                                 </span>
                             </div>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
                                 {additionalTechnologies.map((tech, index) => (
                                     <TechnologyChip key={index} technology={tech} />
                                 ))}
