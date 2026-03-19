@@ -13,14 +13,15 @@ export function useKonamiCode(onActivate: () => void) {
 
     useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
-            if (e.key === SEQUENCE[progress.current]) {
+            const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+            if (key === SEQUENCE[progress.current]) {
                 progress.current += 1;
                 if (progress.current === SEQUENCE.length) {
                     progress.current = 0;
                     onActivate();
                 }
             } else {
-                progress.current = e.key === SEQUENCE[0] ? 1 : 0;
+                progress.current = key === SEQUENCE[0] ? 1 : 0;
             }
         };
 

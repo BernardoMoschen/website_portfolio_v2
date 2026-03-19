@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 
 interface KonamiOverlayProps {
     onClose: () => void;
@@ -27,9 +27,22 @@ const LINES = [
 ];
 
 const KonamiOverlay: React.FC<KonamiOverlayProps> = ({ onClose }) => {
+    const overlayRef = useRef<HTMLDivElement>(null);
+    const previousFocus = useRef<Element | null>(null);
+
     const handleKey = useCallback((e: KeyboardEvent) => {
         if (e.key === 'Escape') onClose();
     }, [onClose]);
+
+    useEffect(() => {
+        previousFocus.current = document.activeElement;
+        overlayRef.current?.focus();
+        return () => {
+            if (previousFocus.current instanceof HTMLElement) {
+                previousFocus.current.focus();
+            }
+        };
+    }, []);
 
     useEffect(() => {
         window.addEventListener('keydown', handleKey);
@@ -38,6 +51,11 @@ const KonamiOverlay: React.FC<KonamiOverlayProps> = ({ onClose }) => {
 
     return (
         <div
+            ref={overlayRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Developer mode overlay"
+            tabIndex={-1}
             onClick={onClose}
             style={{
                 position: 'fixed',
