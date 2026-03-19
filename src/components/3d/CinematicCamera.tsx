@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { scrollState, mouseState } from './scrollState';
 import { lerp } from './mathUtils';
@@ -93,11 +93,15 @@ function getFov(progress: number): number {
 
 const _pos = new THREE.Vector3();
 const _target = new THREE.Vector3();
-const _smoothPos = new THREE.Vector3(0, 0, 6); // Match initial camera position
+const _smoothPos = new THREE.Vector3(0, 0, 6); // Snapped to actual position on first frame
 const _smoothTarget = new THREE.Vector3(0, 0, 0);
 let _initialized = false;
 
 const CinematicCamera: React.FC = () => {
+    const { size } = useThree();
+    // On narrow screens, push camera back so the globe is fully visible
+    const mobileZOffset = size.width < 768 ? 3.5 : 0;
+
     useFrame(({ camera, clock }) => {
         const p = scrollState.progress;
         const mx = mouseState.x;
@@ -106,6 +110,9 @@ const CinematicCamera: React.FC = () => {
         const curveT = getProgressOnCurve(p);
         positionCurve.getPoint(curveT, _pos);
         targetCurve.getPoint(curveT, _target);
+
+        // Pull camera back on mobile so the full globe is visible
+        _pos.z += mobileZOffset;
 
         // Add mouse parallax offset
         _pos.x += mx * 0.6;

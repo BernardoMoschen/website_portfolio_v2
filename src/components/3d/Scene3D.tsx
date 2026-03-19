@@ -519,7 +519,12 @@ const SceneContent: React.FC = () => {
 interface CSSGlobeProps { isLight?: boolean }
 
 const CSSGlobe: React.FC<CSSGlobeProps> = ({ isLight = false }) => {
-    const S = 360; // diameter px
+    const [S, setS] = useState(typeof window !== 'undefined' ? Math.min(360, window.innerWidth - 32) : 360);
+    useEffect(() => {
+        const update = () => setS(Math.min(360, window.innerWidth - 32));
+        window.addEventListener('resize', update);
+        return () => window.removeEventListener('resize', update);
+    }, []);
     const R = S / 2;
     const meridians = 6;
     const latitudes = [-60, -30, 0, 30, 60];
@@ -533,7 +538,7 @@ const CSSGlobe: React.FC<CSSGlobeProps> = ({ isLight = false }) => {
             aria-hidden="true"
             style={{
                 position: 'fixed',
-                top: 0, left: 0, width: '100vw', height: '100vh',
+                top: 0, left: 0, width: '100vw', height: '100dvh',
                 zIndex: 1, pointerEvents: 'none',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
@@ -703,14 +708,14 @@ const Scene3DInner: React.FC = () => {
                 style={{
                     position: 'fixed',
                     top: 0, left: 0,
-                    width: '100vw', height: '100vh',
+                    width: '100vw', height: '100dvh',
                     zIndex: 1, pointerEvents: 'none',
                     opacity: glReady ? 1 : 0,
                     transition: 'opacity 0.6s ease',
                 }}
             >
                 <Canvas
-                    camera={{ position: [0, 0, 6], fov: 50 }}
+                    camera={{ position: [0, 0, window.innerWidth < 768 ? 9.5 : 6], fov: 50 }}
                     style={{ background: 'transparent' }}
                     gl={{ antialias, alpha: true, powerPreference: 'default', preserveDrawingBuffer: false }}
                     dpr={[1, 1.5]}

@@ -314,12 +314,6 @@ a { color: inherit; text-decoration: none; }
 }
 
 @media (max-width: 480px) {
-  /* Prevent any fixed-width element from causing horizontal scroll */
-  * { max-width: 100%; box-sizing: border-box; }
-
-  /* Hero name size floor on very small phones */
-  h1 { font-size: clamp(2rem, 12vw, 4rem) !important; }
-
   /* Nav height safe area */
   nav { padding-top: env(safe-area-inset-top, 0); }
 }

@@ -4,12 +4,25 @@ import React, { useState, useEffect } from 'react';
 import { useLikes } from '../../context/LikesContext';
 import { scrollToTop } from '../layout/Navigation/utils';
 
+function useIsMobile(breakpoint = 768) {
+  const [mobile, setMobile] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
+    const handler = (e: MediaQueryListEvent | MediaQueryList) => setMobile(e.matches);
+    handler(mql);
+    mql.addEventListener('change', handler as (e: MediaQueryListEvent) => void);
+    return () => mql.removeEventListener('change', handler as (e: MediaQueryListEvent) => void);
+  }, [breakpoint]);
+  return mobile;
+}
+
 const BottomRightHUD: React.FC = () => {
   const { count, liked, loading, pulse, handleLike } = useLikes();
   const [showScroll, setShowScroll] = useState(false);
   const [showLike, setShowLike] = useState(false);
   const [hoverLike, setHoverLike] = useState(false);
   const [hoverScroll, setHoverScroll] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const onScroll = () => {
@@ -20,6 +33,16 @@ const BottomRightHUD: React.FC = () => {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Mobile-first sizing
+  const likeSize = isMobile ? 44 : (hoverLike ? 76 : 66);
+  const scrollSize = isMobile ? 36 : (hoverScroll ? 52 : 46);
+  const edgeOffset = isMobile ? '0.75rem' : '1.75rem';
+  const baseBottom = isMobile ? '0.75rem' : '2rem';
+  const likeBottom = showScroll
+    ? `calc(${isMobile ? '3.5rem' : '5.75rem'} + env(safe-area-inset-bottom, 0px))`
+    : `calc(${baseBottom} + env(safe-area-inset-bottom, 0px))`;
+  const scrollBottom = `calc(${baseBottom} + env(safe-area-inset-bottom, 0px))`;
 
   return (
     <>
@@ -52,6 +75,18 @@ const BottomRightHUD: React.FC = () => {
               0 10px 32px rgba(0,0,0,0.45);
           }
         }
+        @keyframes glowLikeMobile {
+          0%, 100% {
+            box-shadow:
+              0 0 8px color-mix(in srgb, var(--color-primary) 30%, transparent),
+              0 4px 12px rgba(0,0,0,0.3);
+          }
+          50% {
+            box-shadow:
+              0 0 14px color-mix(in srgb, var(--color-primary) 45%, transparent),
+              0 4px 12px rgba(0,0,0,0.3);
+          }
+        }
         @keyframes glowScroll {
           0%, 100% {
             box-shadow:
@@ -62,6 +97,18 @@ const BottomRightHUD: React.FC = () => {
             box-shadow:
               0 0 24px color-mix(in srgb, var(--color-secondary) 60%, transparent),
               0 6px 22px rgba(0,0,0,0.4);
+          }
+        }
+        @keyframes glowScrollMobile {
+          0%, 100% {
+            box-shadow:
+              0 0 6px color-mix(in srgb, var(--color-secondary) 25%, transparent),
+              0 3px 10px rgba(0,0,0,0.25);
+          }
+          50% {
+            box-shadow:
+              0 0 10px color-mix(in srgb, var(--color-secondary) 40%, transparent),
+              0 3px 10px rgba(0,0,0,0.25);
           }
         }
         @keyframes heartBurst {
@@ -83,6 +130,15 @@ const BottomRightHUD: React.FC = () => {
         .blob-scroll:hover {
           animation: morphB 1.8s ease-in-out infinite, glowScroll 1s ease-in-out infinite;
         }
+
+        @media (max-width: 768px) {
+          .blob-like {
+            animation: morphA 7s ease-in-out infinite, glowLikeMobile 3.5s ease-in-out infinite;
+          }
+          .blob-scroll {
+            animation: morphB 5.5s ease-in-out infinite, glowScrollMobile 3s ease-in-out infinite;
+          }
+        }
       `}</style>
 
       {/* ── Like blob ── */}
@@ -97,11 +153,11 @@ const BottomRightHUD: React.FC = () => {
         disabled={liked || loading || count === null}
         style={{
           position: 'fixed',
-          bottom: showScroll ? '5.75rem' : '2rem',
-          right: '1.75rem',
+          bottom: likeBottom,
+          right: edgeOffset,
           zIndex: 1000,
-          width: hoverLike ? 76 : 66,
-          height: hoverLike ? 76 : 66,
+          width: likeSize,
+          height: likeSize,
           background: liked
             ? 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)'
             : 'linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 55%, #000) 0%, color-mix(in srgb, var(--color-secondary) 55%, #000) 100%)',
@@ -126,7 +182,7 @@ const BottomRightHUD: React.FC = () => {
         }}
       >
         <span style={{
-          fontSize: '1.25rem',
+          fontSize: isMobile ? '0.9rem' : '1.25rem',
           lineHeight: 1,
           display: 'block',
           animation: pulse ? 'heartBurst 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275)' : 'none',
@@ -137,10 +193,10 @@ const BottomRightHUD: React.FC = () => {
         </span>
         {count !== null && (
           <span style={{
-            fontSize: '0.6rem',
+            fontSize: isMobile ? '0.5rem' : '0.6rem',
             fontFamily: '"JetBrains Mono", monospace',
             fontWeight: 700,
-            marginTop: 4,
+            marginTop: isMobile ? 2 : 4,
             opacity: 0.88,
             letterSpacing: '0.02em',
           }}>
@@ -158,11 +214,11 @@ const BottomRightHUD: React.FC = () => {
         aria-label="Scroll to top"
         style={{
           position: 'fixed',
-          bottom: '2rem',
-          right: '1.75rem',
+          bottom: scrollBottom,
+          right: edgeOffset,
           zIndex: 1000,
-          width: hoverScroll ? 52 : 46,
-          height: hoverScroll ? 52 : 46,
+          width: scrollSize,
+          height: scrollSize,
           background: 'linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%)',
           border: 'none',
           cursor: 'pointer',
@@ -170,7 +226,7 @@ const BottomRightHUD: React.FC = () => {
           alignItems: 'center',
           justifyContent: 'center',
           color: '#fff',
-          fontSize: '1rem',
+          fontSize: isMobile ? '0.8rem' : '1rem',
           fontWeight: 700,
           opacity: showScroll ? 1 : 0,
           pointerEvents: showScroll ? 'auto' : 'none',

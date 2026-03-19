@@ -23,17 +23,26 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({
     menuItems,
 }) => {
     return (
-        <>
-            <MobileMenuButton onClick={onToggle} />
-            <MobileDrawer
-                open={open}
-                onClose={onToggle}
-                menuItems={menuItems}
-                activeSection={activeSection}
-                onMenuClick={onMenuClick}
-            />
-        </>
+        <MobileMenuButton onClick={onToggle} />
     );
 };
+
+/** Drawer rendered separately — must live outside <header> to escape its
+ *  backdrop-filter stacking context so `position: fixed` works correctly. */
+export const MobileNavigationDrawer: React.FC<MobileNavigationProps> = ({
+    open,
+    onToggle,
+    onMenuClick,
+    activeSection,
+    menuItems,
+}) => (
+    <MobileDrawer
+        open={open}
+        onClose={onToggle}
+        menuItems={menuItems}
+        activeSection={activeSection}
+        onMenuClick={onMenuClick}
+    />
+);
 
 export default MobileNavigation;

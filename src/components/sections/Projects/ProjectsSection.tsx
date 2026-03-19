@@ -380,7 +380,6 @@ const ProjectsSection: React.FC = () => {
                                     data-scroll-strip=""
                                     style={{
                                         width: `min(${cardWidth}px, calc(100vw - 48px))`,
-                                        height: '78vh',
                                         minHeight: 'min(560px, 70vh)',
                                         maxHeight: 780,
                                         borderRadius: 20,
@@ -485,7 +484,7 @@ const ProjectsSection: React.FC = () => {
                                         fontSize: '0.92rem',
                                         lineHeight: 1.65,
                                         margin: '0 0 24px 0',
-                                        flex: '1 1 auto',
+                                        flexShrink: 0,
                                         overflow: 'hidden',
                                         display: '-webkit-box',
                                         WebkitLineClamp: 5,

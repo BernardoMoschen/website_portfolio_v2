@@ -17,9 +17,6 @@ const AboutContent: React.FC = () => {
                     display: 'flex',
                     gap: '0.25rem',
                     marginBottom: '1.5rem',
-                    overflowX: 'auto',
-                    WebkitOverflowScrolling: 'touch',
-                    scrollbarWidth: 'none',
                     justifyContent: 'center',
                     flexWrap: 'wrap',
                 }}
@@ -31,7 +28,7 @@ const AboutContent: React.FC = () => {
                             key={index}
                             onClick={() => setSelectedTab(index)}
                             style={{
-                                padding: '0.5rem 1.25rem',
+                                padding: '0.4rem 0.75rem',
                                 fontSize: 'clamp(0.78rem, 1.2vw, 0.95rem)',
                                 fontWeight: 600,
                                 background: 'none',
@@ -44,7 +41,6 @@ const AboutContent: React.FC = () => {
                                     : 'var(--color-text-secondary)',
                                 cursor: 'pointer',
                                 transition: 'color 0.2s, border-color 0.2s',
-                                whiteSpace: 'nowrap',
                                 fontFamily: 'inherit',
                             }}
                             aria-selected={isActive}

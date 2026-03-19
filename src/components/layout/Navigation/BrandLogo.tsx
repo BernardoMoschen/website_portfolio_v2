@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface BrandLogoProps {
     trigger: boolean;
     onClick: () => void;
 }
 
+function useIsMobile(breakpoint = 768) {
+    const [mobile, setMobile] = useState(false);
+    useEffect(() => {
+        const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
+        const handler = (e: MediaQueryListEvent | MediaQueryList) => setMobile(e.matches);
+        handler(mql);
+        mql.addEventListener('change', handler as (e: MediaQueryListEvent) => void);
+        return () => mql.removeEventListener('change', handler as (e: MediaQueryListEvent) => void);
+    }, [breakpoint]);
+    return mobile;
+}
+
 const BrandLogo: React.FC<BrandLogoProps> = ({ trigger, onClick }) => {
+    const isMobile = useIsMobile();
+    const iconSize = isMobile ? 22 : 28;
+
     return (
         <div
             onClick={onClick}
@@ -13,14 +28,15 @@ const BrandLogo: React.FC<BrandLogoProps> = ({ trigger, onClick }) => {
                 display: 'flex',
                 alignItems: 'center',
                 flexGrow: 1,
+                minWidth: 0,
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
             }}
         >
             {/* Terminal icon SVG */}
             <svg
-                width="28"
-                height="28"
+                width={iconSize}
+                height={iconSize}
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="var(--color-primary)"
@@ -28,7 +44,8 @@ const BrandLogo: React.FC<BrandLogoProps> = ({ trigger, onClick }) => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 style={{
-                    marginRight: 8,
+                    marginRight: isMobile ? 6 : 8,
+                    flexShrink: 0,
                     opacity: trigger ? 1 : undefined,
                     animation: trigger ? 'none' : 'pulse 2s infinite',
                 }}
@@ -36,7 +53,7 @@ const BrandLogo: React.FC<BrandLogoProps> = ({ trigger, onClick }) => {
                 <polyline points="4 17 10 11 4 5" />
                 <line x1="12" y1="19" x2="20" y2="19" />
             </svg>
-            <div>
+            <div style={{ minWidth: 0 }}>
                 <div
                     className="mono"
                     style={{
@@ -44,7 +61,10 @@ const BrandLogo: React.FC<BrandLogoProps> = ({ trigger, onClick }) => {
                         color: 'var(--color-primary)',
                         fontFamily: '"JetBrains Mono", monospace',
                         lineHeight: 1,
-                        fontSize: '1.15rem',
+                        fontSize: isMobile ? '0.85rem' : '1.15rem',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
                     }}
                 >
                     bernardo.moschen
@@ -54,7 +74,7 @@ const BrandLogo: React.FC<BrandLogoProps> = ({ trigger, onClick }) => {
                     style={{
                         color: 'var(--color-secondary)',
                         fontFamily: '"JetBrains Mono", monospace',
-                        fontSize: '0.7rem',
+                        fontSize: isMobile ? '0.6rem' : '0.7rem',
                         fontWeight: 'bold',
                         opacity: trigger ? 0.8 : 0.6,
                         transition: 'opacity 0.3s ease',

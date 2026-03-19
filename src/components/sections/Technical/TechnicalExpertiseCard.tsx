@@ -53,7 +53,7 @@ const TechnicalExpertiseCard: React.FC<TechnicalExpertiseCardProps> = ({ area })
 
                 <div style={{ flex: 1, minWidth: 0 }}>
                     {/* Title row */}
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem', flexWrap: 'wrap', gap: '0.25rem' }}>
                         <span style={{ fontWeight: 700, color: 'var(--color-text)', fontSize: '0.9rem' }}>
                             {area.category}
                         </span>
