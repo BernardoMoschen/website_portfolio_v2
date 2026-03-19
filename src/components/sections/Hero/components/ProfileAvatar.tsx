@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useMemo } from 'react';
+import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 
 interface ProfileAvatarProps {
@@ -51,6 +51,7 @@ const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
 }) => {
   const clicks = useRef(0);
   const resetTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const celebrationTimeouts = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   const [chargeKey, setChargeKey] = useState(0);
   const [celebrateKey, setCelebrateKey] = useState(0);
@@ -78,17 +79,26 @@ const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
       setChargeKey(0);
       setShowMsg(true);
       setVisibleRings(4);
-      setTimeout(() => setCelebrating(false), 950);
-      setTimeout(() => {
-        setShowMsg(false);
-        setParticles([]);
-        setVisibleRings(0);
-      }, 2800);
+      celebrationTimeouts.current.push(
+        setTimeout(() => setCelebrating(false), 950),
+        setTimeout(() => {
+          setShowMsg(false);
+          setParticles([]);
+          setVisibleRings(0);
+        }, 2800),
+      );
     } else {
       setVisibleRings(clicks.current);
       setChargeKey(k => k + 1);
     }
   }, [celebrating]);
+
+  useEffect(() => {
+    return () => {
+      if (resetTimeout.current) clearTimeout(resetTimeout.current);
+      celebrationTimeouts.current.forEach(clearTimeout);
+    };
+  }, []);
 
   // Ring dimensions — slightly larger than avatar
   const ringSize = size + 32;
@@ -198,8 +208,12 @@ const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
 
       {/* Avatar gradient ring + photo */}
       <div
-        key={`celebrate-${celebrateKey}`}
+        key={`avatar-${celebrateKey}-${chargeKey}`}
+        role="button"
+        tabIndex={0}
+        aria-label="Click to interact with avatar"
         onClick={handleClick}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick(); } }}
         style={{
           position: 'relative',
           width: size,
@@ -219,7 +233,7 @@ const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
           // Celebration: 3D coin-flip on Y axis. Charge: 3D tilt (not flat wiggle)
           animation: celebrating
             ? 'avatarFlip 0.92s ease forwards'
-            : chargeKey > 0 ? `avatarTilt 0.40s ease ${chargeKey}` : undefined,
+            : chargeKey > 0 ? 'avatarTilt 0.40s ease' : undefined,
           zIndex: 1,
         }}
       >
