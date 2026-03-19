@@ -107,20 +107,20 @@ const AboutSection: React.FC = () => {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: 8,
-                                padding: '12px 16px',
+                                gap: 6,
+                                padding: '8px 12px',
                                 borderBottom: '1px solid var(--color-border)',
                                 background: 'rgba(0, 0, 0, 0.15)',
                             }}
                         >
-                            <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#ff5f57', display: 'inline-block' }} />
-                            <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#febc2e', display: 'inline-block' }} />
-                            <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#28c840', display: 'inline-block' }} />
+                            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#ff5f57', display: 'inline-block' }} />
+                            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#febc2e', display: 'inline-block' }} />
+                            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#28c840', display: 'inline-block' }} />
                             <span
+                                className="mono"
                                 style={{
                                     marginLeft: 8,
-                                    fontFamily: '"JetBrains Mono", monospace',
-                                    fontSize: '0.75rem',
+                                    fontSize: '0.65rem',
                                     color: 'var(--color-text-secondary)',
                                     opacity: 0.7,
                                 }}
