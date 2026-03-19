@@ -1,20 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useIsMobile } from '../../../hooks/useIsMobile';
 
 interface BrandLogoProps {
     trigger: boolean;
     onClick: () => void;
-}
-
-function useIsMobile(breakpoint = 768) {
-    const [mobile, setMobile] = useState(false);
-    useEffect(() => {
-        const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
-        const handler = (e: MediaQueryListEvent | MediaQueryList) => setMobile(e.matches);
-        handler(mql);
-        mql.addEventListener('change', handler as (e: MediaQueryListEvent) => void);
-        return () => mql.removeEventListener('change', handler as (e: MediaQueryListEvent) => void);
-    }, [breakpoint]);
-    return mobile;
 }
 
 const BrandLogo: React.FC<BrandLogoProps> = ({ trigger, onClick }) => {

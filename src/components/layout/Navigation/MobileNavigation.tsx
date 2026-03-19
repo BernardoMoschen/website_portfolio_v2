@@ -16,11 +16,7 @@ interface MobileNavigationProps {
 }
 
 const MobileNavigation: React.FC<MobileNavigationProps> = ({
-    open,
     onToggle,
-    onMenuClick,
-    activeSection,
-    menuItems,
 }) => {
     return (
         <MobileMenuButton onClick={onToggle} />

@@ -715,7 +715,7 @@ const Scene3DInner: React.FC = () => {
                 }}
             >
                 <Canvas
-                    camera={{ position: [0, 0, window.innerWidth < 768 ? 9.5 : 6], fov: 50 }}
+                    camera={{ position: [0, 0, 6], fov: 50 }}
                     style={{ background: 'transparent' }}
                     gl={{ antialias, alpha: true, powerPreference: 'default', preserveDrawingBuffer: false }}
                     dpr={[1, 1.5]}

@@ -5,6 +5,7 @@ import DesktopNavigation from './DesktopNavigation';
 import BrandLogo from './BrandLogo';
 import { menuItems, scrollToSection } from './utils';
 import { useI18n } from '../../../i18n';
+import { useIsMobile } from '../../../hooks/useIsMobile';
 
 function useIsLight() {
     const [isLight, setIsLight] = useState(false);
@@ -16,20 +17,6 @@ function useIsLight() {
         return () => observer.disconnect();
     }, []);
     return isLight;
-}
-
-function useIsMobile(breakpoint = 768) {
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
-        const handler = (e: MediaQueryListEvent | MediaQueryList) => setIsMobile(e.matches);
-        handler(mql);
-        mql.addEventListener('change', handler as (e: MediaQueryListEvent) => void);
-        return () => mql.removeEventListener('change', handler as (e: MediaQueryListEvent) => void);
-    }, [breakpoint]);
-
-    return isMobile;
 }
 
 const NavigationContainer: React.FC = () => {

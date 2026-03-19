@@ -3,18 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLikes } from '../../context/LikesContext';
 import { scrollToTop } from '../layout/Navigation/utils';
-
-function useIsMobile(breakpoint = 768) {
-  const [mobile, setMobile] = useState(false);
-  useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
-    const handler = (e: MediaQueryListEvent | MediaQueryList) => setMobile(e.matches);
-    handler(mql);
-    mql.addEventListener('change', handler as (e: MediaQueryListEvent) => void);
-    return () => mql.removeEventListener('change', handler as (e: MediaQueryListEvent) => void);
-  }, [breakpoint]);
-  return mobile;
-}
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 const BottomRightHUD: React.FC = () => {
   const { count, liked, loading, pulse, handleLike } = useLikes();
