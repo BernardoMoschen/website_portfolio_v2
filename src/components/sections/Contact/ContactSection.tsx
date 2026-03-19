@@ -129,10 +129,10 @@ const ContactSection: React.FC = () => {
   };
 
   const contactLinks = [
-    { icon: <HiMail size={20} />, label: 'Email', value: siteConfig.email, href: `mailto:${siteConfig.email}` },
-    { icon: <FaGithub size={20} />, label: 'GitHub', value: 'BernardoMoschen', href: siteConfig.github, external: true },
-    { icon: <FaLinkedin size={20} />, label: 'LinkedIn', value: 'bernardomoschen', href: siteConfig.linkedin, external: true },
-    { icon: <HiLocationMarker size={20} />, label: 'Location', value: t.hero.location, href: '' },
+    { icon: <HiMail size={20} />, label: t.contact.label_email, value: siteConfig.email, href: `mailto:${siteConfig.email}` },
+    { icon: <FaGithub size={20} />, label: t.contact.label_github, value: 'BernardoMoschen', href: siteConfig.github, external: true },
+    { icon: <FaLinkedin size={20} />, label: t.contact.label_linkedin, value: 'bernardomoschen', href: siteConfig.linkedin, external: true },
+    { icon: <HiLocationMarker size={20} />, label: t.contact.label_location, value: t.hero.location, href: '' },
   ];
 
   const focusBlob = {

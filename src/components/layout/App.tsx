@@ -1,6 +1,7 @@
 'use client';
 
-import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Lenis from 'lenis';
 import { ThemeContextProvider } from '../theme';
 import { SoundContextProvider, useSoundContext } from '../audio';
@@ -20,8 +21,10 @@ import { FooterSection } from '../sections/Footer';
 import CertificationsSection from '../sections/Certifications/CertificationsSection';
 import { LikesProvider } from '../../context/LikesContext';
 import BottomRightHUD from '../ui/BottomRightHUD';
+import KonamiOverlay from '../ui/KonamiOverlay';
+import { useKonamiCode } from '../../hooks/useKonamiCode';
 
-const Scene3D = lazy(() => import('../3d/Scene3D'));
+const Scene3D = dynamic(() => import('../3d/Scene3D'), { ssr: false });
 
 const LenisProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     useEffect(() => {
@@ -48,6 +51,7 @@ const LenisProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
 const AppInner: React.FC = () => {
     const [loading, setLoading] = useState(true);
+    const [konamiActive, setKonamiActive] = useState(false);
     const { playSound } = useSoundContext();
     const startupPlayed = useRef(false);
 
@@ -59,17 +63,32 @@ const AppInner: React.FC = () => {
     useEffect(() => {
         if (!loading && !startupPlayed.current) {
             startupPlayed.current = true;
-            // Small delay so sound plays as curtain lifts
             const t = setTimeout(() => playSound('startup'), 300);
             return () => clearTimeout(t);
         }
     }, [loading, playSound]);
+
+    // Console greeting for DevTools explorers
+    useEffect(() => {
+        console.log(
+            '%c👋 Hey, curious one!',
+            'color: #7fb069; font-size: 18px; font-weight: bold; font-family: monospace;'
+        );
+        console.log(
+            '%c  Built with Next.js, Three.js & too much coffee.\n  Stack: React · TypeScript · Node.js · Python · AWS\n\n  If you\'re reading this, you might be exactly who I want to work with.\n  → https://bernardomoschen.dev',
+            'color: #ff8a50; font-size: 12px; font-family: monospace; line-height: 2;'
+        );
+    }, []);
+
+    const activateKonami = useCallback(() => setKonamiActive(true), []);
+    useKonamiCode(activateKonami);
 
     return (
         <LenisProvider>
             <AmbientAudio />
             <LoadingScreen loading={loading} />
             <CustomCursor />
+            {konamiActive && <KonamiOverlay onClose={() => setKonamiActive(false)} />}
             <Suspense fallback={null}>
                 <Scene3D />
             </Suspense>

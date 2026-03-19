@@ -26,7 +26,7 @@
 
 ## 🟡 SEO & Discoverability
 
-- [ ] **Submit sitemap to Google Search Console** — The sitemap at `/sitemap.xml` exists but
+- [X] **Submit sitemap to Google Search Console** — The sitemap at `/sitemap.xml` exists but
       Google won't crawl it until you submit it manually at search.google.com/search-console.
 
 - [x] **Add canonical URL to metadata** — Added `alternates: { canonical: siteConfig.url }` to

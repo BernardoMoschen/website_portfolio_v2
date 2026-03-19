@@ -27,7 +27,7 @@ export const AmbientAudio: FC = () => {
         if (!audioRef.current) {
             const audio = new Audio('/ambience.mp3');
             audio.loop = true;
-            audio.preload = 'none';
+            audio.preload = 'auto';
             audio.volume = 0;
             audioRef.current = audio;
         }
@@ -93,7 +93,15 @@ export const AmbientAudio: FC = () => {
     // Handle toggle events dispatched synchronously from SoundToggle
     useEffect(() => {
         const onEnabled = () => tryPlay();
-        const onDisabled = () => fadeOut();
+        const onDisabled = () => {
+            // Clear any pending retry handler so a queued retry doesn't race with fade-out
+            if (retryHandlerRef.current) {
+                document.removeEventListener('click', retryHandlerRef.current);
+                document.removeEventListener('keydown', retryHandlerRef.current);
+                retryHandlerRef.current = null;
+            }
+            fadeOut();
+        };
         window.addEventListener(SOUND_ENABLED_EVENT, onEnabled);
         window.addEventListener(SOUND_DISABLED_EVENT, onDisabled);
         return () => {

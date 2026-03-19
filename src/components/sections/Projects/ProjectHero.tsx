@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaLock } from 'react-icons/fa';
-import { projectTypeMap } from './projectTypeMap';
+import { getProjectTypeMap } from './projectTypeMap';
 import type { ProjectData } from '../../data/projectsData';
 import { useI18n } from '../../../i18n';
 import styles from './ProjectDetail.module.css';
@@ -26,6 +26,7 @@ const ProjectHero: React.FC<ProjectHeroProps> = ({
     ease,
 }) => {
     const { t } = useI18n();
+    const projectTypeMap = getProjectTypeMap(t);
     const num = String(projectIndex + 1).padStart(2, '0');
     const [backHovered, setBackHovered] = useState(false);
     void backHovered; // used only for re-render trigger

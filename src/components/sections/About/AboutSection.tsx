@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaCode, FaGlobeAmericas, FaWifi } from 'react-icons/fa';
 import { experiences } from '../../data/aboutData';
+import { getLocalizedProjects } from '../../data/projectsData';
 import AboutContent from './AboutContent';
 import TechnicalExpertiseSection from '../Technical/TechnicalExpertiseSection';
 import ExperienceTimeline from './ExperienceTimeline';
@@ -10,12 +11,16 @@ import { useI18n } from '../../../i18n';
 
 const AboutSection: React.FC = () => {
     const { t } = useI18n();
+    const projectTitles = Object.fromEntries(
+        getLocalizedProjects(t).map((p) => [p.slug, p.title])
+    );
     return (
         <div
             style={{
                 width: '100%',
                 minHeight: '100vh',
-                padding: 'clamp(2rem, 4vw, 3rem) 0',
+                paddingTop: 'calc(72px + clamp(1rem, 2vw, 2rem))',
+                paddingBottom: 'clamp(2rem, 4vw, 3rem)',
                 background: 'var(--color-bg-glass)',
                 backdropFilter: 'blur(16px)',
                 position: 'relative',
@@ -135,7 +140,10 @@ const AboutSection: React.FC = () => {
                     <ExperienceTimeline
                         experiences={experiences}
                         descriptions={t.about.experience_descriptions}
+                        periods={t.experience_periods}
                         heading={t.about.experience_heading}
+                        projectTitles={projectTitles}
+                        viewProjectLabel={t.about.view_project}
                     />
                 </AnimateOnScroll>
             </div>

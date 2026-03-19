@@ -79,6 +79,21 @@ const HeroSection: React.FC = () => {
         padding: '5rem 1.5rem 6rem',
       }}
     >
+      {/* Bottom gradient fade to smooth globe-to-background transition */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          height: '30%',
+          background: 'linear-gradient(to bottom, transparent, var(--color-bg))',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }}
+      />
+
       {/* Cursor-following plasma orb */}
       <style>{`
         @keyframes plasmaMorph {
