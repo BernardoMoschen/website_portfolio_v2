@@ -136,6 +136,7 @@ const HeroSection: React.FC = () => {
           textAlign: 'center',
           position: 'relative',
           zIndex: 2,
+          paddingBottom: 'clamp(3.5rem, 6vw, 5rem)',
         }}
       >
         {/* Profile photo */}
@@ -291,6 +292,7 @@ const HeroSection: React.FC = () => {
           bottom: '2rem',
           left: '50%',
           transform: 'translateX(-50%)',
+          zIndex: 3,
           cursor: 'pointer',
           display: 'flex',
           flexDirection: 'column',
