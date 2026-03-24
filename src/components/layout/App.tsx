@@ -29,7 +29,8 @@ const Scene3D = dynamic(() => import('../3d/Scene3D'), { ssr: false });
 const LenisProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     useEffect(() => {
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) return;
+        const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+        if (prefersReducedMotion || isTouchDevice) return;
 
         const lenis = new Lenis({
             lerp: 0.12,
