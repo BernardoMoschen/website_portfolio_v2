@@ -363,7 +363,7 @@ const ProjectsSection: React.FC = () => {
                     }
                 `}</style>
 
-                <StaggerContainer staggerDelay={0.12} style={{
+                <StaggerContainer key={`featured-${filter}`} staggerDelay={0.12} style={{
                     display: 'flex',
                     gap: cardGap,
                     flexShrink: 0,
@@ -633,7 +633,7 @@ const ProjectsSection: React.FC = () => {
                         </div>
                     </AnimateOnScroll>
 
-                    <StaggerContainer staggerDelay={0.1} style={{
+                    <StaggerContainer key={`other-${filter}`} staggerDelay={0.1} style={{
                         display: 'grid',
                         gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))',
                         gap: 24,
