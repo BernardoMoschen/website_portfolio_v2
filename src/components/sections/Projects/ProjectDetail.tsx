@@ -13,6 +13,7 @@ import styles from './ProjectDetail.module.css';
 import ProjectHero from './ProjectHero';
 import ProjectChallengesResults from './ProjectChallengesResults';
 import ProjectNavigation from './ProjectNavigation';
+import Storyline from '../../projects/storyline/Storyline';
 
 interface AdjacentProject {
     slug: string;
@@ -182,6 +183,14 @@ const ProjectDetailContent: React.FC<ProjectDetailProps> = ({
             </div>
 
             <div className="section-inner"><GradientDivider /></div>
+
+            {/* ===== STORYLINE (optional cinematic case study) ===== */}
+            {project.storyline && project.storyline.length > 0 && (
+                <>
+                    <Storyline blocks={project.storyline} />
+                    <div className="section-inner"><GradientDivider /></div>
+                </>
+            )}
 
             {/* ===== CHALLENGES & RESULTS ===== */}
             <ProjectChallengesResults

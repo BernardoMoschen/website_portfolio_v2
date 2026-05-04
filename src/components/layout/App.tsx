@@ -51,12 +51,23 @@ const LenisProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
 const AppInner: React.FC = () => {
     const [loading, setLoading] = useState(true);
+    const [showBoot, setShowBoot] = useState(true);
     const [konamiActive, setKonamiActive] = useState(false);
     const { playSound } = useSoundContext();
     const startupPlayed = useRef(false);
 
     useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 2000);
+        if (typeof window !== 'undefined' && sessionStorage.getItem('boot-seen')) {
+            setLoading(false);
+            setShowBoot(false);
+            return;
+        }
+        const timer = setTimeout(() => {
+            setLoading(false);
+            if (typeof window !== 'undefined') {
+                sessionStorage.setItem('boot-seen', '1');
+            }
+        }, 2000);
         return () => clearTimeout(timer);
     }, []);
 
@@ -86,7 +97,7 @@ const AppInner: React.FC = () => {
     return (
         <LenisProvider>
             <AmbientAudio />
-            <LoadingScreen loading={loading} />
+            {showBoot && <LoadingScreen loading={loading} />}
             <CustomCursor />
             {konamiActive && <KonamiOverlay onClose={() => setKonamiActive(false)} />}
             <Suspense fallback={null}>

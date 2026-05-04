@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import Link from 'next/link';
 import { FaGithub, FaExternalLinkAlt, FaArrowRight, FaChevronLeft, FaChevronRight, FaLock } from 'react-icons/fa';
 import { getProjectTypeMap } from './projectTypeMap';
 import { getLocalizedProjects } from '../../data/projectsData';
@@ -585,7 +586,7 @@ const ProjectsSection: React.FC = () => {
                                             </a>
                                         )}
                                         {project.slug && (
-                                            <a
+                                            <Link
                                                 href={`/projects/${project.slug}`}
                                                 className="btn btn-ghost action-link"
                                                 style={{
@@ -600,7 +601,7 @@ const ProjectsSection: React.FC = () => {
                                                 }}
                                             >
                                                 {t.projects.details} <FaArrowRight size={12} />
-                                            </a>
+                                            </Link>
                                         )}
                                     </div>
                                 </div>

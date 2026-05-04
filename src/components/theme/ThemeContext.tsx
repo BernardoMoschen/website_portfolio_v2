@@ -1,9 +1,17 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 
 interface ThemeContextType {
   darkMode: boolean;
   toggleTheme: () => void;
 }
+
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const supportsViewTransitions = () =>
+  typeof document !== 'undefined' && 'startViewTransition' in document;
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
@@ -40,7 +48,16 @@ export const ThemeContextProvider: React.FC<ThemeContextProviderProps> = ({ chil
     }
   }, [darkMode]);
 
-  const toggleTheme = () => setDarkMode(!darkMode);
+  const toggleTheme = () => {
+    const next = !darkMode;
+    if (supportsViewTransitions() && !prefersReducedMotion()) {
+      document.startViewTransition!(() => {
+        flushSync(() => setDarkMode(next));
+      });
+    } else {
+      setDarkMode(next);
+    }
+  };
 
   return (
     <ThemeContext.Provider value={{ darkMode, toggleTheme }}>
