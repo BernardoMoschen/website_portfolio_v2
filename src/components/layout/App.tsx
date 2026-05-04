@@ -23,8 +23,12 @@ import { LikesProvider } from '../../context/LikesContext';
 import BottomRightHUD from '../ui/BottomRightHUD';
 import KonamiOverlay from '../ui/KonamiOverlay';
 import { useKonamiCode } from '../../hooks/useKonamiCode';
+import { conciergeBus } from '../../lib/conciergeBus';
 
 const Scene3D = dynamic(() => import('../3d/Scene3D'), { ssr: false });
+const Concierge = dynamic(() => import('../ai/Concierge'), { ssr: false });
+
+const conciergeEnabled = process.env.NEXT_PUBLIC_CONCIERGE_ENABLED === '1';
 
 const LenisProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     useEffect(() => {
@@ -94,6 +98,15 @@ const AppInner: React.FC = () => {
     const activateKonami = useCallback(() => setKonamiActive(true), []);
     useKonamiCode(activateKonami);
 
+    useEffect(() => {
+        if (!conciergeEnabled) return;
+        const off = conciergeBus.on('scrollToSection', ({ id }) => {
+            const target = document.getElementById(id);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        return off;
+    }, []);
+
     return (
         <LenisProvider>
             <AmbientAudio />
@@ -127,6 +140,7 @@ const AppInner: React.FC = () => {
                 </CinematicSection>
             </main>
             <FooterSection />
+            {conciergeEnabled && <Concierge />}
         </LenisProvider>
     );
 };

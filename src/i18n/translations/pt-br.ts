@@ -1,3 +1,5 @@
+import type { StorylineBlock } from '../../components/projects/storyline/types';
+
 export const ptBr = {
   nav: { home: 'Início', about: 'Sobre', projects: 'Projetos', contact: 'Contato', resume: 'Currículo' },
   hero: {
@@ -139,6 +141,13 @@ export const ptBr = {
     live_demo: 'Demo ao Vivo',
     overview: 'Visão Geral do Projeto',
   },
+  concierge: {
+    label: 'Pode perguntar',
+    placeholder: 'Pergunte sobre projetos, experiência ou contato…',
+    firstMessage: 'Oi! Sou o concierge IA do Bernardo. Pergunte sobre um projeto, a experiência dele ou como entrar em contato.',
+    error: 'Deu ruim. Tenta de novo em instantes.',
+    rateLimited: 'Muitas requisições — espera uns minutos e tenta de novo.',
+  },
   experience_periods: ['2024 - Atual', '2022 - 2023', '2021 - 2022', '2021 - 2021'],
   project_items: {
     portfolio: {
@@ -156,6 +165,33 @@ export const ptBr = {
         'Suporte bilíngue completo (EN/PT-BR) sem layout shift na troca de idioma',
       ],
       role: 'Desenvolvedor solo — design, arquitetura e implementação',
+      storyline: [
+        { kind: 'heading', text: 'Como foi feito' },
+        {
+          kind: 'paragraph',
+          text: 'Um portfólio que também é playground: globo WebGL, ambiência audio-reativa, scroll suave e design system próprio com dois temas. A meta — parecer produto, não currículo.',
+        },
+        {
+          kind: 'metrics',
+          items: [
+            { to: 95, suffix: '+', label: 'Lighthouse' },
+            { to: 244, suffix: 'KB gz', label: 'Bundle 3D' },
+            { to: 60, suffix: 'fps', label: 'Render alvo' },
+            { to: 2, label: 'Temas' },
+          ],
+        },
+        {
+          kind: 'code',
+          lang: 'tsx',
+          caption: 'Globo Three.js com rotas de voo em curva de Bézier entre cidades.',
+          code: `// Three.js globe with bezier-curve flight paths
+const arc = new THREE.CubicBezierCurve3(
+  origin, ctrlA, ctrlB, destination
+);
+const points = arc.getPoints(64);
+scene.add(new THREE.Line(geometry.setFromPoints(points), material));`,
+        },
+      ] as StorylineBlock[],
     },
     'telecom-backoffice': {
       title: 'Plataforma Digital de Telecom 5G',
@@ -172,6 +208,34 @@ export const ptBr = {
         'Integração de CRM atendendo ~10K+ clientes de ponta a ponta',
       ],
       role: 'Engenheiro Full Stack Sênior — arquitetura, design de APIs e frontend em toda a plataforma',
+      storyline: [
+        { kind: 'heading', text: 'Conectado, não remendado' },
+        {
+          kind: 'paragraph',
+          text: '5G greenfield significa nada de sistemas legados — e nada de cola pronta entre Zendesk, Webflow, Strapi e Zapier. Construímos a camada que fez tudo isso parecer um produto só pra ~10K assinantes.',
+        },
+        {
+          kind: 'metrics',
+          items: [
+            { to: 10, suffix: 'K+', label: 'Clientes' },
+            { to: 4, suffix: '+', label: 'Integrações' },
+            { to: 2, label: 'Camadas de API' },
+          ],
+        },
+        {
+          kind: 'code',
+          lang: 'ts',
+          caption: 'Eventos de assinante se ramificam pra CRM, Zendesk e onboarding numa rodada só.',
+          code: `// Subscriber lifecycle webhook → Zapier → CRM + Zendesk
+export async function onSubscriberCreated(payload: SubscriberPayload) {
+  await Promise.all([
+    zapier.trigger('crm.sync', payload),
+    zendesk.createUser(payload),
+    notifyOnboardingFlow(payload.id),
+  ]);
+}`,
+        },
+      ] as StorylineBlock[],
     },
     'edtech-platform': {
       title: 'Plataforma EdTech — Grupo Tiradentes',
@@ -188,6 +252,34 @@ export const ptBr = {
         'Substituiu sistemas institucionais fragmentados por um pipeline único de matrícula, contratos e relatórios',
       ],
       role: 'Engenheiro Full Stack Pleno — implementação frontend e desenvolvimento de APIs backend',
+      storyline: [
+        { kind: 'heading', text: 'Cinco estados, uma plataforma' },
+        {
+          kind: 'paragraph',
+          text: 'Cinco estados, instituições fragmentadas, sessenta anos de processos sobrepostos. O trabalho: uma superfície única de matrícula em que 50K+ alunos e equipe administrativa pudessem confiar desde o primeiro dia.',
+        },
+        {
+          kind: 'metrics',
+          items: [
+            { to: 50, suffix: 'K+', label: 'Alunos' },
+            { to: 5, label: 'Estados' },
+            { to: 60, suffix: '+ anos', label: 'Tradição' },
+          ],
+        },
+        {
+          kind: 'code',
+          lang: 'csharp',
+          caption: 'Matrículas idempotentes — seguro reprocessar sob carga.',
+          code: `// Enrollment endpoint — high-volume, idempotent by request key
+[HttpPost("enrollments")]
+public async Task<ActionResult<Enrollment>> Enroll(EnrollmentRequest req) {
+    var existing = await _repo.FindByIdempotencyKey(req.Key);
+    if (existing != null) return Ok(existing);
+    var enrollment = await _service.ProcessAsync(req);
+    return CreatedAtAction(nameof(Get), new { id = enrollment.Id }, enrollment);
+}`,
+        },
+      ] as StorylineBlock[],
     },
     'mining-data-platform': {
       title: 'Plataforma de Operações de Mineração — ArcelorMittal',
@@ -204,6 +296,34 @@ export const ptBr = {
         'Entrega 100% remota do Brasil — coordenação diária com engenharia e operações canadenses',
       ],
       role: 'Engenheiro Full Stack Pleno — desenvolvedor líder da plataforma de operações',
+      storyline: [
+        { kind: 'heading', text: 'Tempo real, da cava ao dashboard' },
+        {
+          kind: 'paragraph',
+          text: 'Equipamentos, turnos e operários rastreados na maior mina de minério de ferro a céu aberto do mundo — substituindo entrada manual por streams de sensores que fundem leituras físicas em modelo virtual em tempo real.',
+        },
+        {
+          kind: 'metrics',
+          items: [
+            { to: 50, suffix: 'K+', label: 'Pontos/dia' },
+            { to: 24, suffix: 'km²', label: 'Área da mina' },
+            { to: 30, suffix: '%', label: 'Output global' },
+          ],
+        },
+        {
+          kind: 'code',
+          lang: 'ts',
+          caption: 'Stream de sensor → fusão → upsert → broadcast num só fluxo.',
+          code: `// Sensor ingest pipeline — merge physical readings with virtual model
+import { mergeWithVirtual } from './virtualModel';
+
+stream.on('data', async (reading) => {
+  const enriched = mergeWithVirtual(reading);
+  await db.equipment.upsert(enriched);
+  bus.emit('equipment.updated', enriched);
+});`,
+        },
+      ] as StorylineBlock[],
     },
   },
 };

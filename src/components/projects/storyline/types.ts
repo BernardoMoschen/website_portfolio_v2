@@ -7,4 +7,5 @@ export type StorylineBlock =
           kind: 'metrics';
           items: Array<{ to: number; from?: number; suffix?: string; prefix?: string; label: string }>;
       }
-    | { kind: 'beforeAfter'; before: string; after: string; alt: string; height?: number };
+    | { kind: 'beforeAfter'; before: string; after: string; alt: string; height?: number }
+    | { kind: 'pin'; heading: string; body?: string; height?: '150vh' | '200vh' | '250vh' };

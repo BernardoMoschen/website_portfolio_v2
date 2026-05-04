@@ -8,6 +8,7 @@ import CodeBlock from './CodeBlock';
 import CountUp from './CountUp';
 import Metrics from './Metrics';
 import BeforeAfter from './BeforeAfter';
+import Pin from './Pin';
 
 interface Props {
     blocks: StorylineBlock[];
@@ -53,6 +54,15 @@ const Storyline: React.FC<Props> = ({ blocks }) => {
                                 before={block.before}
                                 after={block.after}
                                 alt={block.alt}
+                                height={block.height}
+                            />
+                        );
+                    case 'pin':
+                        return (
+                            <Pin
+                                key={key}
+                                heading={block.heading}
+                                body={block.body}
                                 height={block.height}
                             />
                         );

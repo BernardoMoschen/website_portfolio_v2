@@ -11,6 +11,7 @@ import ProjectPreview from './ProjectPreview';
 import { useThemeMode } from '../../theme/ThemeContext';
 import { useI18n } from '../../../i18n';
 import { getStatusMap } from '../../../constants/projectConstants';
+import { conciergeBus } from '../../../lib/conciergeBus';
 
 type ProjectFilter = 'all' | 'professional' | 'personal';
 
@@ -25,6 +26,7 @@ const ProjectsSection: React.FC = () => {
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
     const [filter, setFilter] = useState<ProjectFilter>('all');
+    const [pulseSlug, setPulseSlug] = useState<string | null>(null);
     const filterOptions: ProjectFilter[] = ['all', 'professional', 'personal'];
 
     const handleFilterKeyDown = (e: React.KeyboardEvent, currentIndex: number) => {
@@ -68,6 +70,19 @@ const ProjectsSection: React.FC = () => {
         el.scrollLeft = 0;
         updateScrollState();
     }, [filter]);
+
+    useEffect(() => {
+        const off = conciergeBus.on('highlightProject', ({ slug }) => {
+            const card = document.querySelector<HTMLElement>(`[data-project-slug="${slug}"]`);
+            if (!card) return;
+            card.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+            setPulseSlug(slug);
+            window.setTimeout(() => {
+                setPulseSlug((current) => (current === slug ? null : current));
+            }, 1800);
+        });
+        return off;
+    }, []);
 
     const scroll = (direction: 'left' | 'right') => {
         const el = scrollRef.current;
@@ -157,6 +172,22 @@ const ProjectsSection: React.FC = () => {
                 }
                 .filter-pill-active {
                     animation: filterPillMorph 3.5s ease-in-out infinite;
+                }
+                @keyframes projectPulse {
+                    0%   { box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb,127,176,105), 0.55), 0 8px 24px rgba(0,0,0,0.18); }
+                    50%  { box-shadow: 0 0 0 14px rgba(var(--color-primary-rgb,127,176,105), 0), 0 12px 32px rgba(0,0,0,0.22); }
+                    100% { box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb,127,176,105), 0), 0 8px 24px rgba(0,0,0,0.18); }
+                }
+                .project-pulse {
+                    animation: projectPulse 1.6s ease-out;
+                    border-color: var(--color-primary) !important;
+                }
+                @media (prefers-reduced-motion: reduce) {
+                    .project-pulse {
+                        animation: none;
+                        outline: 2px solid var(--color-primary);
+                        outline-offset: 2px;
+                    }
                 }
             `}</style>
             <div className="proj-blob proj-blob-1" />
@@ -377,8 +408,9 @@ const ProjectsSection: React.FC = () => {
                             <StaggerItem key={project.slug} style={{ flexShrink: 0 }}>
                               <TiltCard style={{ borderRadius: 20, scrollSnapAlign: 'start' }}>
                                 <div
-                                    className="glass project-card-featured"
+                                    className={`glass project-card-featured${pulseSlug === project.slug ? ' project-pulse' : ''}`}
                                     data-scroll-strip=""
+                                    data-project-slug={project.slug}
                                     style={{
                                         width: `min(${cardWidth}px, calc(100vw - 48px))`,
                                         height: '78vh',
@@ -646,7 +678,8 @@ const ProjectsSection: React.FC = () => {
                             return (
                                 <StaggerItem key={project.slug}>
                                     <div
-                                        className="glass-subtle project-card-other"
+                                        className={`glass-subtle project-card-other${pulseSlug === project.slug ? ' project-pulse' : ''}`}
+                                        data-project-slug={project.slug}
                                         style={{
                                             borderRadius: 16,
                                             border: '1px solid var(--color-border)',

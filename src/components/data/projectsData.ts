@@ -16,7 +16,6 @@ interface ProjectStructural {
         content?: string[];
         metrics?: { label: string; value: string }[];
     };
-    storyline?: StorylineBlock[];
 }
 
 export interface ProjectData extends ProjectStructural {
@@ -26,6 +25,7 @@ export interface ProjectData extends ProjectStructural {
     challenges?: string[];
     results?: string[];
     role?: string;
+    storyline?: StorylineBlock[];
 }
 
 const structuralData: ProjectStructural[] = [
@@ -46,33 +46,6 @@ const structuralData: ProjectStructural[] = [
                 { label: 'Build', value: 'Next.js (SSR + SSG)' },
             ],
         },
-        storyline: [
-            { kind: 'heading', text: 'How it was built' },
-            {
-                kind: 'paragraph',
-                text: 'A portfolio that doubles as a playground: WebGL globe, audio-reactive ambience, smooth-scroll, and a custom design system with two themes. The goal — feel like a product, not a CV.',
-            },
-            {
-                kind: 'metrics',
-                items: [
-                    { to: 95, suffix: '+', label: 'Lighthouse' },
-                    { to: 244, suffix: 'KB gz', label: '3D Bundle' },
-                    { to: 60, suffix: 'fps', label: 'Render Target' },
-                    { to: 2, label: 'Themes' },
-                ],
-            },
-            {
-                kind: 'code',
-                lang: 'tsx',
-                caption: 'Typed reveal: characters animate in as the block enters the viewport.',
-                code: `// Three.js globe with bezier-curve flight paths
-const arc = new THREE.CubicBezierCurve3(
-  origin, ctrlA, ctrlB, destination
-);
-const points = arc.getPoints(64);
-scene.add(new THREE.Line(geometry.setFromPoints(points), material));`,
-            },
-        ],
     },
     {
         slug: 'telecom-backoffice',
@@ -162,6 +135,7 @@ const mergeWithTranslations = (t: Translations): ProjectData[] =>
             challenges: text?.challenges,
             results: text?.results,
             role: text?.role,
+            storyline: text?.storyline,
         };
     });
 

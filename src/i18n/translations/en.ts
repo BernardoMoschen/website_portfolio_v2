@@ -1,3 +1,5 @@
+import type { StorylineBlock } from '../../components/projects/storyline/types';
+
 export const en = {
   nav: { home: 'Home', about: 'About', projects: 'Projects', contact: 'Contact', resume: 'Resume' },
   hero: {
@@ -139,6 +141,13 @@ export const en = {
     live_demo: 'Live Demo',
     overview: 'Project Overview',
   },
+  concierge: {
+    label: 'Ask anything',
+    placeholder: 'Ask about projects, experience, or how to reach me…',
+    firstMessage: "Hi! I'm Bernardo's concierge. Ask about a project, his experience, or how to get in touch.",
+    error: 'Something went wrong. Try again in a moment.',
+    rateLimited: "Too many requests — give it a few minutes and try again.",
+  },
   experience_periods: ['2024 - Present', '2022 - 2023', '2021 - 2022', '2021 - 2021'],
   project_items: {
     portfolio: {
@@ -156,6 +165,33 @@ export const en = {
         'Full bilingual support (EN/PT-BR) with zero layout shift on language switch',
       ],
       role: 'Solo developer — design, architecture, and implementation',
+      storyline: [
+        { kind: 'heading', text: 'How it was built' },
+        {
+          kind: 'paragraph',
+          text: 'A portfolio that doubles as a playground: WebGL globe, audio-reactive ambience, smooth-scroll, and a custom design system with two themes. The goal — feel like a product, not a CV.',
+        },
+        {
+          kind: 'metrics',
+          items: [
+            { to: 95, suffix: '+', label: 'Lighthouse' },
+            { to: 244, suffix: 'KB gz', label: '3D Bundle' },
+            { to: 60, suffix: 'fps', label: 'Render Target' },
+            { to: 2, label: 'Themes' },
+          ],
+        },
+        {
+          kind: 'code',
+          lang: 'tsx',
+          caption: 'Three.js globe with bezier-curve flight paths between cities.',
+          code: `// Three.js globe with bezier-curve flight paths
+const arc = new THREE.CubicBezierCurve3(
+  origin, ctrlA, ctrlB, destination
+);
+const points = arc.getPoints(64);
+scene.add(new THREE.Line(geometry.setFromPoints(points), material));`,
+        },
+      ] as StorylineBlock[],
     },
     'telecom-backoffice': {
       title: '5G Telecom Digital Platform',
@@ -172,6 +208,34 @@ export const en = {
         'CRM integration serving ~10K+ customers end to end',
       ],
       role: 'Senior Full Stack Engineer — architecture, API design, and frontend across the platform',
+      storyline: [
+        { kind: 'heading', text: 'Wired together, not stitched' },
+        {
+          kind: 'paragraph',
+          text: "Greenfield 5G means no legacy systems — but also no off-the-shelf glue between Zendesk, Webflow, Strapi, and Zapier. We built the layer that made them feel like one product to ~10K subscribers.",
+        },
+        {
+          kind: 'metrics',
+          items: [
+            { to: 10, suffix: 'K+', label: 'Customers' },
+            { to: 4, suffix: '+', label: 'Integrations' },
+            { to: 2, label: 'API Layers' },
+          ],
+        },
+        {
+          kind: 'code',
+          lang: 'ts',
+          caption: 'Subscriber events fan out to CRM, Zendesk, and onboarding in one round-trip.',
+          code: `// Subscriber lifecycle webhook → Zapier → CRM + Zendesk
+export async function onSubscriberCreated(payload: SubscriberPayload) {
+  await Promise.all([
+    zapier.trigger('crm.sync', payload),
+    zendesk.createUser(payload),
+    notifyOnboardingFlow(payload.id),
+  ]);
+}`,
+        },
+      ] as StorylineBlock[],
     },
     'edtech-platform': {
       title: 'EdTech Platform — Grupo Tiradentes',
@@ -188,6 +252,34 @@ export const en = {
         'Replaced fragmented institutional systems with a single enrollment, contracts, and reporting pipeline',
       ],
       role: 'Mid-level Full Stack Engineer — frontend implementation and backend API development',
+      storyline: [
+        { kind: 'heading', text: 'Five states, one platform' },
+        {
+          kind: 'paragraph',
+          text: 'Five states, fragmented institutions, sixty years of overlapping processes. The job: a single enrollment surface that 50K+ students and admin staff could trust on day one.',
+        },
+        {
+          kind: 'metrics',
+          items: [
+            { to: 50, suffix: 'K+', label: 'Students' },
+            { to: 5, label: 'States' },
+            { to: 60, suffix: '+ yrs', label: 'Heritage' },
+          ],
+        },
+        {
+          kind: 'code',
+          lang: 'csharp',
+          caption: 'Idempotent enrollments — safe to retry under load.',
+          code: `// Enrollment endpoint — high-volume, idempotent by request key
+[HttpPost("enrollments")]
+public async Task<ActionResult<Enrollment>> Enroll(EnrollmentRequest req) {
+    var existing = await _repo.FindByIdempotencyKey(req.Key);
+    if (existing != null) return Ok(existing);
+    var enrollment = await _service.ProcessAsync(req);
+    return CreatedAtAction(nameof(Get), new { id = enrollment.Id }, enrollment);
+}`,
+        },
+      ] as StorylineBlock[],
     },
     'mining-data-platform': {
       title: 'Mining Operations Platform — ArcelorMittal Canada',
@@ -204,6 +296,34 @@ export const en = {
         'Shipped fully remote from Brazil — daily coordination with Canadian engineering and operations',
       ],
       role: 'Mid-level Full Stack Engineer — lead developer for the operations platform',
+      storyline: [
+        { kind: 'heading', text: 'Real-time, from the pit to the dashboard' },
+        {
+          kind: 'paragraph',
+          text: "Equipment, shifts, and crew tracking on the world's largest open-pit iron ore mine — replacing manual entries with sensor streams that merge physical readings into a virtual model in real time.",
+        },
+        {
+          kind: 'metrics',
+          items: [
+            { to: 50, suffix: 'K+', label: 'Points/day' },
+            { to: 24, suffix: 'km²', label: 'Mine area' },
+            { to: 30, suffix: '%', label: 'Global output' },
+          ],
+        },
+        {
+          kind: 'code',
+          lang: 'ts',
+          caption: 'Sensor stream → merge → upsert → broadcast in one flow.',
+          code: `// Sensor ingest pipeline — merge physical readings with virtual model
+import { mergeWithVirtual } from './virtualModel';
+
+stream.on('data', async (reading) => {
+  const enriched = mergeWithVirtual(reading);
+  await db.equipment.upsert(enriched);
+  bus.emit('equipment.updated', enriched);
+});`,
+        },
+      ] as StorylineBlock[],
     },
   },
 };
