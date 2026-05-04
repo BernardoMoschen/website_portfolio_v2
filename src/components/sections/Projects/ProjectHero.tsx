@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { motion } from 'motion/react';
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaLock } from 'react-icons/fa';
 import { getProjectTypeMap } from './projectTypeMap';
@@ -65,7 +66,7 @@ const ProjectHero: React.FC<ProjectHeroProps> = ({
                     animate={m ? {} : { opacity: 1, x: 0 }}
                     transition={m ? {} : { duration: 0.5, ease }}
                 >
-                    <a
+                    <Link
                         href="/#projects"
                         className={`mono ${styles.backBtn}`}
                         onMouseEnter={() => setBackHovered(true)}
@@ -91,7 +92,7 @@ const ProjectHero: React.FC<ProjectHeroProps> = ({
                             <FaArrowLeft size={12} />
                         </span>
                         {t.project_detail.back}
-                    </a>
+                    </Link>
                 </motion.div>
 
                 {/* Status + Role tags */}
