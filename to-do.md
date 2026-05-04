@@ -5,12 +5,27 @@
 - [x] Enhance performance (migrated Astro → Next.js)
 - [ ] Improve white/light theme colors
 - [x] Unify and centralize SSOT for constant data
+- [x] View Transitions for theme + language toggles (with reduced-motion override)
+- [x] Storyline primitives: `Heading`, `Paragraph`, `CodeBlock` (typewriter), `CountUp`, `Metrics`, `BeforeAfter`, `Pin`
+- [x] Storyline content authored EN+PT-BR for `portfolio`, `telecom-backoffice`, `edtech-platform`, `mining-data-platform`
+- [x] Move storyline copy from `projectsData.ts` into `i18n/translations/{en,pt-br}.ts`
+- [x] AI Concierge backend (`/api/chat` edge SSE) — dual-mode: real Gemini if `GOOGLE_AI_API_KEY` set, deterministic mock otherwise
+- [x] AI Concierge UI (bottom-left pill + glass panel, feature-flagged via `NEXT_PUBLIC_CONCIERGE_ENABLED`)
+- [x] KV-backed sliding-window rate limiter (`src/lib/rateLimit.ts`) with in-memory fallback — 10 chat msgs / IP / hour
+- [x] `conciergeBus` event bus + `useConciergeStream` SSE parser; tool calls fire `highlightProject` (pulse + scroll) and `scrollToSection`
 
-# Ideas
+## Ideas
 
 - [ ] Bring recommendations from LinkedIn profile
 - [ ] Is there a way to unify professional experiences with LinkedIn API?
 - [ ] Hero section data is redundant: exchange for something flashy/funny?
+- [ ] **Provision `GOOGLE_AI_API_KEY`** and flip `NEXT_PUBLIC_CONCIERGE_ENABLED=1` — this turns the mock concierge into the real Gemini-powered one. ~R$5/mo at projected traffic, capped by rate limiter.
+- [ ] **Voice-call mode (Phase 5)** — reuses `/api/chat` with `mode: 'voice'`. Web Speech API for STT/TTS (browser-native, free). Plumbing already future-proofed in `systemPrompt.ts`.
+- [ ] **`ScrollVideo` storyline primitive** — frame-scrubbed `<video>` via `requestVideoFrameCallback`. Skipped this iteration (no assets yet); add when a clip lands.
+- [ ] **`Pin` block adoption** — primitive built but not yet wired into a project storyline. Consider opening one of the flagship projects (e.g. `mining-data-platform`) with a `Pin` to anchor the section.
+- [ ] **Cmd+K command palette** — search projects/sections, jump anywhere; doubles as discoverability for the Konami code.
+- [ ] **Time-aware theme** — auto-flip dark/light by visitor's local hour with a "syncing to your timezone" microcopy on first visit.
+- [ ] **Focus mode** — press `F` to dim everything except the current section.
 
 ---
 

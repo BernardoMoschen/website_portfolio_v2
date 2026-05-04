@@ -1,169 +1,200 @@
-# Portfolio Website
+# Bernardo Moschen — Portfolio v2
 
-A modern, responsive portfolio website built with Astro, React, Material UI, and TypeScript.
+A cinematic Next.js portfolio that doubles as a playground: WebGL globe tracing flight paths between cities I've worked from, scroll-driven sections, ambient audio reactive to navigation, full bilingual (EN / PT-BR) support, project case studies authored as a typed "storyline" of primitives, and an optional AI concierge powered by Gemini 2.5 Flash-Lite.
 
-## 🚀 Features
+Live: <https://bernardomoschen.dev>
 
-- **Modern Design**: Clean, professional design with Material UI components
-- **Responsive**: Fully responsive design that works on all devices
-- **Fast Performance**: Built with Astro for optimal loading speeds
-- **Smooth Animations**: Subtle animations and transitions for better UX
-- **Contact Form**: Functional contact form with validation
-- **SEO Optimized**: Built-in SEO optimization with Astro
+---
 
-## 🛠️ Tech Stack
+## Tech stack
 
-- **Framework**: [Astro](https://astro.build/) with React integration
-- **UI Library**: [Material UI (MUI)](https://mui.com/)
-- **Language**: TypeScript
-- **Styling**: Material UI theme system with custom CSS
-- **Icons**: Material UI Icons
-- **Fonts**: Google Fonts (Roboto)
+| Layer | What |
+| --- | --- |
+| Framework | [Next.js 15](https://nextjs.org/) (App Router, edge runtime where it matters) |
+| UI | React 19 + TypeScript 5.9 |
+| Styling | Vanilla CSS with custom properties (`var(--color-*)`); two themes (`data-theme="dark"\|"light"`); no UI library |
+| 3D | [Three.js](https://threejs.org/) + [@react-three/fiber](https://r3f.docs.pmnd.rs) + drei + postprocessing |
+| Animation | [Motion](https://motion.dev/) (Framer Motion successor), View Transitions API for theme/lang fades |
+| Smooth scroll | [Lenis](https://lenis.darkroom.engineering/) (auto-disabled for `prefers-reduced-motion`) |
+| Audio | Web Audio API (procedural ambience + UI feedback) |
+| i18n | Custom EN / PT-BR with auto-detect from `navigator.language` |
+| Email | [Resend](https://resend.com) (contact form) |
+| KV | [@vercel/kv](https://vercel.com/storage/kv) (likes counter, concierge rate limiter) |
+| AI (optional) | [@google/genai](https://www.npmjs.com/package/@google/genai) → `gemini-2.5-flash-lite` |
+| Analytics | `@vercel/analytics`, `@vercel/speed-insights` |
+| Tests | Jest + Testing Library (suite is light — see `to-do.md`) |
 
-## 📁 Project Structure
+Runtime targets: Lighthouse Performance ≥ 95, 3D bundle ~244 KB gz, full reduced-motion respect everywhere.
+
+---
+
+## Getting started
+
+```bash
+yarn install
+cp .env.example .env.local      # then fill in what you need
+yarn dev                        # http://localhost:3000
+```
+
+Required env: none for the core site. Without any keys, contact form, likes, and concierge all degrade gracefully (in-memory rate limit, mock concierge, contact form returns an error if Resend isn't set).
+
+| Variable | Purpose | Default behavior if unset |
+| --- | --- | --- |
+| `RESEND_API_KEY` | Contact form mail delivery | Form returns an error |
+| `KV_REST_API_URL` + `KV_REST_API_TOKEN` (+ siblings) | Likes counter, concierge rate-limit persistence | Likes counter unavailable; concierge falls back to in-memory rate-limit |
+| `GOOGLE_AI_API_KEY` | Live Gemini replies in the AI concierge | Concierge serves a deterministic mock fixture |
+| `NEXT_PUBLIC_CONCIERGE_ENABLED` | Mounts the concierge widget in the UI when `=1` | Widget is not rendered |
+| `SITE_URL`, `SITE_DOMAIN`, `CONTACT_EMAIL` | Metadata, sitemap, OG | Falls back to `siteConfig` defaults |
+
+See [`.env.example`](.env.example) for the full list.
+
+### Scripts
+
+| Command | Action |
+| --- | --- |
+| `yarn dev` | Dev server with HMR |
+| `yarn build` | Production build |
+| `yarn start` | Run the production build locally |
+| `yarn lint` | `next lint` |
+| `yarn test` | Jest |
+| `yarn test:watch` | Jest in watch mode |
+| `yarn analyze` | Build with bundle analyzer |
+
+---
+
+## Project structure
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   ├── AboutSection.tsx
-│   │   ├── App.tsx
-│   │   ├── ContactSection.tsx
-│   │   ├── HeroSection.tsx
-│   │   ├── Navigation.tsx
-│   │   ├── ProjectsSection.tsx
-│   │   └── theme.ts
-│   ├── layouts/
-│   │   └── Layout.astro
-│   ├── pages/
-│   │   └── index.astro
-│   └── styles/
-├── astro.config.mjs
-├── package.json
-├── tsconfig.json
-└── README.md
+src/
+├── app/
+│   ├── layout.tsx                    Root layout, metadata, OG tags, JSON-LD
+│   ├── page.tsx                      Home (mounts <App />)
+│   ├── globals.css                   Theme tokens, .glass, view-transition styles
+│   ├── og/route.tsx                  Dynamic OG image (per slug or default)
+│   ├── projects/[slug]/page.tsx      Per-project static page
+│   └── api/
+│       ├── chat/route.ts             AI concierge SSE stream (edge runtime)
+│       ├── contact/route.ts          Resend mail handler
+│       └── likes/route.ts            KV-backed global likes counter
+├── components/
+│   ├── 3d/                           Scene3D, GlobeWireframe, CSSGlobe fallback
+│   ├── ai/                           Concierge widget + message bubble
+│   ├── audio/                        AmbientAudio + SoundContext
+│   ├── data/                         projectsData, aboutData, certificationsData
+│   ├── layout/                       App, Navigation, CinematicSection, LoadingScreen…
+│   ├── projects/storyline/           Reusable case-study primitives (see below)
+│   ├── sections/                     Hero / About / Projects / Certifications / Contact
+│   ├── theme/                        ThemeContext (dark ↔ light, View Transitions)
+│   ├── ui/                           BottomRightHUD (likes), KonamiOverlay, …
+│   └── utils/                        AnimateOnScroll, TiltCard, validation, …
+├── hooks/                            useKonamiCode, useConciergeStream, …
+├── i18n/                             I18nProvider + translations/{en,pt-br}.ts
+├── lib/
+│   ├── conciergeBus.ts               EventTarget bus: highlightProject / scrollToSection
+│   ├── llm/                          systemPrompt + gemini + mock + dispatcher
+│   └── rateLimit.ts                  KV sliding-window with in-memory fallback
+└── config/                           Site config, API constants
+public/
+├── certifications/                   Credential PDFs / badges
+├── data/certifications.json          Source of truth for certifications list
+└── project-*.jpg, profile-photo.webp, resume.pdf, …
 ```
 
-## 🚀 Getting Started
+---
 
-1. **Install dependencies**
+## Key systems
 
-   ```bash
-   npm install
-   ```
+### Theme + View Transitions
 
-2. **Start the development server**
+`ThemeContext` flips `data-theme` on `<html>`. When the browser supports `document.startViewTransition` and the user hasn't requested reduced motion, the flip is wrapped in a transition + `flushSync` so the entire viewport cross-dissolves over ~320 ms instead of snapping. `i18n/index.ts` does the same wrap for EN ↔ PT-BR. `globals.css` defines the cross-fade and overrides it to `animation: none !important` under `prefers-reduced-motion: reduce`.
 
-   ```bash
-   npm run dev
-   ```
+### Cinematic scroll
 
-3. **Open your browser**
-   Navigate to `http://localhost:4321` to see your portfolio
+`CinematicSection` pins each top-level section while a tall scroll height passes, driving fades and content reveals via Motion's `useScroll` + `useTransform`. Lenis provides the smooth-scroll feel on capable browsers; touch devices and reduced-motion preferences fall back to native scroll.
 
-## 🎨 Customization
+### 3D globe
 
-### Personal Information
+`Scene3D` renders a wireframe globe with bezier-curve flight paths between cities I've worked from. It's `next/dynamic({ssr:false})`, lazy-loaded, and watched by a `WebGLErrorBoundary`. A `CSSGlobe` static fallback covers no-JS / no-WebGL / pre-WebGL-init. The shader picks up `scrollState` and `mouseState` uniforms (audio is the planned third — see `to-do.md`).
 
-Update the following files with your personal information:
+### Project storyline system
 
-- **Hero Section**: Edit `src/components/HeroSection.tsx`
+Each project page renders a reusable "storyline" — an array of typed blocks declared in `i18n/translations/{en,pt-br}.ts` under `project_items.<slug>.storyline`, dispatched by [`Storyline.tsx`](src/components/projects/storyline/Storyline.tsx) into primitive components in [`src/components/projects/storyline/`](src/components/projects/storyline/).
 
-  - Name, title, bio
-  - Skills and technologies
-  - Social media links
-  - Profile image
+Available block kinds:
 
-- **About Section**: Edit `src/components/AboutSection.tsx`
+| Kind | Component | What it does |
+| --- | --- | --- |
+| `heading` | `Heading.tsx` | h2/h3 with on-enter reveal |
+| `paragraph` | `Paragraph.tsx` | Prose with optional center alignment |
+| `code` | `CodeBlock.tsx` | Glass-card snippet with viewport-triggered typewriter (full text on reduced motion) |
+| `countUp` | `CountUp.tsx` | Animated number, gradient text, `tabular-nums` |
+| `metrics` | `Metrics.tsx` | Auto-fit grid of CountUps |
+| `beforeAfter` | `BeforeAfter.tsx` | Pointer + keyboard image-comparison slider with `clip-path` reveal |
+| `pin` | `Pin.tsx` | Sticky-hero block — content holds attention while a configured viewport-distance scrolls past; renders inline under reduced motion |
 
-  - About me content
-  - Professional experience
-  - Technical skills
+Adding a new storyline: extend `project_items.<slug>.storyline` in **both** `en.ts` and `pt-br.ts` and cast the array `as StorylineBlock[]`. The merge in `projectsData.ts` reads it via `text?.storyline`. See the `portfolio` entry as the canonical example.
 
-- **Projects Section**: Edit `src/components/ProjectsSection.tsx`
+Deferred: `ScrollVideo` primitive (frame-scrubbed `<video>`) — skipped until real video assets exist.
 
-  - Add your projects
-  - Update project descriptions, technologies, and links
+### AI concierge (optional)
 
-- **Contact Section**: Edit `src/components/ContactSection.tsx`
-  - Contact information
-  - Social media profiles
+A floating bottom-left pill expands into a glass chat panel. Replies stream from `/api/chat` (SSE, edge runtime); when the model emits a tool call it's forwarded as an `event: tool` SSE line, parsed by [`useConciergeStream`](src/hooks/useConciergeStream.ts), and dispatched through [`conciergeBus`](src/lib/conciergeBus.ts).
 
-### Styling
+Tool calls available to the model:
 
-- **Theme**: Customize colors and typography in `src/components/theme.ts`
-- **Global Styles**: Edit global styles in `src/layouts/Layout.astro`
+- `highlightProject({slug})` — `ProjectsSection` listens, scrolls the matching card into view, and pulses a glowing ring for ~1.6 s (outline-only under reduced motion).
+- `scrollToSection({id})` — `App` listens, calls `getElementById(id)?.scrollIntoView()` for `about | projects | technical | certifications | contact`.
 
-### Assets
+Three things to know:
 
-Add your files to the `public/` directory:
+1. **Two backends.** [`src/lib/llm/index.ts`](src/lib/llm/index.ts) picks **real Gemini** (`@google/genai`, `gemini-2.5-flash-lite`) when `GOOGLE_AI_API_KEY` is set, otherwise a **deterministic mock fixture** ([`mock.ts`](src/lib/llm/mock.ts)) that streams char-by-char and triggers tool events on keyword match (`portfolio` / `telecom` / `edtech` / `mining` / `about` / `skills` / `contact`). The mock is locale-aware (EN + PT-BR fixtures).
+2. **Feature flag.** The widget is only mounted when `NEXT_PUBLIC_CONCIERGE_ENABLED=1`. The route itself (`/api/chat`) is always reachable; it returns whatever the configured backend produces.
+3. **Rate limited.** `src/lib/rateLimit.ts` runs a KV-backed sliding-window limiter — 10 messages per IP per hour. When KV env vars aren't set (local dev), it falls back to an in-memory `Map`.
 
-- Profile photo: `public/profile-photo`
-- Resume: `public/resume.pdf`
-- Project images: `public/project-*.jpg`
+The system prompt is assembled in [`systemPrompt.ts`](src/lib/llm/systemPrompt.ts) from `aboutData.experiences`, `projectsData`, and `certificationsData`. It supports `mode: 'text' | 'voice'` — `voice` mode adds a "1–2 short spoken sentences, max 80 words" constraint, ready for a future voice-call mode.
 
-## 📝 Available Scripts
+Estimated cost when live: ~R$5 / month at projected traffic (Gemini Flash-Lite is ~$0.10 / M tokens in, $0.40 / M out), hard-capped by the rate limiter. See `.env.example` and `/api/chat/route.ts` for the wiring.
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build locally
-- `npm run astro` - Run Astro CLI commands
+### i18n
 
-## 🚀 Deployment
+Schema is `typeof en` (`src/i18n/index.ts`). Adding a key means adding it to both `translations/en.ts` and `translations/pt-br.ts` — TypeScript will fail the build if you forget. `useI18n()` returns `{ locale, setLocale, t }`. Locale persists in `localStorage`, defaults from `navigator.language`. Switching locale uses View Transitions for a cross-fade.
 
-This site can be deployed to any static hosting provider:
+### Likes
 
-### Netlify
+`/api/likes` increments a single global counter in Vercel KV; per-IP write is a 24-hour SET-NX (one like per visitor per day). The HUD button at bottom-right reads from `LikesContext`.
 
-1. Connect your GitHub repository
-2. Build command: `npm run build`
-3. Publish directory: `dist`
+---
 
-### Vercel
+## Deployment
 
-1. Import your GitHub repository
-2. Framework preset: Astro
-3. Deploy
+Vercel is the intended target — App Router, edge functions, KV, and the analytics/speed-insights packages are all first-class.
 
-### GitHub Pages
+1. Import the repo into Vercel.
+2. Storage → KV → create + link the database (env vars are auto-populated).
+3. Add `RESEND_API_KEY`. Optional: `GOOGLE_AI_API_KEY`, `NEXT_PUBLIC_CONCIERGE_ENABLED`.
+4. Push.
 
-1. Enable GitHub Pages in repository settings
-2. Use GitHub Actions for automated deployment
+Other static-but-compatible hosts work (Netlify, Cloudflare Pages) but you'll have to provide a KV-compatible adapter or accept the in-memory fallback for likes / rate-limits.
 
-## 📄 License
+---
 
-This project is open source and available under the [MIT License](LICENSE).
+## Conventions
 
-## 🤝 Contributing
+- TypeScript everywhere, strict mode.
+- Functional components, hooks. No class components.
+- Theme tokens via CSS custom properties; no hardcoded colors.
+- Every animation path checks `useReducedMotion()` (Motion) or `matchMedia('(prefers-reduced-motion: reduce)')` and degrades. References: `LoadingScreen.tsx`, `CinematicSection.tsx`, `Pin.tsx`.
+- New visible string ⇒ both `en.ts` and `pt-br.ts`.
+- Heavy / client-only components (`Scene3D`, `Concierge`) are loaded with `next/dynamic({ssr:false})`.
 
-Contributions, issues, and feature requests are welcome!
-│ └── index.astro
-└── package.json
+---
 
-```
+## License
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Source code is open under [MIT](LICENSE). The personal content (case studies, copy, photo) belongs to me — feel free to fork the structure, but please replace the content with your own.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+---
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Roadmap
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-```
+See [`to-do.md`](to-do.md) for the active backlog and recently shipped items.
