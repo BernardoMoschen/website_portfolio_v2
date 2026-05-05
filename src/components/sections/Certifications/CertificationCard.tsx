@@ -331,13 +331,23 @@ const CertificationCard: React.FC<Props> = ({ cert }) => {
       {/* Action — pinned to bottom */}
       {target && (
         <div style={{ padding: '1rem 1.5rem 1.25rem', marginTop: 'auto' }}>
-          <button
-            onClick={() => window.open(target, '_blank', 'noopener,noreferrer')}
+          <a
+            href={target}
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn btn-outline"
-            style={{ fontSize: '0.8rem', padding: '0.45rem 1rem', width: '100%' }}
+            style={{
+              fontSize: '0.8rem',
+              padding: '0.45rem 1rem',
+              width: '100%',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+            }}
           >
             {t.certifications.view_credential}
-          </button>
+          </a>
         </div>
       )}
     </TiltCard>
