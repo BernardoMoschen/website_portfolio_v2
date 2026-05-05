@@ -5,8 +5,9 @@ import {
     SiMongodb, SiSequelize, SiTypeorm, SiZapier, SiWebflow, SiZendesk, SiStrapi,
     SiNestjs, SiAdonisjs, SiJavascript, SiAstro, SiTailwindcss, SiRedux, SiWebpack,
     SiSass, SiHtml5, SiCss, SiExpress, SiPrisma, SiDocker, SiLinux, SiGit, SiSwagger,
+    SiEthereum, SiIpfs, SiThirdweb, SiAlchemy, SiWeb3Dotjs, SiStripe, SiShopify, SiAuth0, SiAnthropic,
 } from 'react-icons/si';
-import { FaServer, FaDatabase, FaLaptopCode, FaCloud, FaBriefcase, FaAws } from 'react-icons/fa';
+import { FaServer, FaDatabase, FaLaptopCode, FaCloud, FaBriefcase, FaAws, FaLink, FaProjectDiagram, FaFileContract } from 'react-icons/fa';
 import { HiDatabase } from 'react-icons/hi';
 
 export const getCategoryIcon = (iconType: string) => {
@@ -15,6 +16,7 @@ export const getCategoryIcon = (iconType: string) => {
         case 'storage': return <HiDatabase />;
         case 'cloud': return <FaCloud />;
         case 'work': return <FaBriefcase />;
+        case 'blockchain': return <FaLink />;
         default: return <FaLaptopCode />;
     }
 };
@@ -65,6 +67,18 @@ export const getTechnologyIcon = (iconType: string, color: string) => {
         case 'rest': case 'microservices': case 'spa': case 'solid': case 'scrum': case 'server':
             return <FaServer style={style} />;
         case 'database': return <FaDatabase style={style} />;
+        case 'ethereum': case 'erc20': return <SiEthereum style={style} />;
+        case 'web3': return <SiWeb3Dotjs style={style} />;
+        case 'ipfs': return <SiIpfs style={style} />;
+        case 'thirdweb': return <SiThirdweb style={style} />;
+        case 'alchemy': return <SiAlchemy style={style} />;
+        case 'thegraph': return <FaProjectDiagram style={style} />;
+        case 'berachain': return <FaLink style={style} />;
+        case 'smartcontract': return <FaFileContract style={style} />;
+        case 'stripe': return <SiStripe style={style} />;
+        case 'shopify': return <SiShopify style={style} />;
+        case 'auth0': return <SiAuth0 style={style} />;
+        case 'anthropic': return <SiAnthropic style={style} />;
         default: return <SiReact style={style} />;
     }
 };

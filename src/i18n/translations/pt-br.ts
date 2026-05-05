@@ -34,6 +34,12 @@ export const ptBr = {
     ],
     experience_descriptions: [
       [
+        'Ajudei a construir um marketplace de publicidade verificado em blockchain na Berachain — anunciantes pagam apenas por conversões verificadas on-chain, não por cliques ou impressões, atacando a fraude estrutural embutida nas redes de publicidade tradicionais. Acompanhei do protótipo ao lançamento mainnet (fev 2026) e ao pivot pra atribuição nativa Shopify que veio depois',
+        'Entreguei React, Next.js e TypeScript em todo o stack — dashboards de campanha, onboarding de publishers, ganhos em tempo real do creator e um assistente de briefing de campanha com IA construído sobre a API da Anthropic. Auth0 pro login, ThirdWeb pra criação invisível de carteiras — o usuário ganha verificação blockchain sem nunca encostar na chain',
+        'Construí serviços em Node.js / NestJS que disparam transações assinadas para smart contracts na Berachain (via ThirdWeb e Alchemy), espelham o estado on-chain através de um subgraph Goldsky, e roteiam comissões pelo fluxo de escrow do Stripe — hold de 30 dias, recuperação automática em reembolsos, payout direto pra conta bancária',
+        '100% remoto do Brasil com time do Reino Unido/EUA — engenharia, design e BD num produto totalmente on-chain com lançamento mainnet em data marcada',
+      ],
+      [
         'Ajudei a construir a camada digital inteira da primeira operadora 5G cloud-native de Bermuda — onboarding, CRM, automação de back-office, ferramental interno',
         'Entreguei fluxos de onboarding self-service (React, Recoil, Jest) que derrubaram o abandono de usuários na plataforma',
         'Projetei APIs REST e serviços intermediários (Node.js, TypeScript, GraphQL, AWS) alimentando um CRM com ~10K+ clientes',
@@ -70,6 +76,11 @@ export const ptBr = {
         category: 'DevOps, Bancos de Dados & Ferramentas',
         description: 'Design de banco de dados, otimização, conteinerização e infraestrutura em nuvem',
         descriptionHighlight: 'Eu leio os logs antes de culpar a infra',
+      },
+      {
+        category: 'Web3 & Blockchain',
+        description: 'Integração com smart contracts, atribuição on-chain e ferramental Web3 para marketplaces em produção',
+        descriptionHighlight: 'Onde a prova não pode ser reescrita por nenhum dos lados da operação',
       },
     ],
   },
@@ -139,7 +150,7 @@ export const ptBr = {
     live_demo: 'Demo ao Vivo',
     overview: 'Visão Geral do Projeto',
   },
-  experience_periods: ['2024 - Atual', '2022 - 2023', '2021 - 2022', '2021 - Atual'],
+  experience_periods: ['2025 - Atual', '2024 - 2025', '2022 - 2023', '2021 - 2022', '2021 - Atual'],
   project_items: {
     portfolio: {
       title: 'Portfólio',

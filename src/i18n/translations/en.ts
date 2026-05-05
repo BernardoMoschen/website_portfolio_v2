@@ -34,6 +34,12 @@ export const en = {
     ],
     experience_descriptions: [
       [
+        "Helped build a blockchain-verified ad marketplace on Berachain — advertisers pay only for verified on-chain conversions, not clicks or impressions, attacking the structural fraud built into traditional ad networks. Saw it through from prototype to mainnet launch (Feb 2026) and into a Shopify-native affiliate attribution pivot",
+        'Shipped React, Next.js and TypeScript across the stack — campaign dashboards, publisher onboarding, real-time creator earnings, and an AI-assisted campaign briefing assistant built on the Anthropic API. Auth0 for sign-in, ThirdWeb for invisible wallet creation — users get blockchain verification without ever seeing the chain',
+        'Built Node.js / NestJS services that dispatch signed transactions to smart contracts on Berachain (via ThirdWeb and Alchemy), mirror on-chain state through a Goldsky subgraph indexer, and route commissions through a Stripe escrow flow — 30-day holds, automatic refund clawbacks, direct bank payouts',
+        'Fully remote from Brazil with a UK/US team — engineering, design, and BD on a fully on-chain product launching to mainnet on a fixed date',
+      ],
+      [
         "Helped build the entire digital layer for Bermuda's first cloud-native 5G operator — onboarding, CRM, back-office automation, internal tooling",
         'Shipped self-service onboarding flows (React, Recoil, Jest) that cut user drop-off across the platform',
         'Designed REST APIs and midtier services (Node.js, TypeScript, GraphQL, AWS) powering a CRM serving ~10K+ customers',
@@ -70,6 +76,11 @@ export const en = {
         category: 'DevOps, Databases & Tools',
         description: 'Database design, optimization, containerization and cloud infrastructure',
         descriptionHighlight: 'From schema design to production deploy — no surprises',
+      },
+      {
+        category: 'Web3 & Blockchain',
+        description: 'Smart contract integration, on-chain attribution, and Web3 tooling for production marketplaces',
+        descriptionHighlight: "Where the proof can't be rewritten by either side of the trade",
       },
     ],
   },
@@ -139,7 +150,7 @@ export const en = {
     live_demo: 'Live Demo',
     overview: 'Project Overview',
   },
-  experience_periods: ['2024 - Present', '2022 - 2023', '2021 - 2022', '2021 - Present'],
+  experience_periods: ['2025 - Present', '2024 - 2025', '2022 - 2023', '2021 - 2022', '2021 - Present'],
   project_items: {
     portfolio: {
       title: 'Portfolio Website',

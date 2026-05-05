@@ -1,13 +1,13 @@
 export interface Technology {
     name: string;
     iconColor: string;
-    iconType: 'react' | 'typescript' | 'mui' | 'jest' | 'nextjs' | 'nodejs' | 'csharp' | 'dotnet' | 'graphql' | 'postgresql' | 'aws' | 'sonarqube' | 'server' | 'database' | 'vue' | 'php' | 'mysql' | 'mongodb' | 'zapier' | 'strapi' | 'webflow' | 'zendesk' | 'sequelize' | 'mssql' | 'typeorm' | 'adonis' | 'nestjs' | 'docker' | 'express' | 'prisma' | 'astro' | 'tailwind' | 'redux' | 'recoil' | 'webpack' | 'sass' | 'linux' | 'html' | 'css' | 'git' | 'swagger' | 'spa' | 'rest' | 'solid' | 'scrum' | 'microservices' | 'javascript';
-    featured?: boolean; 
+    iconType: 'react' | 'typescript' | 'mui' | 'jest' | 'nextjs' | 'nodejs' | 'csharp' | 'dotnet' | 'graphql' | 'postgresql' | 'aws' | 'sonarqube' | 'server' | 'database' | 'vue' | 'php' | 'mysql' | 'mongodb' | 'zapier' | 'strapi' | 'webflow' | 'zendesk' | 'sequelize' | 'mssql' | 'typeorm' | 'adonis' | 'nestjs' | 'docker' | 'express' | 'prisma' | 'astro' | 'tailwind' | 'redux' | 'recoil' | 'webpack' | 'sass' | 'linux' | 'html' | 'css' | 'git' | 'swagger' | 'spa' | 'rest' | 'solid' | 'scrum' | 'microservices' | 'javascript' | 'ethereum' | 'web3' | 'ipfs' | 'thegraph' | 'thirdweb' | 'alchemy' | 'berachain' | 'erc20' | 'smartcontract' | 'stripe' | 'shopify' | 'auth0' | 'anthropic';
+    featured?: boolean;
 }
 
 export interface TechnicalArea {
     category: string;
-    iconType: 'devices' | 'storage' | 'cloud';
+    iconType: 'devices' | 'storage' | 'cloud' | 'blockchain';
     technologies: Technology[];
     description?: string;
     descriptionHighlight?: string;
@@ -62,6 +62,7 @@ export const technicalAreas: TechnicalArea[] = [
             { name: 'Adonis.js', iconColor: '#220052', iconType: 'adonis' },
             { name: 'Sequelize.js', iconColor: '#52B0E7', iconType: 'sequelize' },
             { name: 'Microservices', iconColor: '#4ECDC4', iconType: 'microservices' },
+            { name: 'Anthropic API', iconColor: '#D97757', iconType: 'anthropic' },
             { name: 'PHP', iconColor: '#777BB4', iconType: 'php' },
             { name: '.NET', iconColor: '#512BD4', iconType: 'dotnet' },
             { name: 'C#', iconColor: '#239120', iconType: 'csharp', },
@@ -87,7 +88,25 @@ export const technicalAreas: TechnicalArea[] = [
             { name: 'SCRUM', iconColor: '#0052CC', iconType: 'scrum',  },
             { name: 'Strapi', iconColor: '#2F2E8B', iconType: 'strapi' },
             { name: 'Webflow', iconColor: '#4353FF', iconType: 'webflow' },
+            { name: 'Stripe', iconColor: '#635BFF', iconType: 'stripe', featured: true },
+            { name: 'Shopify', iconColor: '#7AB55C', iconType: 'shopify', featured: true },
+            { name: 'Auth0', iconColor: '#EB5424', iconType: 'auth0' },
             { name: 'SOLID', iconColor: '#4285F4', iconType: 'solid' },
+        ],
+    },
+    {
+        category: 'Web3 & Blockchain',
+        iconType: 'blockchain',
+        technologies: [
+            { name: 'Smart Contract Integration', iconColor: '#627EEA', iconType: 'smartcontract', featured: true },
+            { name: 'EVM', iconColor: '#627EEA', iconType: 'ethereum', featured: true },
+            { name: 'Berachain', iconColor: '#814625', iconType: 'berachain', featured: true },
+            { name: 'ThirdWeb', iconColor: '#F213A4', iconType: 'thirdweb', featured: true },
+            { name: 'Alchemy', iconColor: '#0C0C0E', iconType: 'alchemy', featured: true },
+            { name: 'Subgraphs (Goldsky)', iconColor: '#6747ED', iconType: 'thegraph' },
+            { name: 'IPFS', iconColor: '#65C2CB', iconType: 'ipfs' },
+            { name: 'ERC20', iconColor: '#627EEA', iconType: 'erc20' },
+            { name: 'Web3.js', iconColor: '#F16822', iconType: 'web3' },
         ],
     },
 ];
@@ -100,9 +119,17 @@ const metaItConsultant = {
 export const experiences: Experience[] = [
     {
         role: 'Senior Full Stack Engineer',
+        company: 'Frequency Advisors',
+        companyUrl: 'https://github.com/frequencyadvisors',
+        period: '2025 - Present',
+        iconType: 'work',
+        allocatedVia: metaItConsultant,
+    },
+    {
+        role: 'Senior Full Stack Engineer',
         company: 'Paradise Mobile',
         companyUrl: 'https://www.linkedin.com/company/paradise-mobile/about',
-        period: '2024 - Present',
+        period: '2024 - 2025',
         projectSlugs: ['telecom-backoffice'],
         iconType: 'work',
         allocatedVia: metaItConsultant,
