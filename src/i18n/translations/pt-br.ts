@@ -127,6 +127,7 @@ export const ptBr = {
     heading: 'Certificações & Credenciais',
     subtitle: 'As credenciais formais por trás da experiência prática.',
     view_credential: 'Ver Credencial',
+    visit_issuer: 'Ver no LinkedIn',
     categories: {
       all: 'Todos',
       cloud: 'Cloud',

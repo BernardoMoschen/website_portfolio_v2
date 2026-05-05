@@ -1,12 +1,35 @@
 [
   {
-    "id": "example-aws-saa",
-    "title": "AWS Solutions Architect – Associate",
-    "issuer": "Amazon Web Services",
-    "date": "2024-06",
-    "category": "cloud",
-    "credentialUrl": "https://www.credly.com/badges/your-badge-id",
-    "badgeUrl": "https://images.credly.com/size/340x340/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png",
-    "featured": true
+    "id": "btech-graduation",
+    "title": "Bachelor of Technology (B.Tech.) in Systems Analysis and Development",
+    "issuer": "UNISINOS - Universidade do Vale do Rio dos Sinos",
+    "date": "2023-01",
+    "category": "degree",
+    "fileUrl": "/certifications/bachelor_of_technology.pdf",
+    "featured": true,
+    "issuerUrl": "https://br.linkedin.com/school/universidade-do-vale-do-rio-dos-sinos/"
+
+  },
+  {
+    "id": "postgraduate-degree",
+    "title": "Postgraduate Certificate, Full Stack Development",
+    "issuer": "PUCRS - Pontifícia Universidade Católica do Rio Grande do Sul",
+    "date": "2026-01",
+    "category": "degree",
+    "fileUrl": "/certifications/postgraduate_degree.pdf",
+    "featured": true,
+    "issuerUrl": "https://br.linkedin.com/school/pucrs/"
+
+  },
+  {
+    "id": "i2a2-ai-certification",
+    "title": "Intelligent Agents with Generative AI Networks",
+    "issuer": "I2A2 - Institut d'Intelligence Artificielle Appliquée",
+    "date": "2025-12",
+    "category": "course",
+    "fileUrl": "/certifications/i2a2_ai_certification.pdf",
+    "featured": true,
+    "issuerUrl": "https://ca.linkedin.com/school/i2a2-brasil/"
+
   }
 ]

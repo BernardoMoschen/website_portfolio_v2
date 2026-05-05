@@ -10,6 +10,8 @@ export interface Certification {
   /** Path under /public/certifications/ e.g. '/certifications/cert.pdf' */
   fileUrl?: string;
   badgeUrl?: string;
+  /** LinkedIn (or other) profile URL for the issuing institution */
+  issuerUrl?: string;
   featured?: boolean;
 }
 

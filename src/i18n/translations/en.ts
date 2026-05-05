@@ -127,6 +127,7 @@ export const en = {
     heading: 'Certifications & Credentials',
     subtitle: 'The paperwork behind the work.',
     view_credential: 'View Credential',
+    visit_issuer: 'Visit on LinkedIn',
     categories: {
       all: 'All',
       cloud: 'Cloud',
