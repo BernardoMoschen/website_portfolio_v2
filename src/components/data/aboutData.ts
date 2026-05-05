@@ -129,7 +129,7 @@ export const experiences: Experience[] = [
         role: 'Senior Full Stack Engineer',
         company: 'Paradise Mobile',
         companyUrl: 'https://www.linkedin.com/company/paradise-mobile/about',
-        period: '2024 - 2025',
+        period: '2023 - 2025',
         projectSlugs: ['telecom-backoffice'],
         iconType: 'work',
         allocatedVia: metaItConsultant,
