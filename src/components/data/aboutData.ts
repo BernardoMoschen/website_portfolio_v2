@@ -120,7 +120,7 @@ export const experiences: Experience[] = [
     {
         role: 'Senior Full Stack Engineer',
         company: 'Frequency Advisors',
-        companyUrl: 'https://github.com/frequencyadvisors',
+        companyUrl: 'https://www.linkedin.com/company/frequency-advisors',
         period: '2025 - Present',
         iconType: 'work',
         allocatedVia: metaItConsultant,

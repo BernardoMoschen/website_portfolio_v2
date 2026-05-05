@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { FaLinkedin } from 'react-icons/fa';
 import type { Experience } from '../../data/aboutData';
 import { getCategoryIcon } from '../../utils/iconMap';
 
@@ -208,10 +209,23 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experiences, de
                     .timeline-company a {
                         color: var(--color-secondary);
                         text-decoration: none;
-                        transition: opacity 0.2s;
+                        text-underline-offset: 3px;
+                        transition: color 0.2s ease;
+                        display: inline-flex;
+                        align-items: center;
                     }
                     .timeline-company a:hover {
-                        opacity: 0.8;
+                        text-decoration: underline;
+                    }
+                    .timeline-company-icon {
+                        margin-left: 0.35rem;
+                        opacity: 0.7;
+                        display: inline-flex;
+                        transition: opacity 0.2s ease, color 0.2s ease;
+                    }
+                    .timeline-company a:hover .timeline-company-icon {
+                        opacity: 1;
+                        color: var(--color-primary);
                     }
                     .timeline-period {
                         display: inline-block;
@@ -258,10 +272,22 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experiences, de
                     .timeline-via a {
                         color: var(--color-text-secondary);
                         text-decoration: none;
-                        transition: opacity 0.2s;
+                        text-underline-offset: 3px;
+                        display: inline-flex;
+                        align-items: center;
+                        transition: color 0.2s ease;
                     }
                     .timeline-via a:hover {
-                        opacity: 0.8;
+                        text-decoration: underline;
+                    }
+                    .timeline-via-icon {
+                        margin-left: 0.3rem;
+                        opacity: 0.6;
+                        display: inline-flex;
+                        transition: opacity 0.2s ease;
+                    }
+                    .timeline-via a:hover .timeline-via-icon {
+                        opacity: 1;
                     }
                     .timeline-card--allocated {
                         border-left: 3px solid var(--color-primary);
@@ -288,6 +314,9 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experiences, de
                             <p className="timeline-company">
                                 <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer">
                                     {exp.company}
+                                    <span className="timeline-company-icon" aria-hidden="true">
+                                        <FaLinkedin size={12} />
+                                    </span>
                                 </a>
                             </p>
                             {exp.allocatedVia && (
@@ -295,6 +324,9 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({ experiences, de
                                     via{' '}
                                     <a href={exp.allocatedVia.companyUrl} target="_blank" rel="noopener noreferrer">
                                         {exp.allocatedVia.company}
+                                        <span className="timeline-via-icon" aria-hidden="true">
+                                            <FaLinkedin size={10} />
+                                        </span>
                                     </a>
                                 </span>
                             )}
